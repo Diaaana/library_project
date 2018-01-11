@@ -1,4 +1,4 @@
-package by.radomskaya.project.command.user;
+package by.radomskaya.project.command.common;
 
 import by.radomskaya.project.command.Command;
 

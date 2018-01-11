@@ -5,7 +5,7 @@
     <title>Регистрация</title>
 
     <link rel="shortcut icon" href="/resource/images/icon.png" type="image/x-icon">
-    <%--<link rel="stylesheet" type="text/css" href = "/resource/css/style.css">--%>
+    <link rel="stylesheet" type="text/css" href = "/resource/css/app-style.css">
     <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap-theme.css">
 
@@ -44,7 +44,7 @@
             <div class="form-group field">
                 <input type="password" name="password2" placeholder="Повторите пароль" class="form-control">
             </div>
-            <div class="form-group field">
+            <div class="form-group">
                 <input type="hidden" name="command" value="registration"/>
                 <input type="submit" name="registration" value="Зарегистрироваться" class="btn btn-success">
                 <button type="reset" value="clear" onclick="clearForm()" class="btn btn-danger">Очистить</button>

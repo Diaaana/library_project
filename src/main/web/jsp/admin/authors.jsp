@@ -4,7 +4,7 @@
     <title>Title</title>
 
     <link rel="shortcut icon" href="/resource/images/icon.png" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href = "/resource/css/style.css">
+    <link rel="stylesheet" type="text/css" href = "/resource/css/app-style.css">
     <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap-theme.css">
 

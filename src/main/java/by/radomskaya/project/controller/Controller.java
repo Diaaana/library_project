@@ -2,7 +2,7 @@ package by.radomskaya.project.controller;
 
 import by.radomskaya.project.command.ActionFactory;
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.command.user.EmptyCommand;
+import by.radomskaya.project.command.common.EmptyCommand;
 import by.radomskaya.project.exception.CommandException;
 
 import javax.servlet.RequestDispatcher;

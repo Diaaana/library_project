@@ -38,7 +38,7 @@ public class AddBookCommand implements Command {
         book.setIsbn(request.getParameter(PARAM_ISBN));
         book.setTittle(request.getParameter(PARAM_TITTLE));
         book.setGenre(request.getParameter(PARAM_GENRE));
-        book.setDataEdition(request.getParameter(PARAM_DATA_EDITION));
+        book.setDateEdition(request.getParameter(PARAM_DATA_EDITION));
         book.setPlaceEdition(request.getParameter(PARAM_PLACE_EDITION));
         book.setPublisher(request.getParameter(PARAM_PUBLISHER));
         book.setNumberCopies(Integer.parseInt(request.getParameter(PARAM_NUMBER_COPIES)));
@@ -49,10 +49,8 @@ public class AddBookCommand implements Command {
 
         try {
             if (addLogic.addBook(book) && addLogic.addAuthor(author) && addLogic.addGenre(book)) {
-                System.out.println(1);
                 page = ADMIN_BOOKS_PAGE;
             } else {
-                System.out.println(2);
                 page = ADMIN_ADD_BOOKS_PAGE;
             }
         } catch (DAOException e) {

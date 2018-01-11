@@ -4,7 +4,7 @@
 <head>
     <title>Библиотека</title>
 
-    <%--<link rel="stylesheet" type="text/css" href = "/resource/css/style.css">--%>
+    <link rel="stylesheet" type="text/css" href = "/resource/css/app-style.css">
     <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap-theme.css.css">
 
@@ -17,7 +17,7 @@
             <ul class="nav">
 
                 <c:if test="${sessionScope.role == null}">
-                    <li><a href="/jsp/user/registration.jsp" class="a1">Регистрация</a></li>
+                    <li><a href="/jsp/user/registration.jsp" class="a-registration">Регистрация</a></li>
                 </c:if>
 
                 <c:if test="${sessionScope.role == 'user'}">

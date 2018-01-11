@@ -8,6 +8,8 @@ import by.radomskaya.project.entity.Author;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.DAOException;
 
+import java.util.List;
+
 public class AdminLogic {
 
     public boolean addBook(Book book) throws DAOException {
@@ -23,6 +25,11 @@ public class AdminLogic {
     public boolean addGenre(Book book) throws DAOException {
         GenreDAO genreDAO = DAOFactory.getInstance().getGenreDAO();
         return genreDAO.addGenre(book);
+    }
+
+    public List<Book> getBooks() throws DAOException {
+        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
+        return bookDAO.getAllBooks();
     }
 
 }
