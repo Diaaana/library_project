@@ -34,7 +34,8 @@ public class Controller extends HttpServlet {
         try {
             page = command.execute(request);
         } catch (CommandException e) {
-            request.getRequestDispatcher("jsp/start.jsp").forward(request, response); //!!!
+            e.printStackTrace();
+           // request.getRequestDispatcher("jsp/start.jsp").forward(request, response); //!!!
         }
 
         if (page != null) {

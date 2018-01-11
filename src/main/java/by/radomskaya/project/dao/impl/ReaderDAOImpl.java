@@ -17,11 +17,11 @@ import java.util.List;
 
 
 public class ReaderDAOImpl implements ReaderDAO {
-    private static final Logger LOGGER = LogManager.getLogger(ReaderDAOImpl.class);
+    private final static Logger LOGGER = LogManager.getLogger(ReaderDAOImpl.class);
 
-    private static final String SELECT_READERS = "SELECT number_ticket, surname, name, middle_name, age, phone_number, mail  FROM library.readers JOIN library.roles ON roles.id_role = readers.id_role WHERE roles.name_role = 'Пользователь'";
-    private static final String INSERT_READER = "INSERT INTO readers(surname, name, middle_name, age, phone_number, mail, login, password) VALUES(?,?,?,?,?,?,?,?)";
-    private static final String CHECK_LOGIN_PASSWORD = "SELECT login, password FROM library.readers JOIN library.roles on readers.id_role = roles.id_role WHERE name_role = 'Пользователь' AND login = ? AND password = ?";
+    private final static String SELECT_READERS = "SELECT number_ticket, surname, name, middle_name, age, phone_number, mail  FROM library.readers JOIN library.roles ON roles.id_role = readers.id_role WHERE roles.name_role = 'Пользователь'";
+    private final static String INSERT_READER = "INSERT INTO readers(surname, name, middle_name, age, phone_number, mail, login, password) VALUES(?,?,?,?,?,?,?,?)";
+    private final static String CHECK_LOGIN_PASSWORD = "SELECT login, password FROM library.readers JOIN library.roles on readers.id_role = roles.id_role WHERE name_role = 'Пользователь' AND login = ? AND password = ?";
 
     @Override
     public List<Reader> getAllReaders() throws DAOException {
@@ -73,10 +73,10 @@ public class ReaderDAOImpl implements ReaderDAO {
             statement.setString(6, reader.getMail());
             statement.setString(7, reader.getLogin());
             statement.setString(8, reader.getPassword());
-            statement.execute();
+            statement.executeUpdate();
             return true;
         } catch (SQLException e) {
-            throw new DAOException("Error add readers" + e);
+            throw new DAOException("Error add reader" + e);
         } finally {
             try {
                 statement.close();

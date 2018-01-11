@@ -1,6 +1,7 @@
 package by.radomskaya.project.dao.impl;
 
-import by.radomskaya.project.dao.AdminDAO;
+import by.radomskaya.project.dao.GenreDAO;
+import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.pool.ConnectionPool;
 import by.radomskaya.project.pool.ProxyConnection;
@@ -8,25 +9,23 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AdminDAOImpl implements AdminDAO {
-    private final static Logger LOGGER = LogManager.getLogger(AdminDAOImpl.class);
-    private final static String CHECK_LOGIN_PASSWORD = "SELECT login, password FROM library.readers JOIN library.roles on readers.id_role = roles.id_role WHERE name_role = 'Администратор' AND login = ? AND password = ?";
+public class GenreDAOImpl implements GenreDAO {
+    private final static Logger LOGGER = LogManager.getLogger(GenreDAOImpl.class);
+    private final static String INSERT_GENRE = "INSERT INTO genres(name_genre) VALUES(?)";
 
     @Override
-    public boolean checkLoginPasswordAdmin(String login, String password) throws DAOException {
+    public boolean addGenre(Book book) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(CHECK_LOGIN_PASSWORD);
-            statement.setString(1, login);
-            statement.setString(2, password);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            statement = connection.prepareStatement(INSERT_GENRE);
+            statement.setString(1, book.getGenre());
+            statement.executeUpdate();
+            return true;
         } catch (SQLException e) {
-            throw new DAOException("Error check admin by login and password" + e);
+            throw new DAOException("Error add genre" + e);
         } finally {
             try {
                 statement.close();

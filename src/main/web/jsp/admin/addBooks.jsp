@@ -18,41 +18,54 @@
 
     <h1 class="header">Добавление книги</h1>
 
-    <form role="form">
+    <form role="form" action="/Controller" method="get">
         <div class="form-group">
             <label>Введите международный номер: </label>
-            <input type="text" id="isbn" class="form-control" placeholder="Международный номер">
+            <input type="text" name="isbn" class="form-control" placeholder="Международный номер">
             <p class="help-block">13 знаков</p>
         </div>
         <div class="form-group">
             <label class="control-label">Введите название книги: </label>
-            <input type="text" id="tittle" class="form-control" placeholder="Название">
+            <input type="text" name="tittle" class="form-control" placeholder="Название">
         </div>
         <div class="form-group">
             <label>Введите фамилию автора книги: </label>
-            <input type="text" id="author" class="form-control" placeholder="Автор">
+            <input type="text" name="surname" class="form-control" placeholder="Фамилия">
+        </div>
+        <div class="form-group">
+            <label>Введите имя автора книги: </label>
+            <input type="text" name="name" class="form-control" placeholder="Имя">
+        </div>
+        <div class="form-group">
+            <label>Введите отчество автора книги: </label>
+            <input type="text" name="middle_name" class="form-control" placeholder="Отчество">
+        </div>
+        <div class="form-group">
+            <label>Введите страну рождения автора книги: </label>
+            <input type="text" name="country" class="form-control" placeholder="Страна">
         </div>
         <div class="form-group">
             <label>Введите жанр книги: </label>
-            <input type="text" id="genre" class="form-control" placeholder="Жанр">
+            <input type="text" name="genre" class="form-control" placeholder="Жанр">
         </div>
         <div class="form-group">
             <label>Введите дату издания книги: </label>
-            <input type="text" id="date" class="form-control" placeholder="Дата издания">
+            <input type="text" name="date_edition" class="form-control" placeholder="Дата издания">
         </div>
         <div class="form-group">
             <label>Введите место издания книги: </label>
-            <input type="text" id="place" class="form-control" placeholder="Место издания">
+            <input type="text" name="place_edition" class="form-control" placeholder="Место издания">
         </div>
         <div class="form-group">
             <label>Введите название издательства: </label>
-            <input type="text" id="publisher" class="form-control" placeholder="Издательство">
+            <input type="text" name="publisher" class="form-control" placeholder="Издательство">
         </div>
         <div class="form-group">
             <label>Введите число экземпляров: </label>
-            <input type="text" id="number" class="form-control" placeholder="Экземпляры">
+            <input type="text" name="number_copies" class="form-control" placeholder="Экземпляры">
         </div>
-        <button type="submit" class="btn btn-success">Добавить</button>
+        <input type="hidden" name="command" value="add_book"/>
+        <input type="submit" name="add_book" class="btn btn-success" value="Добавить"/>
         <button type="reset" value="clear" onclick="clearForm()" class="btn btn-danger">Очистить</button>
     </form>
 </div>

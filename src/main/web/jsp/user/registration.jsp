@@ -5,7 +5,7 @@
     <title>Регистрация</title>
 
     <link rel="shortcut icon" href="/resource/images/icon.png" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href = "/resource/css/style.css">
+    <%--<link rel="stylesheet" type="text/css" href = "/resource/css/style.css">--%>
     <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap-theme.css">
 
@@ -16,7 +16,7 @@
 
     <h1 class="header">РЕГИСТРАЦИЯ</h1>
 
-        <form role="form" action="/Controller" name="form" onsubmit="return validationForm();">
+        <form role="form" action="/Controller" name="form" onsubmit="return validationForm();" method="get">
             <div class="form-group field">
                 <input type="text" name="surname" placeholder="Фамилия" class="form-control">
             </div>
