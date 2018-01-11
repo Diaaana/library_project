@@ -1,5 +1,5 @@
-body {
-    background-image: url(../images/1.jpg);
+.body-registration {
+    background-image: url(/resource/images/1.jpg);
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
@@ -8,59 +8,19 @@ body {
     background-size: cover;
 }
 
+.body-add-books {
+    background-color: #c6c8ca;
+}
+
 .header {
     text-align: center;
-    font-family: Algerian, Helvetica, Verdana, sans-serif;
-    font-size: 300%;
     color: papayawhip;
-    padding-top: 20px;
-}
-
-.form {
-    position: absolute;
-    width: 50%;
-    height: 80%;
-    top: 12%;
-    left: 25%;
-    text-align: left;
-    background: linear-gradient(to top, #e4d68a, #69292d);
-    opacity: 0.9;
-}
-
-.field {
-    width: 400px;
-    height: 35px;
-    font-size: 15px;
+    padding: 20px;
 }
 
 .field:hover {
-    font-size: 20px;
     color:  #802e36;
     box-shadow: 0 0 10px 10px #802e36;
-}
-
-.input {
-    position: relative;
-    text-align: center;
-    margin: 3%;
-}
-
-.buttonInput {
-    position: relative;
-    text-align: center;
-}
-
-.button {
-    width: 200px;
-    height: 40px;
-    font-size: 17px;
-    background-color: #69292d;
-    color: #f7f1e7;
-}
-
-.button:hover {
-    box-shadow: 0 0 10px 5px #5b1313;
-    font-size: 20px;
 }
 
 .footer {
@@ -82,9 +42,4 @@ body {
 .layout {
     position: relative;
     right: -200px;
-}
-
-.label {
-    color: #fcf8e3;
-    font-size: 20px;
 }
