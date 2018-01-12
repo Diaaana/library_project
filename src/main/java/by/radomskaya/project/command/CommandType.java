@@ -2,7 +2,7 @@ package by.radomskaya.project.command;
 
 import by.radomskaya.project.command.admin.AddBookCommand;
 import by.radomskaya.project.command.admin.ShowBooksCommand;
-import by.radomskaya.project.command.common.ChangeLocale;
+import by.radomskaya.project.command.common.ChangeLocaleCommand;
 import by.radomskaya.project.command.common.LoginCommand;
 import by.radomskaya.project.command.common.LogoutCommond;
 import by.radomskaya.project.command.user.RegistrationCommand;
@@ -15,7 +15,7 @@ public enum CommandType {
     REGISTRATION(new RegistrationCommand(new UserLogic())),
     ADD_BOOK(new AddBookCommand(new AdminLogic())),
     SHOW_BOOKS(new ShowBooksCommand(new AdminLogic())),
-    LOCALE(new ChangeLocale());
+    LOCALE(new ChangeLocaleCommand());
 
     private Command command;
 

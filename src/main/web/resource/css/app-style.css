@@ -50,6 +50,13 @@ body {
     color: #f7f1e7;
 }
 
+.footer-button {
+    position: fixed;
+    right: 0; bottom: 0;
+    padding-top: 19px;
+    color: #f7f1e7;
+}
+
 .a-registration {
     position: absolute;
     left: 60%;

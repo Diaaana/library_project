@@ -1,8 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:bundle basename="locale" prefix="label.">
+<fmt:setBundle basename="locale" var="local"/>
 <html>
 <head>
 
@@ -23,7 +23,7 @@
 <form role="form" action="Controller" method="get" class="form-login">
 
     <div class="form-group">
-    <label class="label">Логин:</label>
+    <label class="label"><fmt:message key="label.login" bundle="${local}"/></label>
     <input type="text" name="login" class="form-control"/><br />
     </div>
 
@@ -38,6 +38,5 @@
 </form>
 </div>
 </body>
+<script src = "/resource/js/script.js"></script>
 </html>
-    <script src = "/resource/js/script.js"></script>
-</fmt:bundle>
