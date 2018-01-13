@@ -19,8 +19,8 @@
     <input type="hidden" name="command" value="locale">
     <input type="hidden" name="url" value="${pageContext.request.requestURI}">
     <div class="form-group footer-button">
-        <button class="btn btn-link" type="submit" name="locale" value="en">EN</button>
-        <button class="btn btn-link" type="submit" name="locale" value="ru">RU</button>
+        <button class="button-footer" type="submit" name="locale" value="en">EN</button>
+        <button class="button-footer" type="submit" name="locale" value="ru">RU</button>
     </div>
 </form>
 </body>

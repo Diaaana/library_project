@@ -12,6 +12,7 @@ public class DAOFactory {
     private final GenreDAO genreDAO = new GenreDAOImpl();
     private final BorrowBookDAO borrowBookDAO = new BorrowBookDAOImpl();
     private final ReaderDAO readerDAO = new ReaderDAOImpl();
+    private final LibrarianDAO librarianDAO = new LibrarianDAOImpl();
     private final OrderDAO orderDAO = new OrderDAOImpl();
 
     public DAOFactory() {}
@@ -40,6 +41,10 @@ public class DAOFactory {
 
     public ReaderDAO getReaderDAO() {
         return readerDAO;
+    }
+
+    public LibrarianDAO getLibrarianDAO() {
+        return librarianDAO;
     }
 
     public OrderDAO getOrderDAO() {

@@ -1,5 +1,5 @@
-body {
-    background-image: url(/resource/images/2.jpg);
+.body {
+    background-image: url(/resource/images/background.jpg);
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
@@ -9,27 +9,51 @@ body {
 }
 
 .body-registration {
-    background-image: url(/resource/images/2.jpg);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    background-clip: border-box;
-    background-origin: content-box;
-    background-size: cover;
+    background-color: #bfa099;
 }
 
 .body-add-books {
     background-color: #c6c8ca;
 }
 
-.form-login {
-    margin-top: 20%;
+.my-nav {
+    width: 100%;
+    margin-top: 5%;
 }
 
+.nav-button-group {
+    width: 100%;
+}
+
+.nav-btn {
+    margin: 5%;
+    padding: 5%;
+}
+
+.form-login {
+    position: relative;
+    right: 27%;
+    width: 90%;
+    margin-top: 15%;
+}
+
+.button-login {
+    background-color: #752c42;
+    color: #fcfff0;
+}
+
+.button-registr {
+    background-color: #0c6975;
+    color: #d6af9a;
+}
+
+.button-registr:hover {
+    box-shadow: 0 0 10px 10px #0a343e;
+}
 
 .header {
     text-align: center;
-    color: papayawhip;
+    color: #0c6975;
     padding: 20px;
 }
 
@@ -53,33 +77,49 @@ body {
 .footer-button {
     position: fixed;
     right: 0; bottom: 0;
-    padding-top: 19px;
-    color: #f7f1e7;
+    padding-right: 1%;
+}
+
+.button-footer {
+    font-size: 50px;
+    border: none;
+    background-color: inherit;
+    color: #3d0c43;
+}
+
+.button-footer:hover {
+    text-decoration: none;
+    color: #ce9ab9;
+}
+
+
+.button {
+    border: none;
+    background-color: inherit;
+}
+
+.button:hover {
+    border: none;
 }
 
 .a-registration {
     position: absolute;
-    left: 60%;
+    top:1%;
+    left: 45%;
     color: #802e36;
     font-size: 300%;
 }
 
 .a-registration:hover {
     text-decoration: none;
-    color: #fcf8e3;
+    color: #fcfae4;
 }
 
 .a1 {
     color: #f1b0b7;
-    font-size: 150%;
 }
 
 .a1:hover {
     text-decoration: none;
     color: #fcf8e3;
-}
-
-.layout {
-    position: relative;
-    right: -200px;
 }

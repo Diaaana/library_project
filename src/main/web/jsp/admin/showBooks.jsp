@@ -1,13 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Title</title>
 
     <link rel="shortcut icon" href="/resource/images/icon.png" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href = "/resource/css/app-style.css">
-    <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href="/resource/css/app-style.css">
+    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap-theme.css">
 
 </head>
 <body>
@@ -35,9 +35,9 @@
         <td>${book.publisher}</td>
         <td>${book.numberCopies}</td>
     </tr>
+    </c:forEach>
     </tbody>
-</c:forEach>
 </table>
 </body>
-<script src = "/resource/js/script.js"></script>
+<script src="/resource/js/script.js"></script>
 </html>

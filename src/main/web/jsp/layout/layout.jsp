@@ -1,55 +1,81 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="locale" var="local"/>
+
+<fmt:message key="label.registration" bundle="${local}" var="registration"/>
+<fmt:message key="label.main" bundle="${local}" var="main"/>
+<fmt:message key="label.books" bundle="${local}" var="books"/>
+<fmt:message key="label.authors" bundle="${local}" var="authors"/>
+<fmt:message key="label.librarians" bundle="${local}" var="librarians"/>
+<fmt:message key="label.readers" bundle="${local}" var="readers"/>
+<fmt:message key="label.account" bundle="${local}" var="account"/>
+<fmt:message key="label.logout" bundle="${local}" var="logout"/>
+
 <html>
 <head>
-    <title>Библиотека</title>
+    <title><fmt:message key="label.library" bundle="${local}"/></title>
 
-    <link rel="stylesheet" type="text/css" href = "/resource/css/app-style.css">
-    <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap-theme.css.css">
+    <link rel="stylesheet" type="text/css" href="/resource/css/app-style.css">
+    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap-theme.css.css">
 
 </head>
 <body>
 <div class="container">
-    <form action="Controller" method="get">
-    <nav>
-        <div class="layout">
-            <ul class="nav">
 
-                <c:if test="${sessionScope.role == null}">
-                    <li><a href="/jsp/user/registration.jsp" class="a-registration">Регистрация</a></li>
-                </c:if>
+    <c:if test="${sessionScope.role == null || sessionScope.role == 'guest'}">
+        <a href="/jsp/user/registration.jsp" class="a-registration">${registration}</a>
+    </c:if>
 
-                <c:if test="${sessionScope.role == 'user'}">
-                    <li><a href="/jsp/user/main.jsp" class="a1">Главная</a></li>
-                    <li><a href="/jsp/user/books.jsp" class="a1">Книги</a></li>
-                    <li><a href="/jsp/user/authors.jsp" class="a1">Писатели</a></li>
-                    <li><a href="/jsp/user/account.jsp" class="a1">Личный кабинет</a></li>
-                    <li>
-                        <form action="Controller" method="get">
-                            <input type="hidden" name="command" value="logout"/>
-                            <input type="submit" value="Выход" class="button"/><br />
-                        </form>
-                    </li>
-                </c:if>
+    <nav class="my-nav">
 
-                <c:if test="${sessionScope.role == 'admin'}">
-                    <li><a href="/jsp/admin/main.jsp" class="a1">Главная</a></li>
-                    <li><a href="/jsp/admin/books.jsp" class="a1">Книги</a></li>
-                    <li><a href="/jsp/admin/authors.jsp" class="a1">Писатели</a></li>
-                    <li>
-                        <form action="Controller" method="get">
-                            <input type="hidden" name="command" value="logout"/>
-                            <input type="submit" value="Выход" class="button"/><br />
-                        </form>
-                    </li>
-                </c:if>
+        <c:if test="${sessionScope.role == 'admin'}">
 
-            </ul>
-        </div>
+            <div class="btn-group nav-button-group">
+                <input type="submit" class="btn btn-link nav-btn" onclick='location.href="/jsp/admin/main.jsp"' value="${main}"/>
+                <button class="btn btn-link nav-btn" onclick='location.href="/jsp/admin/books.jsp"'>${books}</button>
+                <button class="btn btn-link nav-btn" onclick='location.href="/jsp/admin/authors.jsp"'>${authors}</button>
+                <form action="Controller" method="post">
+                    <input type="hidden" name="command" value="show_librarians"/>
+                    <input type="submit" value="${librarians}" class="btn btn-link nav-btn"/>
+                </form>
+                <button class="btn btn-link nav-btn" onclick='location.href="/jsp/admin/readers.jsp"'>${readers}</button>
+                <form action="Controller" method="post">
+                    <input type="hidden" name="command" value="logout"/>
+                    <input type="submit" value="${logout}" class="btn btn-link nav-btn"/>
+                </form>
+            </div>
+        </c:if>
+
+        <c:if test="${sessionScope.role == 'user'}">
+            <div class="btn-group">
+                <input type="submit" class="btn btn-link nav-btn" onclick='location.href="/jsp/user/main.jsp"' value="${main}"/>
+                <button class="btn btn-link nav-btn" onclick='location.href="/jsp/user/books.jsp"'>${books}</button>
+                <button class="btn btn-link nav-btn" onclick='location.href="/jsp/user/authors.jsp"'>${authors}</button>
+                <button class="btn btn-link nav-btn" onclick='location.href="/jsp/user/account.jsp"'>${account}</button>
+                <form action="Controller" method="get">
+                    <input type="hidden" name="command" value="logout"/>
+                    <input type="submit" value="${logout}" class="button"/><br/>
+                </form>
+            </div>
+        </c:if>
+
+        <c:if test="${sessionScope.role == 'librarian'}">
+            <div class="btn-group">
+                <button class="btn btn-link">${main}</button>
+                <button class="btn btn-link">${books}</button>
+                <button class="btn btn-link">${authors}</button>
+                <button class="btn btn-link">${account}</button>
+                <form action="Controller" method="get">
+                    <input type="hidden" name="command" value="logout"/>
+                    <input type="submit" value="${logout}" class="button"/><br/>
+                </form>
+            </div>
+        </c:if>
     </nav>
-    </form>
 </div>
 </body>
-<script src = "/resource/js/bootstrap.js"></script>
+<script src="/resource/js/bootstrap.js"></script>
 </html>

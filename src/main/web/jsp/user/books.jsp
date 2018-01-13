@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -10,6 +11,47 @@
 
 </head>
 <body>
+
+<form action="/Controller" method="post">
+    <div class="form-group">
+        <span class="glyphicon glyphicon-search"><input type="text" name="book" placeholder="Название книги"></span>
+    </div>
+    <input type="hidden" name="command" value="find_book"/>
+    <input type="submit" value="Поиск книги"/>
+
+
+    <c:if test="${requestScope.book != null}">
+    <table class="table table-hover">
+
+        <thead>
+        <tr>
+            <th>Международный номер</th>
+            <th>Название</th>
+            <th>Жанр</th>
+            <th>Дата издания</th>
+            <th>Место издания</th>
+            <th>Издательство</th>
+            <th>Количество копий</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="book" items="${book}">
+            <tr>
+                <td>${book.isbn}</td>
+                <td>${book.tittle}</td>
+                <td>${book.genre}</td>
+                <td>${book.dateEdition}</td>
+                <td>${book.placeEdition}</td>
+                <td>${book.publisher}</td>
+                <td>${book.numberCopies}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+
+    </table>
+    </c:if>
+
+</form>
 
 </body>
 <script src = "/resource/js/bootstrap.js"></script>

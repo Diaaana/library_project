@@ -14,7 +14,7 @@ import static by.radomskaya.project.constant.PageConstant.START_PAGE;
 public class RegistrationCommand implements Command {
     private static final String PARAM_SURNAME = "surname";
     private static final String PARAM_NAME = "name";
-    private static final String PARAM_MIDDLE_NAME = "middleName";
+    private static final String PARAM_MIDDLE_NAME = "middle_name";
     private static final String PARAM_AGE = "age";
     private static final String PARAM_PHONE = "phone";
     private static final String PARAM_MAIL = "mail";
