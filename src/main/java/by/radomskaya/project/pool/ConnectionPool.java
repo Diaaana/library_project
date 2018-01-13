@@ -37,7 +37,7 @@ public class ConnectionPool {
             connections.add(manager.getConnection());
         }
         if (connections.isEmpty()) {
-            LOGGER.log(Level.FATAL, "Can not create database connection by.radomskaya.project.pool");
+            LOGGER.log(Level.FATAL, "Can not create database connection pool");
         }
 
         int sizeDiff = manager.poolSize - connections.size();
@@ -48,9 +48,9 @@ public class ConnectionPool {
         }
         sizeDiff = manager.poolSize - connections.size();
         if (sizeDiff > 0 && sizeDiff < manager.poolSize / 2) {
-           LOGGER.log(Level.WARN, "Connection by.radomskaya.project.pool size is smaller than required; Attempt to continue working...");
+           LOGGER.log(Level.WARN, "Connection pool size is smaller than required; Attempt to continue working...");
         } else if (sizeDiff > manager.poolSize / 2) {
-           LOGGER.log(Level.FATAL, "Connection by.radomskaya.project.pool size is too small: size - " + connections.size());
+           LOGGER.log(Level.FATAL, "Connection pool size is too small: size - " + connections.size());
         }
     }
 
@@ -77,7 +77,7 @@ public class ConnectionPool {
         try {
             connection = connections.take();
         } catch (InterruptedException e) {
-            LOGGER.log(Level.ERROR, "Can not take connection from by.radomskaya.project.pool: " + e);
+            LOGGER.log(Level.ERROR, "Can not take connection from pool: " + e);
         }
         return connection;
     }
