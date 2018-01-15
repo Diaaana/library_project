@@ -49,7 +49,7 @@ public class AddLibrarianCommand implements Command {
                 page = ADMIN_ADD_LIBRARIANS_PAGE; //!!!
             }
         } catch (DAOException e) {
-            e.printStackTrace(); //!!!!
+            throw new CommandException(e);
         }
         return page;
     }

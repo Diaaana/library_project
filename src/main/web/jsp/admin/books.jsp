@@ -14,8 +14,12 @@
 <form action="/Controller" method="get">
 <a href="/jsp/admin/addBooks.jsp" class="a1">Добавить книгу</a>
 
-    <input type="hidden" name="command" value="add_librarian"/>
-    <input type="submit" value="" class="btn btn-success">
+    <input type="hidden" name="command" value="add_book"/>
+    <input type="submit" value="Книги" class="btn btn-success">
+</form>
+<form action="/Controller" method="post">
+    <input type="hidden" name="command" value="show_books"/>
+    <input type="submit" value="Показать Книги" class="btn btn-success">
 </form>
 </body>
 <script src = "/resource/js/bootstrap.js"></script>

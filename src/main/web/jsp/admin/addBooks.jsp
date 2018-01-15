@@ -81,6 +81,10 @@
             <label class="label"><fmt:message key="label.enterNumberCopies" bundle="${local}"/></label>
             <input type="text" name="number_copies" class="form-control" placeholder="${numberCopies}">
         </div>
+        <div class="form-group">
+            <label class="label">Добавьте фото</label>
+            <input type="file" name="image" class="form-control" placeholder="Фото">
+        </div>
         <input type="hidden" name="command" value="add_book"/>
         <input type="submit" name="add_book" class="btn btn-success" value="${add}"/>
         <button type="reset" value="clear" onclick="clearForm()" class="btn btn-danger"><fmt:message key="label.clear" bundle="${local}"/></button>

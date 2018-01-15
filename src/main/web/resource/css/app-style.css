@@ -37,6 +37,11 @@
     margin-top: 15%;
 }
 
+.imageBook {
+    width: 360%;
+    height: 480%;
+}
+
 .button-login {
     background-color: #752c42;
     color: #fcfff0;

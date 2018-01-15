@@ -19,7 +19,7 @@ import java.util.List;
 public class ReaderDAOImpl implements ReaderDAO {
     private final static Logger LOGGER = LogManager.getLogger(ReaderDAOImpl.class);
 
-    private final static String SELECT_READERS = "SELECT number_ticket, surname, name, middle_name, age, phone_number, mail  FROM library.readers JOIN library.roles ON roles.id_role = readers.id_role WHERE roles.name_role = 'Пользователь'";
+    private final static String SELECT_READERS = "SELECT number_ticket, surname, name, middle_name, age, phone_number, mail, login, image  FROM library.readers JOIN library.roles ON roles.id_role = readers.id_role WHERE roles.name_role = 'Пользователь'";
     private final static String INSERT_READER = "INSERT INTO readers(surname, name, middle_name, age, phone_number, mail, login, password) VALUES(?,?,?,?,?,?,?,?)";
     private final static String CHECK_LOGIN_PASSWORD = "SELECT login, password FROM library.readers JOIN library.roles on readers.id_role = roles.id_role WHERE name_role = 'Пользователь' AND login = ? AND password = ?";
 
@@ -40,6 +40,8 @@ public class ReaderDAOImpl implements ReaderDAO {
                 reader.setAge(resultSet.getInt("age"));
                 reader.setPhoneNumber(resultSet.getString("phone_number"));
                 reader.setMail(resultSet.getString("mail"));
+                reader.setLogin(resultSet.getString("login"));
+                reader.setProfilePhoto(resultSet.getString("image"));
                 listReaders.add(reader);
             }
             return listReaders;

@@ -8,10 +8,11 @@ public class Book extends Entity {
     private String placeEdition;
     private String publisher;
     private int numberCopies;
+    private String image;
 
     public Book() {}
 
-    public Book(String isbn, String tittle, String genre, String dateEdition, String placeEdition, String publisher, int numberCopies) {
+    public Book(String isbn, String tittle, String genre, String dateEdition, String placeEdition, String publisher, int numberCopies, String image) {
         this.isbn = isbn;
         this.tittle = tittle;
         this.genre = genre;
@@ -19,6 +20,7 @@ public class Book extends Entity {
         this.placeEdition = placeEdition;
         this.publisher = publisher;
         this.numberCopies = numberCopies;
+        this.image = image;
     }
 
     public String getIsbn() {
@@ -77,6 +79,14 @@ public class Book extends Entity {
         this.numberCopies = numberCopies;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -90,7 +100,8 @@ public class Book extends Entity {
         if (!genre.equals(book.genre)) return false;
         if (!dateEdition.equals(book.dateEdition)) return false;
         if (!placeEdition.equals(book.placeEdition)) return false;
-        return publisher.equals(book.publisher);
+        if (!publisher.equals(book.publisher)) return false;
+        return image.equals(book.image);
     }
 
     @Override
@@ -102,6 +113,7 @@ public class Book extends Entity {
         result = 31 * result + placeEdition.hashCode();
         result = 31 * result + publisher.hashCode();
         result = 31 * result + numberCopies;
+        result = 31 * result + image.hashCode();
         return result;
     }
 
@@ -115,6 +127,7 @@ public class Book extends Entity {
                 ", placeEdition='" + placeEdition + '\'' +
                 ", publisher='" + publisher + '\'' +
                 ", numberCopies=" + numberCopies +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

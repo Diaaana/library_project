@@ -7,14 +7,16 @@
     <link rel="shortcut icon" href="/resource/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href = "/resource/css/app-style.css">
     <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap-theme.css">
 
 </head>
 <body>
-
+<div class="container">
 <form action="/Controller" method="post">
-    <div class="form-group">
-        <span class="glyphicon glyphicon-search"><input type="text" name="book" placeholder="Название книги"></span>
+    <div class="input-group">
+        <input type="text" name="book" placeholder="Название книги">
+        <span class="glyphicon glyphicon-search"></span>
     </div>
     <input type="hidden" name="command" value="find_book"/>
     <input type="submit" value="Поиск книги"/>
@@ -50,8 +52,9 @@
 
     </table>
     </c:if>
-
 </form>
+</div>
+
 
 </body>
 <script src = "/resource/js/bootstrap.js"></script>

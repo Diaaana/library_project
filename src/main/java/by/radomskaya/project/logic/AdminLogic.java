@@ -5,6 +5,7 @@ import by.radomskaya.project.dao.factory.DAOFactory;
 import by.radomskaya.project.entity.Author;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.entity.Librarian;
+import by.radomskaya.project.entity.Reader;
 import by.radomskaya.project.exception.DAOException;
 
 import java.util.List;
@@ -34,6 +35,11 @@ public class AdminLogic {
     public boolean addLibrarian(Librarian librarian) throws DAOException {
         LibrarianDAO librarianDAO = DAOFactory.getInstance().getLibrarianDAO();
         return librarianDAO.addLibrarian(librarian);
+    }
+
+    public List<Reader> getReaders() throws DAOException {
+        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
+        return readerDAO.getAllReaders();
     }
 
     public List<Book> getBooks() throws DAOException {

@@ -34,6 +34,7 @@
         <td>${book.placeEdition}</td>
         <td>${book.publisher}</td>
         <td>${book.numberCopies}</td>
+        <td><img src="/resource/images/books/${book.image}" alt="${book.tittle}" class="imageBook"></td>
     </tr>
     </c:forEach>
     </tbody>
