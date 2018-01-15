@@ -17,13 +17,28 @@ import java.util.List;
 
 public class BookDAOImpl implements BookDAO {
     private final static Logger LOGGER = LogManager.getLogger(BookDAOImpl.class);
+
     private final static String INSERT_BOOK = "INSERT INTO books(isbn, tittle, date_edition, place_edition, publisher, number_copies, image_book) VALUES(?,?,?,?,?,?,?)";
-    private final static String SELECT_ALL = "SELECT isbn, tittle, surname, name, middle_name, name_genre, date_edition, place_edition, publisher, number_copies" +
-            " FROM library.books JOIN library.authors ON books.id_book = authors.id_author" +
-            " JOIN library.genres ON books.id_book = books.id_book;";
-    private final static String SELECT_BOOKS = "SELECT isbn, tittle, name_genre, date_edition, place_edition, publisher, number_copies, image_book FROM library.books JOIN library.book_genre ON books.id_book = book_genre.id_book JOIN library.genres ON book_genre.id_genre = genres.id_genre;";
-    private final static String FIND_BOOK = "SELECT tittle FROM library.books WHERE tittle = ?;";
-    private final static String SELECT_FIND_BOOK = "SELECT isbn, tittle, name_genre, /*surname, name, middle_name,*/ date_edition, place_edition, publisher, number_copies FROM library.books /*JOIN library.authors ON books.id_book = authors.id_author*/ JOIN library.genres ON books.id_book = genres.id_genre WHERE tittle = ?;";
+    private final static String SELECT_ALL = "SELECT isbn, tittle, surname, name, middle_name, name_genre, date_edition, place_edition, publisher, number_copies " +
+            "FROM library.books JOIN library.authors ON books.id_book = authors.id_author " +
+            "JOIN library.genres ON books.id_book = books.id_book;";
+    private final static String SELECT_BOOKS = "SELECT isbn, tittle, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
+            "FROM library.books JOIN library.book_genre ON books.id_book = book_genre.id_book " +
+            "JOIN library.genres ON book_genre.id_genre = genres.id_genre;";
+    private final static String FIND_BOOKS_BY_TITTLE = "SELECT tittle FROM library.books WHERE tittle = ?;";
+    private final static String SELECT_FIND_BOOKS_BY_TITTLE = "SELECT isbn, tittle, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
+            "FROM library.books JOIN library.book_genre ON book_genre.id_book = books.id_book " +
+            "JOIN library.genres ON book_genre.id_genre = genres.id_genre " +
+            "JOIN library.book_author ON books.id_book = book_author.id_book " +
+            "JOIN library.authors ON authors.id_author = book_author.id_author " +
+            "WHERE tittle = ?;";
+    private final static String FIND_BOOKS_BY_AUTHOR = "SELECT surname FROM library.books JOIN library.book_author ON books.id_book = book_author.id_book JOIN library.authors ON book_author.id_author = authors.id_author WHERE surname = ?;";
+    private final static String SELECT_FIND_BOOKS_BY_AUTHOR = "SELECT isbn, tittle, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
+            "FROM library.books JOIN library.book_genre ON book_genre.id_book = books.id_book " +
+            "JOIN library.genres ON book_genre.id_genre = genres.id_genre " +
+            "JOIN library.book_author ON books.id_book = book_author.id_book " +
+            "JOIN library.authors ON authors.id_author = book_author.id_author " +
+            "WHERE surname = ?;";
 
 
     @Override
@@ -95,11 +110,11 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public boolean findBook(String tittle) throws DAOException {
+    public boolean findBooksByTittle(String tittle) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(FIND_BOOK);
+            statement = connection.prepareStatement(FIND_BOOKS_BY_TITTLE);
             statement.setString(1, tittle);
             ResultSet resultSet = statement.executeQuery();
             return resultSet.next();
@@ -120,23 +135,16 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public List<Book> getFoundBook(String tittle) throws DAOException {
+    public boolean findBooksByAuthor(String author) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        Book book = new Book();
-        List<Book> listBook = new ArrayList<>();
         try {
-            statement = connection.prepareStatement(SELECT_FIND_BOOK);
-            statement.setString(1, tittle);
-            resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                book = getBookFromResultSet(resultSet);
-            }
-            listBook.add(book);
-            return listBook;
+            statement = connection.prepareStatement(FIND_BOOKS_BY_AUTHOR);
+            statement.setString(1, author);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next();
         } catch (SQLException e) {
-            throw new DAOException("Error get all books" + e);
+            throw new DAOException("Error find a book by author" + e);
         } finally {
             try {
                 statement.close();
@@ -151,7 +159,71 @@ public class BookDAOImpl implements BookDAO {
         }
     }
 
-    private Book getBookFromResultSet(ResultSet resultSet) throws SQLException {
+    @Override
+    public List<Book> getFoundBooksByTittle(String tittle) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        Book book = new Book();
+        List<Book> listBook = new ArrayList<>();
+        try {
+            statement = connection.prepareStatement(SELECT_FIND_BOOKS_BY_TITTLE);
+            statement.setString(1, tittle);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                book = getBooksFromResultSet(resultSet);
+            }
+            listBook.add(book);
+            return listBook;
+        } catch (SQLException e) {
+            throw new DAOException("Error get found book by tittle" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+    }
+
+    @Override
+    public List<Book> getFoundBooksByAuthor(String author) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        Book book = new Book();
+        List<Book> listBook = new ArrayList<>();
+        try {
+            statement = connection.prepareStatement(SELECT_FIND_BOOKS_BY_AUTHOR);
+            statement.setString(1, author);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                book = getBooksFromResultSet(resultSet);
+            }
+            listBook.add(book);
+            return listBook;
+        } catch (SQLException e) {
+            throw new DAOException("Error get found book by author" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+    }
+
+    private Book getBooksFromResultSet(ResultSet resultSet) throws SQLException {
         Book book = new Book();
         book.setIsbn(resultSet.getString("isbn"));
         book.setTittle(resultSet.getString("tittle"));
@@ -160,6 +232,7 @@ public class BookDAOImpl implements BookDAO {
         book.setPlaceEdition(resultSet.getString("place_edition"));
         book.setPublisher(resultSet.getString("publisher"));
         book.setNumberCopies(resultSet.getInt("number_copies"));
+        book.setImage(resultSet.getString("image_book"));
         return book;
     }
 }

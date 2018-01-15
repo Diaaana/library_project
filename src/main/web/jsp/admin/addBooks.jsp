@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="locale" var="local"/>
@@ -15,6 +16,7 @@
 <fmt:message key="label.publisher" bundle="${local}" var="publisher"/>
 <fmt:message key="label.numberCopies" bundle="${local}" var="numberCopies"/>
 <fmt:message key="label.add" bundle="${local}" var="add"/>
+
 
 <html>
 <head>
@@ -89,6 +91,8 @@
         <input type="submit" name="add_book" class="btn btn-success" value="${add}"/>
         <button type="reset" value="clear" onclick="clearForm()" class="btn btn-danger"><fmt:message key="label.clear" bundle="${local}"/></button>
     </form>
+
+
 </div>
 </body>
 <script src = "/resource/js/bootstrap.js"></script>

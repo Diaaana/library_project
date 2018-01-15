@@ -47,6 +47,11 @@ public class AdminLogic {
         return bookDAO.getAllBooks();
     }
 
+    public List<Author> getAuthors() throws DAOException {
+        AuthorDAO authorDAO = DAOFactory.getInstance().getAuthorDAO();
+        return authorDAO.getAllAuthors();
+    }
+
     public List<Librarian> getLibrarians() throws DAOException {
         LibrarianDAO librarianDAO = DAOFactory.getInstance().getLibrarianDAO();
         return librarianDAO.getAllLibrarians();

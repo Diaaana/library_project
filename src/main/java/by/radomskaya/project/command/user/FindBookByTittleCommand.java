@@ -11,11 +11,11 @@ import java.util.List;
 
 import static by.radomskaya.project.constant.PageConstant.USER_BOOKS_PAGE;
 
-public class FindBookCommand implements Command {
-    private final static String PARAM_BOOK = "book";
+public class FindBookByTittleCommand implements Command {
+    private final String PARAM_BOOK = "book";
     private UserLogic userLogic;
 
-    public FindBookCommand(UserLogic userLogic) {
+    public FindBookByTittleCommand(UserLogic userLogic) {
         this.userLogic = userLogic;
     }
 
@@ -23,17 +23,17 @@ public class FindBookCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
         String tittle = request.getParameter(PARAM_BOOK);
-        List<Book> listBook;
+        List<Book> listFoundBooksByTittle;
 
         try {
-            if (userLogic.findBook(tittle)) {
-                listBook = userLogic.getFoundBook(tittle);
-                request.setAttribute("book", listBook);
+            if (userLogic.findBooksByTittle(tittle)) {
+                listFoundBooksByTittle = userLogic.getFoundBooksByTittle(tittle);
+                request.setAttribute("foundBooksByTittle", listFoundBooksByTittle);
                 page = USER_BOOKS_PAGE;
             }
 
         } catch (DAOException e) {
-            e.printStackTrace();
+            throw new CommandException(e);
         }
         return page;
     }

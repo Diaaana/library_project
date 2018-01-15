@@ -59,6 +59,7 @@ public class AddBookCommand implements Command {
             author.setCountryBirth(request.getParameter(PARAM_AUTHOR_COUNTRY));
 
             if (addLogic.addBook(book) && addLogic.addAuthor(author) && addLogic.addGenre(book)) {
+                request.setAttribute("success", "Все хорошо");
                 page = ADMIN_BOOKS_PAGE;
             } else {
                 page = ADMIN_ADD_BOOKS_PAGE;

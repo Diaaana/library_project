@@ -11,6 +11,11 @@
 
 </head>
 <body>
+
+<c:if test="${not empty requestScope.success}">
+    <div class="alert alert-success">${requestScope.success}</div>
+</c:if>
+
 <table class="table table-hover">
 
     <thead>
@@ -39,6 +44,9 @@
     </c:forEach>
     </tbody>
 </table>
+
+
+
 </body>
 <script src="/resource/js/script.js"></script>
 </html>

@@ -21,14 +21,28 @@ public class UserLogic {
         return readerDAO.addReader(reader);
     }
 
-    public boolean findBook(String tittle) throws DAOException {
+    public List<Book> getBooks() throws DAOException {
         BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
-        return bookDAO.findBook(tittle);
+        return bookDAO.getAllBooks();
     }
 
-    public List<Book> getFoundBook(String tittle) throws DAOException {
+    public boolean findBooksByTittle(String tittle) throws DAOException {
         BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
-        return bookDAO.getFoundBook(tittle);
+        return bookDAO.findBooksByTittle(tittle);
     }
 
+    public boolean findBooksByAuthor(String author) throws DAOException {
+        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
+        return bookDAO.findBooksByAuthor(author);
+    }
+
+    public List<Book> getFoundBooksByTittle(String tittle) throws DAOException {
+        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
+        return bookDAO.getFoundBooksByTittle(tittle);
+    }
+
+    public List<Book> getFoundBooksByAuthor(String author) throws DAOException {
+        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
+        return bookDAO.getFoundBooksByAuthor(author);
+    }
 }

@@ -8,6 +8,8 @@ import java.util.List;
 public interface BookDAO {
     List<Book> getAllBooks() throws DAOException;
     boolean addBook(Book book) throws DAOException;
-    boolean findBook(String tittle) throws DAOException;
-    List<Book> getFoundBook(String tittle) throws DAOException;
+    boolean findBooksByTittle(String tittle) throws DAOException;
+    boolean findBooksByAuthor(String author) throws DAOException;
+    List<Book> getFoundBooksByTittle(String tittle) throws DAOException;
+    List<Book> getFoundBooksByAuthor(String author) throws DAOException;
 }

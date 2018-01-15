@@ -12,6 +12,7 @@ public class PageConstant {
     public final static String ADMIN_ADD_LIBRARIANS_PAGE = "/jsp/admin/addLibrarians.jsp";
     public final static String ADMIN_SHOW_BOOKS_PAGE = "/jsp/admin/showBooks.jsp";
     public final static String ADMIN_AUTHORS_PAGE = "/jsp/admin/authors.jsp";
+    public final static String ADMIN_READERS_PAGE = "/jsp/admin/readers.jsp";
 
     public final static String REGISTRATION_PAGE = "/jsp/user/registration.jsp";
     public final static String USER_MAIN_PAGE = "/jsp/user/main.jsp";

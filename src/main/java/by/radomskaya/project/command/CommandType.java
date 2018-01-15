@@ -1,13 +1,12 @@
 package by.radomskaya.project.command;
 
-import by.radomskaya.project.command.admin.AddBookCommand;
-import by.radomskaya.project.command.admin.AddLibrarianCommand;
-import by.radomskaya.project.command.admin.ShowBooksCommand;
-import by.radomskaya.project.command.admin.ShowLibrariansCommand;
+import by.radomskaya.project.command.admin.*;
 import by.radomskaya.project.command.common.ChangeLocaleCommand;
 import by.radomskaya.project.command.common.LoginCommand;
 import by.radomskaya.project.command.common.LogoutCommond;
-import by.radomskaya.project.command.user.FindBookCommand;
+import by.radomskaya.project.command.user.FindBookByAuthorCommand;
+import by.radomskaya.project.command.user.FindBookByTittleCommand;
+import by.radomskaya.project.command.user.GetBooksCommand;
 import by.radomskaya.project.command.user.RegistrationCommand;
 import by.radomskaya.project.logic.AdminLogic;
 import by.radomskaya.project.logic.LibrarianLogic;
@@ -21,8 +20,12 @@ public enum CommandType {
     ADD_BOOK(new AddBookCommand(new AdminLogic())),
     ADD_LIBRARIAN(new AddLibrarianCommand(new AdminLogic())),
     SHOW_BOOKS(new ShowBooksCommand(new AdminLogic())),
+    SHOW_AUTHORS(new ShowAuthorsCommand(new AdminLogic())),
+    SHOW_READERS(new ShowReadersCommand(new AdminLogic())),
     SHOW_LIBRARIANS(new ShowLibrariansCommand(new AdminLogic())),
-    FIND_BOOK(new FindBookCommand(new UserLogic()));
+    GET_BOOKS(new GetBooksCommand(new UserLogic())),
+    FIND_BOOK_BY_TITTLE(new FindBookByTittleCommand(new UserLogic())),
+    FIND_BOOK_BY_AUTHOR(new FindBookByAuthorCommand(new UserLogic()));
 
     private Command command;
 

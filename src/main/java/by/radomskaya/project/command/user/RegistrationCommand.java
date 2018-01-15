@@ -12,14 +12,15 @@ import static by.radomskaya.project.constant.PageConstant.REGISTRATION_PAGE;
 import static by.radomskaya.project.constant.PageConstant.START_PAGE;
 
 public class RegistrationCommand implements Command {
-    private static final String PARAM_SURNAME = "surname";
-    private static final String PARAM_NAME = "name";
-    private static final String PARAM_MIDDLE_NAME = "middle_name";
-    private static final String PARAM_AGE = "age";
-    private static final String PARAM_PHONE = "phone";
-    private static final String PARAM_MAIL = "mail";
-    private static final String PARAM_LOGIN = "login";
-    private static final String PARAM_PASSWORD = "password";
+    private final String PARAM_SURNAME = "surname";
+    private final String PARAM_NAME = "name";
+    private final String PARAM_MIDDLE_NAME = "middle_name";
+    private final String PARAM_AGE = "age";
+    private final String PARAM_PHONE = "phone";
+    private final String PARAM_MAIL = "mail";
+    private final String PARAM_LOGIN = "login";
+    private final String PARAM_PASSWORD = "password";
+    private final String PARAM_PROFILE_PHOTO = "profile_photo";
     private UserLogic registrationLogic;
 
     public RegistrationCommand(UserLogic registrationLogic) {
@@ -38,6 +39,7 @@ public class RegistrationCommand implements Command {
         reader.setMail(request.getParameter(PARAM_MAIL));
         reader.setLogin(request.getParameter(PARAM_LOGIN));
         reader.setPassword(request.getParameter(PARAM_PASSWORD));
+        reader.setProfilePhoto(request.getParameter(PARAM_PROFILE_PHOTO));
 
         try {
             if (registrationLogic.registrationUser(reader)) {
