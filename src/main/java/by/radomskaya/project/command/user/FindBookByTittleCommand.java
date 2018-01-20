@@ -4,7 +4,7 @@ import by.radomskaya.project.command.Command;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
-import by.radomskaya.project.logic.UserLogic;
+import by.radomskaya.project.logic.BookLogic;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -13,10 +13,10 @@ import static by.radomskaya.project.constant.PageConstant.USER_BOOKS_PAGE;
 
 public class FindBookByTittleCommand implements Command {
     private final String PARAM_BOOK = "book";
-    private UserLogic userLogic;
+    private BookLogic bookLogic;
 
-    public FindBookByTittleCommand(UserLogic userLogic) {
-        this.userLogic = userLogic;
+    public FindBookByTittleCommand(BookLogic bookLogic) {
+        this.bookLogic = bookLogic;
     }
 
     @Override
@@ -26,12 +26,11 @@ public class FindBookByTittleCommand implements Command {
         List<Book> listFoundBooksByTittle;
 
         try {
-            if (userLogic.findBooksByTittle(tittle)) {
-                listFoundBooksByTittle = userLogic.getFoundBooksByTittle(tittle);
+            if (bookLogic.findBooksByTittle(tittle)) {
+                listFoundBooksByTittle = bookLogic.getFoundBooksByTittle(tittle);
                 request.setAttribute("foundBooksByTittle", listFoundBooksByTittle);
                 page = USER_BOOKS_PAGE;
             }
-
         } catch (DAOException e) {
             throw new CommandException(e);
         }

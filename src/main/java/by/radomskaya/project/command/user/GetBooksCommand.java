@@ -4,7 +4,7 @@ import by.radomskaya.project.command.Command;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
-import by.radomskaya.project.logic.UserLogic;
+import by.radomskaya.project.logic.BookLogic;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -12,10 +12,10 @@ import java.util.List;
 import static by.radomskaya.project.constant.PageConstant.USER_BOOKS_PAGE;
 
 public class GetBooksCommand implements Command {
-    private UserLogic userLogic;
+    private BookLogic bookLogic;
 
-    public GetBooksCommand(UserLogic userLogic) {
-        this.userLogic = userLogic;
+    public GetBooksCommand(BookLogic bookLogic) {
+        this.bookLogic = bookLogic;
     }
 
     @Override
@@ -24,12 +24,13 @@ public class GetBooksCommand implements Command {
         List<Book> listBooks;
 
         try {
-            listBooks = userLogic.getBooks();
+            listBooks = bookLogic.getBooks();
             request.setAttribute("books", listBooks);
             page = USER_BOOKS_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }
+
         return page;
     }
 }

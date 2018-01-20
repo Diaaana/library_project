@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
@@ -17,16 +17,16 @@
 <head>
     <title><fmt:message key="label.library" bundle="${local}"/></title>
 
-    <link rel="stylesheet" type="text/css" href="/resource/css/app-style.css">
-    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap-theme.css.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/app-style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap-theme.css">
 
 </head>
 <body>
 <div class="container">
 
     <c:if test="${sessionScope.role == null || sessionScope.role == 'guest'}">
-        <a href="/jsp/user/registration.jsp" class="a-registration">${registration}</a>
+        <a href="${pageContext.request.contextPath}/jsp/user/registration.jsp" class="a-registration">${registration}</a>
     </c:if>
 
     <nav class="my-nav">
@@ -35,7 +35,10 @@
 
             <div class="btn-group nav-button-group">
                 <input type="submit" class="btn btn-link nav-btn" onclick='location.href="/jsp/admin/main.jsp"' value="${main}"/>
-                <input type="submit" class="btn btn-link nav-btn" onclick='location.href="/jsp/admin/books.jsp"' value="${books}"/>
+                <form action="Controller" method="post">
+                    <input type="hidden" name="command" value="show_books"/>
+                    <input type="submit" value="${books}" class="btn btn-link nav-btn"/>
+                </form>
                 <form action="Controller" method="post">
                     <input type="hidden" name="command" value="show_authors"/>
                     <input type="submit" value="${authors}" class="btn btn-link nav-btn"/>
@@ -85,5 +88,5 @@
     </nav>
 </div>
 </body>
-<script src="/resource/js/bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/resource/js/bootstrap.js"></script>
 </html>

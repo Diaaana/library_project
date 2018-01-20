@@ -22,7 +22,7 @@ public class BookDAOImpl implements BookDAO {
     private final static String SELECT_ALL = "SELECT isbn, tittle, surname, name, middle_name, name_genre, date_edition, place_edition, publisher, number_copies " +
             "FROM library.books JOIN library.authors ON books.id_book = authors.id_author " +
             "JOIN library.genres ON books.id_book = books.id_book;";
-    private final static String SELECT_BOOKS = "SELECT isbn, tittle, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
+    private final static String SELECT_BOOKS = "SELECT books.id_book, isbn, tittle, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
             "FROM library.books JOIN library.book_genre ON books.id_book = book_genre.id_book " +
             "JOIN library.genres ON book_genre.id_genre = genres.id_genre;";
     private final static String FIND_BOOKS_BY_TITTLE = "SELECT tittle FROM library.books WHERE tittle = ?;";
@@ -52,6 +52,7 @@ public class BookDAOImpl implements BookDAO {
             List<Book> listBooks = new ArrayList<>();
             while (resultSet.next()) {
                 Book book = new Book();
+                book.setId(resultSet.getInt("id_book"));
                 book.setIsbn(resultSet.getString("isbn"));
                 book.setTittle(resultSet.getString("tittle"));
                 book.setGenre(resultSet.getString("name_genre"));
@@ -225,16 +226,16 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public boolean deleteBook(Book book) throws DAOException {
+    public boolean deleteBook(int id) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(DELETE_BOOK);
-            statement.setString(1, book.getIsbn());
+            statement.setInt(1, id);
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
-            throw new DAOException("Error delete a book" + e);
+            throw new DAOException("Error delete the book" + e);
         } finally {
             try {
                 statement.close();

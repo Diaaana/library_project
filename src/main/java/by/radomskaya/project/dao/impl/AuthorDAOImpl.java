@@ -17,7 +17,7 @@ import java.util.List;
 
 public class AuthorDAOImpl implements AuthorDAO {
     private final static Logger LOGGER = LogManager.getLogger(AuthorDAOImpl.class);
-    private final static String SELECT_AUTHORS = "SELECT surname, name, middle_name, country FROM library.authors;";
+    private final static String SELECT_AUTHORS = "SELECT id_author, surname, name, middle_name, country FROM library.authors;";
     private final static String INSERT_AUTHOR = "INSERT INTO authors(surname, name, middle_name, country) VALUES(?,?,?,?)";
     private final static String DELETE_AUTHOR = "DELETE FROM library.authors WHERE id_author = ?";
 
@@ -31,6 +31,7 @@ public class AuthorDAOImpl implements AuthorDAO {
             List<Author> listAuthors = new ArrayList<>();
             while (resultSet.next()) {
                 Author author = new Author();
+                author.setId(resultSet.getInt("id_author"));
                 author.setSurname(resultSet.getString("surname"));
                 author.setName(resultSet.getString("name"));
                 author.setMiddleName(resultSet.getString("middle_name"));
@@ -83,16 +84,16 @@ public class AuthorDAOImpl implements AuthorDAO {
     }
 
     @Override
-    public boolean deleteAuthor(Author author) throws DAOException {
+    public boolean deleteAuthor(int id) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(DELETE_AUTHOR);
-            statement.setInt(1, author.getId());
+            statement.setInt(1, id);
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
-            throw new DAOException("Error delete author" + e);
+            throw new DAOException("Error delete an author" + e);
         } finally {
             try {
                 statement.close();

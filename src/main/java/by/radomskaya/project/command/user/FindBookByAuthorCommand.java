@@ -4,7 +4,7 @@ import by.radomskaya.project.command.Command;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
-import by.radomskaya.project.logic.UserLogic;
+import by.radomskaya.project.logic.BookLogic;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -13,10 +13,10 @@ import static by.radomskaya.project.constant.PageConstant.USER_BOOKS_PAGE;
 
 public class FindBookByAuthorCommand implements Command {
     private final String PARAM_AUTHOR = "author";
-    private UserLogic userLogic;
+    private BookLogic bookLogic;
 
-    public FindBookByAuthorCommand(UserLogic userLogic) {
-        this.userLogic = userLogic;
+    public FindBookByAuthorCommand(BookLogic bookLogic) {
+        this.bookLogic = bookLogic;
     }
 
     @Override
@@ -26,8 +26,8 @@ public class FindBookByAuthorCommand implements Command {
         List<Book> listFoundBooksByAuthor;
 
         try {
-            if (userLogic.findBooksByAuthor(author)) {
-                listFoundBooksByAuthor = userLogic.getFoundBooksByAuthor(author);
+            if (bookLogic.findBooksByAuthor(author)) {
+                listFoundBooksByAuthor = bookLogic.getFoundBooksByAuthor(author);
                 request.setAttribute("foundBooksByAuthor", listFoundBooksByAuthor);
                 page = USER_BOOKS_PAGE;
             }

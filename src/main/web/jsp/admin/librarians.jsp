@@ -1,13 +1,13 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Библиотекари</title>
 
-    <link rel="shortcut icon" href="/resource/images/icon.png" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="/resource/css/app-style.css">
-    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap-theme.css">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resource/images/icon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/app-style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap-theme.css">
 
 </head>
 <body>
@@ -16,6 +16,8 @@
 <div class="heading">
     <h1>Библиотекари</h1>
 </div>
+
+<form action="Controller" method="post">
 
 <table class="table table-hover">
 
@@ -35,16 +37,22 @@
             <td>${librarian.name}</td>
             <td>${librarian.middleName}</td>
             <td>${librarian.shift}</td>
+            <td>
+                <div class="form-group">
+                    <a class="btn-link" href="Controller?id=${librarian.id}&command=delete_librarian">Удалить</a>
+                </div>
+            </td>
         </tr>
     </c:forEach>
     </tbody>
 
 </table>
+</form>
 
-<a href="/jsp/admin/addLibrarians.jsp" class="a1">Добавить библиотекаря</a>
+<a href="${pageContext.request.contextPath}/jsp/admin/addLibrarians.jsp" class="a1">Добавить библиотекаря</a>
 
 
 <jsp:include page="/jsp/layout/footer.jsp"></jsp:include>
 </body>
-<script src="/resource/js/bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/resource/js/bootstrap.js"></script>
 </html>

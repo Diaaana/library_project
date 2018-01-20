@@ -1,6 +1,7 @@
 package by.radomskaya.project.entity;
 
 public class Book extends Entity {
+    private int id;
     private String isbn;
     private String tittle;
     private String genre;
@@ -12,7 +13,8 @@ public class Book extends Entity {
 
     public Book() {}
 
-    public Book(String isbn, String tittle, String genre, String dateEdition, String placeEdition, String publisher, int numberCopies, String image) {
+    public Book(int id, String isbn, String tittle, String genre, String dateEdition, String placeEdition, String publisher, int numberCopies, String image) {
+        this.id = id;
         this.isbn = isbn;
         this.tittle = tittle;
         this.genre = genre;
@@ -21,6 +23,14 @@ public class Book extends Entity {
         this.publisher = publisher;
         this.numberCopies = numberCopies;
         this.image = image;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getIsbn() {
@@ -94,6 +104,7 @@ public class Book extends Entity {
 
         Book book = (Book) o;
 
+        if (id != book.id) return false;
         if (numberCopies != book.numberCopies) return false;
         if (!isbn.equals(book.isbn)) return false;
         if (!tittle.equals(book.tittle)) return false;
@@ -106,7 +117,8 @@ public class Book extends Entity {
 
     @Override
     public int hashCode() {
-        int result = isbn.hashCode();
+        int result = id;
+        result = 31 * result + isbn.hashCode();
         result = 31 * result + tittle.hashCode();
         result = 31 * result + genre.hashCode();
         result = 31 * result + dateEdition.hashCode();
@@ -120,7 +132,8 @@ public class Book extends Entity {
     @Override
     public String toString() {
         return "Book{" +
-                "isbn='" + isbn + '\'' +
+                "id=" + id +
+                ", isbn='" + isbn + '\'' +
                 ", tittle='" + tittle + '\'' +
                 ", genre='" + genre + '\'' +
                 ", dateEdition='" + dateEdition + '\'' +

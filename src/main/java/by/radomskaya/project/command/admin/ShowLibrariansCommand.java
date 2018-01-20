@@ -4,18 +4,18 @@ import by.radomskaya.project.command.Command;
 import by.radomskaya.project.entity.Librarian;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
-import by.radomskaya.project.logic.AdminLogic;
+import by.radomskaya.project.logic.LibrarianLogic;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static by.radomskaya.project.constant.PageConstant.*;
+import static by.radomskaya.project.constant.PageConstant.ADMIN_LIBRARIANS_PAGE;
 
 public class ShowLibrariansCommand implements Command {
-    private AdminLogic adminLogic;
+    private LibrarianLogic librarianLogic;
 
-    public ShowLibrariansCommand(AdminLogic adminLogic) {
-        this.adminLogic = adminLogic;
+    public ShowLibrariansCommand(LibrarianLogic librarianLogic) {
+        this.librarianLogic = librarianLogic;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class ShowLibrariansCommand implements Command {
         List<Librarian> listLibrarians;
 
         try {
-            listLibrarians = adminLogic.getLibrarians();
+            listLibrarians = librarianLogic.getLibrarians();
             request.setAttribute("librarians", listLibrarians);
             page = ADMIN_LIBRARIANS_PAGE;
         } catch (DAOException e) {

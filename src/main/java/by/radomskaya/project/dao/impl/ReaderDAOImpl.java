@@ -94,16 +94,16 @@ public class ReaderDAOImpl implements ReaderDAO {
     }
 
     @Override
-    public boolean deleteReader(Reader reader) throws DAOException {
+    public boolean deleteReader(int number_ticket) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(DELETE_READER);
-            statement.setInt(1, reader.getNumberTicket());
+            statement.setInt(1, number_ticket);
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
-            throw new DAOException("Error delete the reader" + e);
+            throw new DAOException("Error delete a reader" + e);
         } finally {
             try {
                 statement.close();

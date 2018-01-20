@@ -50,6 +50,7 @@ public class RegistrationCommand implements Command {
         } catch (DAOException e) {
             throw new CommandException(e);
         }
+
         return page;
     }
 }

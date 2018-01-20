@@ -4,7 +4,7 @@ import by.radomskaya.project.command.Command;
 import by.radomskaya.project.entity.Reader;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
-import by.radomskaya.project.logic.AdminLogic;
+import by.radomskaya.project.logic.ReaderLogic;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -12,10 +12,10 @@ import java.util.List;
 import static by.radomskaya.project.constant.PageConstant.ADMIN_READERS_PAGE;
 
 public class ShowReadersCommand implements Command {
-    private AdminLogic adminLogic;
+    private ReaderLogic readerLogic;
 
-    public ShowReadersCommand(AdminLogic adminLogic) {
-        this.adminLogic = adminLogic;
+    public ShowReadersCommand(ReaderLogic readerLogic) {
+        this.readerLogic = readerLogic;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class ShowReadersCommand implements Command {
         List<Reader> listReader;
 
         try {
-            listReader = adminLogic.getReaders();
+            listReader = readerLogic.getReaders();
             request.setAttribute("readers", listReader);
             page = ADMIN_READERS_PAGE;
         } catch (DAOException e) {

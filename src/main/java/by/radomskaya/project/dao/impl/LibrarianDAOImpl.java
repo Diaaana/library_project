@@ -18,9 +18,9 @@ import java.util.List;
 public class LibrarianDAOImpl implements LibrarianDAO {
     private final static Logger LOGGER = LogManager.getLogger(LibrarianDAOImpl.class);
     private final static String INSERT_LIBRARIAN = "INSERT INTO librarians(surname, name, middle_name, shift, login, password) VALUES(?,?,?,?,?,?);";
-    private final static String SELECT_LIBRARIANS = "SELECT surname, name, middle_name, shift FROM library.librarians;";
+    private final static String SELECT_LIBRARIANS = "SELECT id_librarian, surname, name, middle_name, shift FROM library.librarians;";
     private final static String CHECK_LOGIN_PASSWORD = "SELECT login, password FROM library.librarians JOIN library.roles on librarians.id_role = roles.id_role WHERE name_role = 'Библиотекарь' AND login = ? AND password = ?";
-    private final static String DELETE_LIBRARIAN = "DELETE FROM library.librarians WHERE id = ?";
+    private final static String DELETE_LIBRARIAN = "DELETE FROM library.librarians WHERE id_librarian = ?";
 
     @Override
     public List<Librarian> getAllLibrarians() throws DAOException {
@@ -32,6 +32,7 @@ public class LibrarianDAOImpl implements LibrarianDAO {
             List<Librarian> listLibrarian = new ArrayList<>();
             while (resultSet.next()) {
                 Librarian librarian = new Librarian();
+                librarian.setId(resultSet.getInt("id_librarian"));
                 librarian.setSurname(resultSet.getString("surname"));
                 librarian.setName(resultSet.getString("name"));
                 librarian.setMiddleName(resultSet.getString("middle_name"));
@@ -86,12 +87,12 @@ public class LibrarianDAOImpl implements LibrarianDAO {
     }
 
     @Override
-    public boolean deleteLibrarian(Librarian librarian) throws DAOException {
+    public boolean deleteLibrarian(int id) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(DELETE_LIBRARIAN);
-            statement.setInt(1, librarian.getId());
+            statement.setInt(1, id);
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {

@@ -8,5 +8,5 @@ import java.util.List;
 public interface AuthorDAO {
     List<Author> getAllAuthors() throws DAOException;
     boolean addAuthor(Author author) throws DAOException;
-    boolean deleteAuthor(Author author) throws  DAOException;
+    boolean deleteAuthor(int id) throws  DAOException;
 }

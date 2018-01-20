@@ -4,10 +4,9 @@ import by.radomskaya.project.command.Command;
 import by.radomskaya.project.entity.Librarian;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
-import by.radomskaya.project.logic.AdminLogic;
+import by.radomskaya.project.logic.LibrarianLogic;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static by.radomskaya.project.constant.PageConstant.ADMIN_ADD_LIBRARIANS_PAGE;
@@ -20,15 +19,14 @@ public class AddLibrarianCommand implements Command {
     private final static String PARAM_SHIFT = "shift";
     private final static String PARAM_LOGIN = "login";
     private final static String PARAM_PASSWORD = "password";
-    private AdminLogic adminLogic;
+    private LibrarianLogic librarianLogic;
 
-    public AddLibrarianCommand(AdminLogic adminLogic) {
-        this.adminLogic = adminLogic;
+    public AddLibrarianCommand(LibrarianLogic librarianLogic) {
+        this.librarianLogic = librarianLogic;
     }
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        HttpSession session = request.getSession(true);
         String page = null;
         List<Librarian> listLibrarians;
         Librarian librarian = new Librarian();
@@ -41,16 +39,17 @@ public class AddLibrarianCommand implements Command {
         librarian.setPassword(request.getParameter(PARAM_PASSWORD));
 
         try {
-            if (adminLogic.addLibrarian(librarian)) {
-                listLibrarians = adminLogic.getLibrarians();
+            if (librarianLogic.addLibrarian(librarian)) {
+                listLibrarians = librarianLogic.getLibrarians();
                 request.setAttribute("librarians", listLibrarians);
                 page = ADMIN_LIBRARIANS_PAGE;
             } else {
-                page = ADMIN_ADD_LIBRARIANS_PAGE; //!!!
+                page = ADMIN_ADD_LIBRARIANS_PAGE; //TO DO
             }
         } catch (DAOException e) {
             throw new CommandException(e);
         }
+
         return page;
     }
 }

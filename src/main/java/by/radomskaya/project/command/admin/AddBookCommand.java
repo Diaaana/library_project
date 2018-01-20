@@ -5,7 +5,8 @@ import by.radomskaya.project.entity.Author;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
-import by.radomskaya.project.logic.AdminLogic;
+import by.radomskaya.project.logic.AuthorLogic;
+import by.radomskaya.project.logic.BookLogic;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,10 +30,12 @@ public class AddBookCommand implements Command {
     private final static String PARAM_PUBLISHER = "publisher";
     private final static String PARAM_NUMBER_COPIES = "number_copies";
     private final static String PARAM_IMAGE = "image";
-    private AdminLogic addLogic;
+    private BookLogic bookLogic;
+    private AuthorLogic authorLogic;
 
-    public AddBookCommand(AdminLogic addLogic) {
-        this.addLogic = addLogic;
+    public AddBookCommand(BookLogic bookLogic, AuthorLogic authorLogic) {
+        this.bookLogic = bookLogic;
+        this.authorLogic = authorLogic;
     }
 
     @Override
@@ -58,7 +61,7 @@ public class AddBookCommand implements Command {
             author.setMiddleName(request.getParameter(PARAM_AUTHOR_MIDDLE_NAME));
             author.setCountryBirth(request.getParameter(PARAM_AUTHOR_COUNTRY));
 
-            if (addLogic.addBook(book) && addLogic.addAuthor(author) && addLogic.addGenre(book)) {
+            if (bookLogic.addBook(book) && authorLogic.addAuthor(author) && bookLogic.addGenre(book)) {
                 request.setAttribute("success", "Все хорошо");
                 page = ADMIN_BOOKS_PAGE;
             } else {
@@ -66,9 +69,7 @@ public class AddBookCommand implements Command {
             }
         } catch (DAOException e) {
             throw new CommandException(e);
-        } catch (IOException e) {
-            throw new CommandException(e);
-        } catch (ServletException e) {
+        } catch (IOException|ServletException e) {
             throw new CommandException(e);
         }
 

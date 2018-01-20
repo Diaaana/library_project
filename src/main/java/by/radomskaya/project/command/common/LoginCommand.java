@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 import static by.radomskaya.project.constant.PageConstant.*;
 
 public class LoginCommand implements Command {
-    private static final String PARAM_LOGIN = "login";
-    private static final String PARAM_PASSWORD = "password";
+    private final String PARAM_LOGIN = "login";
+    private final String PARAM_PASSWORD = "password";
     private UserLogic userLogic;
     private AdminLogic adminLogic;
     private LibrarianLogic librarianLogic;
@@ -49,6 +49,7 @@ public class LoginCommand implements Command {
         } catch (DAOException e) {
             throw new CommandException(e);
         }
+
         return page;
     }
 }

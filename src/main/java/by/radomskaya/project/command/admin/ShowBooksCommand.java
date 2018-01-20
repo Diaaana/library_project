@@ -4,18 +4,18 @@ import by.radomskaya.project.command.Command;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
-import by.radomskaya.project.logic.AdminLogic;
+import by.radomskaya.project.logic.BookLogic;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static by.radomskaya.project.constant.PageConstant.ADMIN_SHOW_BOOKS_PAGE;
+import static by.radomskaya.project.constant.PageConstant.ADMIN_BOOKS_PAGE;
 
 public class ShowBooksCommand implements Command {
-    private AdminLogic adminLogic;
+    private BookLogic bookLogic;
 
-    public ShowBooksCommand(AdminLogic adminLogic) {
-        this.adminLogic = adminLogic;
+    public ShowBooksCommand(BookLogic bookLogic) {
+        this.bookLogic = bookLogic;
     }
 
     @Override
@@ -24,10 +24,9 @@ public class ShowBooksCommand implements Command {
         List<Book> listBooks;
 
         try {
-            listBooks = adminLogic.getBooks();
+            listBooks = bookLogic.getBooks();
             request.setAttribute("books", listBooks);
-            request.setAttribute("success", "Все хорошо");
-            page = ADMIN_SHOW_BOOKS_PAGE;
+            page = ADMIN_BOOKS_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }
