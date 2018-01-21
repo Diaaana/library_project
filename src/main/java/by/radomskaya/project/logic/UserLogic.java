@@ -7,11 +7,6 @@ import by.radomskaya.project.exception.DAOException;
 
 public class UserLogic {
 
-    public boolean checkUser(String login, String password) throws DAOException {
-        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
-        return readerDAO.checkLoginPasswordUser(login, password);
-    }
-
     public boolean registrationUser(Reader reader) throws DAOException {
         ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
         return readerDAO.addReader(reader);

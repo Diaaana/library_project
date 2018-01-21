@@ -1,6 +1,7 @@
 package by.radomskaya.project.dao.impl;
 
 import by.radomskaya.project.dao.BookDAO;
+import by.radomskaya.project.entity.Author;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.pool.ConnectionPool;
@@ -19,9 +20,11 @@ public class BookDAOImpl implements BookDAO {
     private final static Logger LOGGER = LogManager.getLogger(BookDAOImpl.class);
 
     private final static String INSERT_BOOK = "INSERT INTO books(isbn, tittle, date_edition, place_edition, publisher, number_copies, image_book) VALUES(?,?,?,?,?,?,?)";
-    private final static String SELECT_ALL = "SELECT isbn, tittle, surname, name, middle_name, name_genre, date_edition, place_edition, publisher, number_copies " +
-            "FROM library.books JOIN library.authors ON books.id_book = authors.id_author " +
-            "JOIN library.genres ON books.id_book = books.id_book;";
+    private final static String SELECT_BOOKS_AND_AUTHORS = "SELECT books.id_book, isbn, tittle, authors.id_author, surname, name, middle_name, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
+            "FROM library.books JOIN library.book_genre ON books.id_book = book_genre.id_book " +
+            "JOIN library.genres ON book_genre.id_genre = genres.id_genre " +
+            "JOIN library.book_author ON books.id_book = book_author.id_book " +
+            "JOIN library.authors ON book_author.id_author = authors.id_author;";
     private final static String SELECT_BOOKS = "SELECT books.id_book, isbn, tittle, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
             "FROM library.books JOIN library.book_genre ON books.id_book = book_genre.id_book " +
             "JOIN library.genres ON book_genre.id_genre = genres.id_genre;";
@@ -55,6 +58,50 @@ public class BookDAOImpl implements BookDAO {
                 book.setId(resultSet.getInt("id_book"));
                 book.setIsbn(resultSet.getString("isbn"));
                 book.setTittle(resultSet.getString("tittle"));
+                book.setGenre(resultSet.getString("name_genre"));
+                book.setDateEdition(resultSet.getString("date_edition"));
+                book.setPlaceEdition(resultSet.getString("place_edition"));
+                book.setPublisher(resultSet.getString("publisher"));
+                book.setNumberCopies(resultSet.getInt("number_copies"));
+                book.setImage(resultSet.getString("image_book"));
+                listBooks.add(book);
+            }
+            return listBooks;
+        } catch (SQLException e) {
+            throw new DAOException("Error get all books" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+    }
+
+    @Override
+    public List<Book> getBooksAndAuthors() throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SELECT_BOOKS_AND_AUTHORS);
+            List<Book> listBooks = new ArrayList<>();
+            while (resultSet.next()) {
+                Book book = new Book();
+                Author author = new Author();
+                book.setId(resultSet.getInt("id_book"));
+                book.setIsbn(resultSet.getString("isbn"));
+                book.setTittle(resultSet.getString("tittle"));
+                author.setId(resultSet.getInt("id_author"));
+                author.setSurname(resultSet.getString("surname"));
+                author.setName(resultSet.getString("name"));
+                author.setMiddleName(resultSet.getString("middle_name"));
+                book.setAuthor(author);
                 book.setGenre(resultSet.getString("name_genre"));
                 book.setDateEdition(resultSet.getString("date_edition"));
                 book.setPlaceEdition(resultSet.getString("place_edition"));

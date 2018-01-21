@@ -6,9 +6,9 @@
 <html>
 <head>
 
-    <link rel="stylesheet" type="text/css" href = "/resource/css/app-style.css">
-    <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href = "${pageContext.request.contextPath}/resource/css/app-style.css">
+    <link rel="stylesheet" type="text/css" href = "${pageContext.request.contextPath}/resource/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href = "${pageContext.request.contextPath}/resource/css/bootstrap-theme.css">
 
 </head>
 <body>
@@ -24,5 +24,5 @@
     </div>
 </form>
 </body>
-<script src = "/resource/js/bootstrap.js"></script>
+<script src = "${pageContext.request.contextPath}/resource/js/bootstrap.js"></script>
 </html>

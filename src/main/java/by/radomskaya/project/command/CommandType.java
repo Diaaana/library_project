@@ -4,15 +4,12 @@ import by.radomskaya.project.command.admin.*;
 import by.radomskaya.project.command.common.ChangeLocaleCommand;
 import by.radomskaya.project.command.common.LoginCommand;
 import by.radomskaya.project.command.common.LogoutCommond;
-import by.radomskaya.project.command.user.FindBookByAuthorCommand;
-import by.radomskaya.project.command.user.FindBookByTittleCommand;
-import by.radomskaya.project.command.user.GetBooksCommand;
-import by.radomskaya.project.command.user.RegistrationCommand;
+import by.radomskaya.project.command.user.*;
 import by.radomskaya.project.logic.*;
 
 public enum CommandType {
     LOCALE(new ChangeLocaleCommand()),
-    LOGIN(new LoginCommand(new UserLogic(), new AdminLogic(), new LibrarianLogic())),
+    LOGIN(new LoginCommand(new ReaderLogic(), new AdminLogic(), new LibrarianLogic())),
     LOGOUT(new LogoutCommond()),
     REGISTRATION(new RegistrationCommand(new UserLogic())),
     ADD_BOOK(new AddBookCommand(new BookLogic(), new AuthorLogic())),
@@ -27,7 +24,9 @@ public enum CommandType {
     DELETE_BOOK(new DeleteBookCommand(new BookLogic())),
     DELETE_AUTHOR(new DeleteAuthorCommand(new AuthorLogic())),
     DELETE_READER(new DeleteReaderCommand(new ReaderLogic())),
-    DELETE_LIBRARIAN(new DeleteLibrarianCommand(new LibrarianLogic()));
+    DELETE_LIBRARIAN(new DeleteLibrarianCommand(new LibrarianLogic())),
+    ADD_TO_CART(new AddToCartCommand(new OrderLogic())),
+    GET_PERSONAL_ORDERS(new GetPersonalOrdersCommand(new OrderLogic()));
 
     private Command command;
 

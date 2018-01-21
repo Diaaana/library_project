@@ -9,18 +9,18 @@
 
     <title><fmt:message key="label.library" bundle="${local}"/></title>
 
-    <link rel="shortcut icon" href="/resource/images/icon.png" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="/resource/css/app-style.css">
-    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap-theme.css">
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resource/images/icon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/app-style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap-theme.css">
 
 </head>
 <body class="body">
 
 <div class="container">
 
-    <jsp:include page="layout/layout.jsp"></jsp:include>
-    <jsp:include page="layout/footer.jsp"></jsp:include>
+    <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+    <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 
     <form role="form" action="Controller" method="get" class="form-login">
 
@@ -40,5 +40,5 @@
     </form>
 </div>
 </body>
-<script src="/resource/js/script.js"></script>
+<script src="${pageContext.request.contextPath}/resource/js/script.js"></script>
 </html>

@@ -22,6 +22,7 @@ public class ReaderDAOImpl implements ReaderDAO {
     private final static String INSERT_READER = "INSERT INTO readers(surname, name, middle_name, age, phone_number, mail, login, password) VALUES(?,?,?,?,?,?,?,?)";
     private final static String CHECK_LOGIN_PASSWORD = "SELECT login, password FROM library.readers JOIN library.roles on readers.id_role = roles.id_role WHERE name_role = 'Пользователь' AND login = ? AND password = ?";
     private final static String DELETE_READER = "DELETE FROM library.readers WHERE number_ticket = ?";
+    private final static String SELECT_NUMBER_TICKET = "SELECT number_ticket FROM library.readers WHERE login = ? AND password = ?;";
 
     @Override
     public List<Reader> getAllReaders() throws DAOException {
@@ -59,6 +60,37 @@ public class ReaderDAOImpl implements ReaderDAO {
                 LOGGER.error("Error closing connection", e);
             }
         }
+    }
+
+    @Override
+    public int getNumberTicket(String login, String password) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+        int numberTicket = 0;
+        try {
+            statement = connection.prepareStatement(SELECT_NUMBER_TICKET);
+            statement.setString(1, login);
+            statement.setString(2, password);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                numberTicket = resultSet.getInt("number_ticket");
+            }
+        } catch (SQLException e) {
+            throw new DAOException("Error get all readers" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+        return numberTicket;
     }
 
     @Override
@@ -122,11 +154,12 @@ public class ReaderDAOImpl implements ReaderDAO {
     public boolean checkLoginPasswordUser(String login, String password) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
+        ResultSet resultSet;
         try {
             statement = connection.prepareStatement(CHECK_LOGIN_PASSWORD);
             statement.setString(1, login);
             statement.setString(2, password);
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
             throw new DAOException("Error check reader by login and password" + e);

@@ -9,6 +9,16 @@ import java.util.List;
 
 public class ReaderLogic {
 
+    public boolean checkReader(String login, String password) throws DAOException {
+        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
+        return readerDAO.checkLoginPasswordUser(login, password);
+    }
+
+    public int getNumberTicket(String login, String password) throws DAOException {
+        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
+        return readerDAO.getNumberTicket(login, password);
+    }
+
     public List<Reader> getReaders() throws DAOException {
         ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
         return readerDAO.getAllReaders();

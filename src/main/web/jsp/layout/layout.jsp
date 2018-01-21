@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<c:set var="reader" scope="session" value="${sessionScope.reader}"/>
+
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="locale" var="local"/>
 
@@ -65,8 +68,13 @@
                     <input type="hidden" name="command" value="get_books"/>
                     <input type="submit" value="${books}" class="btn btn-link nav-btn"/>
                 </form>
+                <form action="Controller" method="post">
+                    <input type="hidden" name="command" value="get_personal_orders"/>
+                    <input type="hidden" name="number_ticket" value="${reader.numberTicket}"/>
+                    <input type="submit" value="Корзина" class="btn btn-link nav-btn"/><br/>
+                </form>
                 <button class="btn btn-link nav-btn" onclick='location.href="/jsp/user/account.jsp"'>${account}</button>
-                <form action="Controller" method="get">
+                <form action="Controller" method="post">
                     <input type="hidden" name="command" value="logout"/>
                     <input type="submit" value="${logout}" class="button"/><br/>
                 </form>

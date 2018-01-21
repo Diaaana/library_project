@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ReaderDAO {
     List<Reader> getAllReaders() throws DAOException;
+    int getNumberTicket(String login, String password) throws DAOException;
     boolean addReader(Reader reader) throws DAOException;
     boolean deleteReader(int numberTicket) throws DAOException;
     boolean checkLoginPasswordUser(String login, String password) throws DAOException;

@@ -4,6 +4,7 @@ public class Book extends Entity {
     private int id;
     private String isbn;
     private String tittle;
+    private Author author;
     private String genre;
     private String dateEdition;
     private String placeEdition;
@@ -13,10 +14,15 @@ public class Book extends Entity {
 
     public Book() {}
 
-    public Book(int id, String isbn, String tittle, String genre, String dateEdition, String placeEdition, String publisher, int numberCopies, String image) {
+    public Book(int id) {
+        this.id = id;
+    }
+
+    public Book(int id, String isbn, String tittle, Author author, String genre, String dateEdition, String placeEdition, String publisher, int numberCopies, String image) {
         this.id = id;
         this.isbn = isbn;
         this.tittle = tittle;
+        this.author = author;
         this.genre = genre;
         this.dateEdition = dateEdition;
         this.placeEdition = placeEdition;
@@ -47,6 +53,14 @@ public class Book extends Entity {
 
     public void setTittle(String tittle) {
         this.tittle = tittle;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public String getGenre() {
@@ -108,6 +122,7 @@ public class Book extends Entity {
         if (numberCopies != book.numberCopies) return false;
         if (!isbn.equals(book.isbn)) return false;
         if (!tittle.equals(book.tittle)) return false;
+        if (author != null ? !author.equals(book.author) : book.author != null) return false;
         if (!genre.equals(book.genre)) return false;
         if (!dateEdition.equals(book.dateEdition)) return false;
         if (!placeEdition.equals(book.placeEdition)) return false;
@@ -120,6 +135,7 @@ public class Book extends Entity {
         int result = id;
         result = 31 * result + isbn.hashCode();
         result = 31 * result + tittle.hashCode();
+        result = 31 * result + (author != null ? author.hashCode() : 0);
         result = 31 * result + genre.hashCode();
         result = 31 * result + dateEdition.hashCode();
         result = 31 * result + placeEdition.hashCode();
@@ -135,6 +151,7 @@ public class Book extends Entity {
                 "id=" + id +
                 ", isbn='" + isbn + '\'' +
                 ", tittle='" + tittle + '\'' +
+                ", author=" + author +
                 ", genre='" + genre + '\'' +
                 ", dateEdition='" + dateEdition + '\'' +
                 ", placeEdition='" + placeEdition + '\'' +
