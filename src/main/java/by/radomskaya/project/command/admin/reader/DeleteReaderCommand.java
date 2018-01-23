@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.reader;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.entity.Reader;
+import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.ReaderLogic;
@@ -22,13 +22,13 @@ public class DeleteReaderCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
-        List<Reader> listReaders;
+        List<User> listUsers;
         int numberTicket = Integer.parseInt(request.getParameter(PARAM_ID_READER));
 
         try {
             if (readerLogic.deleteReader(numberTicket)) {
-                listReaders = readerLogic.getReaders();
-                request.setAttribute("readers", listReaders);
+                listUsers = readerLogic.getReaders();
+                request.setAttribute("readers", listUsers);
                 page = ADMIN_READERS_PAGE;
             }
         } catch (DAOException e) {

@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 import static by.radomskaya.project.constant.PageConstant.ADMIN_ADD_BOOKS_PAGE;
 import static by.radomskaya.project.constant.PageConstant.ADMIN_BOOKS_PAGE;
 
+
 public class AddBookCommand implements Command {
     private final static String PARAM_ISBN = "isbn";
     private final static String PARAM_TITTLE = "tittle";
@@ -46,20 +47,21 @@ public class AddBookCommand implements Command {
         try {
             book.setIsbn(request.getParameter(PARAM_ISBN));
             book.setTittle(request.getParameter(PARAM_TITTLE));
+            author.setSurname(request.getParameter(PARAM_AUTHOR_SURNAME));
+            author.setName(request.getParameter(PARAM_AUTHOR_NAME));
+            author.setMiddleName(request.getParameter(PARAM_AUTHOR_MIDDLE_NAME));
+            author.setCountryBirth(request.getParameter(PARAM_AUTHOR_COUNTRY));
+            book.setAuthor(author);
             book.setGenre(request.getParameter(PARAM_GENRE));
             book.setDateEdition(request.getParameter(PARAM_DATA_EDITION));
             book.setPlaceEdition(request.getParameter(PARAM_PLACE_EDITION));
             book.setPublisher(request.getParameter(PARAM_PUBLISHER));
             book.setNumberCopies(Integer.parseInt(request.getParameter(PARAM_NUMBER_COPIES)));
             // book.setImage(request.getParameter(PARAM_IMAGE));
-            Part part = request.getPart(request.getParameter(PARAM_IMAGE));
-            String imageName = getImageName(part);
-            String webPath = request.getServletContext().getRealPath("/");
+            Part filePart = request.getPart(PARAM_IMAGE);
+            String imageName = getImageName(filePart);
             book.setImage(imageName);
-            author.setSurname(request.getParameter(PARAM_AUTHOR_SURNAME));
-            author.setName(request.getParameter(PARAM_AUTHOR_NAME));
-            author.setMiddleName(request.getParameter(PARAM_AUTHOR_MIDDLE_NAME));
-            author.setCountryBirth(request.getParameter(PARAM_AUTHOR_COUNTRY));
+           // String webInfPath = request.getServletContext().getRealPath("/");
 
             if (bookLogic.addBook(book) && authorLogic.addAuthor(author) && bookLogic.addGenre(book)) {
                 request.setAttribute("success", "Все хорошо");
@@ -67,7 +69,7 @@ public class AddBookCommand implements Command {
             } else {
                 page = ADMIN_ADD_BOOKS_PAGE;
             }
-        } catch (IOException|ServletException|DAOException e) {
+        } catch (ServletException | DAOException | IOException e) {
             throw new CommandException(e);
         }
 

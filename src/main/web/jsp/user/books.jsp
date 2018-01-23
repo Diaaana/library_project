@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<c:set var="reader" scope="session" value="${sessionScope.reader}"/>
+<c:set var="user" scope="session" value="${sessionScope.user}"/>
 
 <html>
 <head>
@@ -44,7 +44,7 @@
                     <td>
                         <div class="form-group">
                             <a class="btn-link"
-                               href="Controller?number_ticket=${reader.numberTicket}&id_book=${book.id}&id_author=${book.author.id}&command=add_to_cart">В
+                               href="Controller?number_ticket=${user.numberTicket}&id_book=${book.id}&id_author=${book.author.id}&command=add_to_cart">В
                                 корзину</a>
                         </div>
                     </td>

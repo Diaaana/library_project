@@ -2,7 +2,7 @@ package by.radomskaya.project.dao.impl;
 
 import by.radomskaya.project.dao.ReaderDAO;
 import by.radomskaya.project.exception.DAOException;
-import by.radomskaya.project.entity.Reader;
+import by.radomskaya.project.entity.User;
 import by.radomskaya.project.pool.ConnectionPool;
 import by.radomskaya.project.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
@@ -18,34 +18,37 @@ import java.util.List;
 
 public class ReaderDAOImpl implements ReaderDAO {
     private final static Logger LOGGER = LogManager.getLogger(ReaderDAOImpl.class);
-    private final static String SELECT_READERS = "SELECT number_ticket, surname, name, middle_name, age, phone_number, mail, login, image  FROM library.readers JOIN library.roles ON roles.id_role = readers.id_role WHERE roles.name_role = 'Пользователь'";
-    private final static String INSERT_READER = "INSERT INTO readers(surname, name, middle_name, age, phone_number, mail, login, password) VALUES(?,?,?,?,?,?,?,?)";
-    private final static String CHECK_LOGIN_PASSWORD = "SELECT login, password FROM library.readers JOIN library.roles on readers.id_role = roles.id_role WHERE name_role = 'Пользователь' AND login = ? AND password = ?";
-    private final static String DELETE_READER = "DELETE FROM library.readers WHERE number_ticket = ?";
-    private final static String SELECT_NUMBER_TICKET = "SELECT number_ticket FROM library.readers WHERE login = ? AND password = ?;";
+    private final static String SELECT_READERS = "SELECT number_ticket, surname, name, middle_name, age, phone_number, mail, login, image FROM library.users JOIN library.roles ON roles.id_role = users.id_role WHERE roles.name_role = 'Читатель'";
+    private final static String INSERT_READER = "INSERT INTO users(surname, name, middle_name, age, phone_number, mail, image, login, password, id_role) VALUES(?,?,?,?,?,?,?,?,?,?)";
+    private final static String CHECK_LOGIN_PASSWORD = "SELECT login, password FROM library.users JOIN library.roles on users.id_role = roles.id_role WHERE name_role = 'Читатель' AND login = ? AND password = ?";
+    private final static String DELETE_READER = "DELETE FROM library.users WHERE number_ticket = ?";
+    private final static String SELECT_NUMBER_TICKET = "SELECT number_ticket FROM library.users WHERE login = ? AND password = ?;";
+    private final static int ID_ROLE_READER = 3;
+
 
     @Override
-    public List<Reader> getAllReaders() throws DAOException {
+    public List<User> getAllReaders() throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         Statement statement = null;
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SELECT_READERS);
-            List<Reader> listReaders = new ArrayList<>();
+            List<User> listUsers = new ArrayList<>();
             while (resultSet.next()) {
-                Reader reader = new Reader();
-                reader.setNumberTicket(resultSet.getInt("number_ticket"));
-                reader.setSurname(resultSet.getString("surname"));
-                reader.setName(resultSet.getString("name"));
-                reader.setMiddleName(resultSet.getString("middle_name"));
-                reader.setAge(resultSet.getInt("age"));
-                reader.setPhoneNumber(resultSet.getString("phone_number"));
-                reader.setMail(resultSet.getString("mail"));
-                reader.setLogin(resultSet.getString("login"));
-                reader.setProfilePhoto(resultSet.getString("image"));
-                listReaders.add(reader);
+                User user = new User();
+                user.setNumberTicket(resultSet.getInt("number_ticket"));
+                user.setSurname(resultSet.getString("surname"));
+                user.setName(resultSet.getString("name"));
+                user.setMiddleName(resultSet.getString("middle_name"));
+                user.setAge(resultSet.getInt("age"));
+                user.setPhoneNumber(resultSet.getString("phone_number"));
+                user.setMail(resultSet.getString("mail"));
+                user.setLogin(resultSet.getString("login"));
+                user.setProfilePhoto(resultSet.getString("image"));
+                user.setLogin(resultSet.getString("login"));
+                listUsers.add(user);
             }
-            return listReaders;
+            return listUsers;
         } catch (SQLException e) {
             throw new DAOException("Error get all readers" + e);
         } finally {
@@ -94,23 +97,25 @@ public class ReaderDAOImpl implements ReaderDAO {
     }
 
     @Override
-    public boolean addReader(Reader reader) throws DAOException {
+    public boolean addReader(User user) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(INSERT_READER);
-            statement.setString(1, reader.getSurname());
-            statement.setString(2, reader.getName());
-            statement.setString(3, reader.getMiddleName());
-            statement.setInt(4, reader.getAge());
-            statement.setString(5, reader.getPhoneNumber());
-            statement.setString(6, reader.getMail());
-            statement.setString(7, reader.getLogin());
-            statement.setString(8, reader.getPassword());
+            statement.setString(1, user.getSurname());
+            statement.setString(2, user.getName());
+            statement.setString(3, user.getMiddleName());
+            statement.setInt(4, user.getAge());
+            statement.setString(5, user.getPhoneNumber());
+            statement.setString(6, user.getMail());
+            statement.setString(7, user.getProfilePhoto());
+            statement.setString(8, user.getLogin());
+            statement.setString(9, user.getPassword());
+            statement.setInt(10, ID_ROLE_READER);
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
-            throw new DAOException("Error add reader" + e);
+            throw new DAOException("Error add user" + e);
         } finally {
             try {
                 statement.close();

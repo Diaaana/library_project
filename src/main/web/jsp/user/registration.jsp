@@ -33,7 +33,19 @@
 
     <h1 class="header">${registration}</h1>
 
-        <form role="form" action="/Controller" name="form" onsubmit="return validationForm();" method="get">
+        <form role="form" action="/Controller" name="form" onsubmit="return validationForm();" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="label">Выберите: </label><br/>
+                <label class="radio-inline">
+                    <input type="radio" name="role" value="admin">Администратор
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="role" value="librarian">Библиотекарь
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="role" value="reader">Читатель
+                </label>
+            </div>
             <div class="form-group">
                 <input type="text" name="surname" placeholder="${surname}" class="form-control field"><br/>
             </div>
@@ -51,6 +63,9 @@
             </div>
             <div class="form-group">
                 <input type="text" name="mail" placeholder="${mail}" class="form-control field"><br/>
+            </div>
+            <div class="form-group">
+                <input type="file" name="profile_photo" class="form-control field"><br/>
             </div>
             <div class="form-group">
                 <input type="text" name="login" placeholder="${login}" class="form-control field"><br/>

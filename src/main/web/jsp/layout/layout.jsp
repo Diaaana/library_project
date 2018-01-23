@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<c:set var="reader" scope="session" value="${sessionScope.reader}"/>
+<c:set var="user" scope="session" value="${sessionScope.reader}"/>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="locale" var="local"/>
@@ -61,7 +61,7 @@
             </div>
         </c:if>
 
-        <c:if test="${sessionScope.role == 'user'}">
+        <c:if test="${sessionScope.role == 'reader'}">
             <div class="btn-group">
                 <input type="submit" class="btn btn-link nav-btn" onclick='location.href="/jsp/user/main.jsp"' value="${main}"/>
                 <form action="Controller" method="post">
@@ -70,7 +70,7 @@
                 </form>
                 <form action="Controller" method="post">
                     <input type="hidden" name="command" value="get_personal_orders"/>
-                    <input type="hidden" name="number_ticket" value="${reader.numberTicket}"/>
+                    <input type="hidden" name="number_ticket" value="${user.numberTicket}"/>
                     <input type="submit" value="Корзина" class="btn btn-link nav-btn"/><br/>
                 </form>
                 <button class="btn btn-link nav-btn" onclick='location.href="/jsp/user/account.jsp"'>${account}</button>

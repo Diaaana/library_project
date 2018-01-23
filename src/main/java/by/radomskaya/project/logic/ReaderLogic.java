@@ -2,12 +2,17 @@ package by.radomskaya.project.logic;
 
 import by.radomskaya.project.dao.ReaderDAO;
 import by.radomskaya.project.dao.factory.DAOFactory;
-import by.radomskaya.project.entity.Reader;
+import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.DAOException;
 
 import java.util.List;
 
 public class ReaderLogic {
+
+    public boolean registrationReader(User user) throws DAOException {
+        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
+        return readerDAO.addReader(user);
+    }
 
     public boolean checkReader(String login, String password) throws DAOException {
         ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
@@ -19,7 +24,7 @@ public class ReaderLogic {
         return readerDAO.getNumberTicket(login, password);
     }
 
-    public List<Reader> getReaders() throws DAOException {
+    public List<User> getReaders() throws DAOException {
         ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
         return readerDAO.getAllReaders();
     }

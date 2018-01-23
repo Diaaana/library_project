@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.common;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.entity.Reader;
+import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.AdminLogic;
@@ -32,7 +32,7 @@ public class LoginCommand implements Command {
         int numberTicket;
         String loginValue = request.getParameter(PARAM_LOGIN);
         String passwordValue = request.getParameter(PARAM_PASSWORD);
-        Reader reader = new Reader();
+        User user = new User();
         HttpSession session = request.getSession(true);
 
         try {
@@ -40,14 +40,13 @@ public class LoginCommand implements Command {
                 session.setAttribute("role", "admin");
                 page = ADMIN_MAIN_PAGE;
             } else if (readerLogic.checkReader(loginValue, passwordValue)) {
-                session.setAttribute("role", "user");
+                session.setAttribute("role", "reader");
 
                 numberTicket = readerLogic.getNumberTicket(loginValue, passwordValue);
-                reader.setLogin(loginValue);
-                reader.setPassword(passwordValue);
-                reader.setNumberTicket(numberTicket);
-
-                session.setAttribute("reader", reader);
+                user.setLogin(loginValue);
+                user.setPassword(passwordValue);
+                user.setNumberTicket(numberTicket);
+                session.setAttribute("reader", user);
                 page = USER_MAIN_PAGE;
             } else if (librarianLogic.checkLibrarian(loginValue, passwordValue)) {
                 session.setAttribute("role", "librarian");

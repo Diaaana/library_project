@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.librarian;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.entity.Librarian;
+import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.LibrarianLogic;
@@ -28,13 +28,12 @@ public class AddLibrarianCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
-        List<Librarian> listLibrarians;
-        Librarian librarian = new Librarian();
+        List<User> listLibrarians;
+        User librarian = new User();
 
         librarian.setSurname(request.getParameter(PARAM_SURNAME));
         librarian.setName(request.getParameter(PARAM_NAME));
         librarian.setMiddleName(request.getParameter(PARAM_MIDDLE_NAME));
-        librarian.setShift(Integer.parseInt(request.getParameter(PARAM_SHIFT)));
         librarian.setLogin(request.getParameter(PARAM_LOGIN));
         librarian.setPassword(request.getParameter(PARAM_PASSWORD));
 

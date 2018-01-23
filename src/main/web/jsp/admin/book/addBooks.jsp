@@ -37,7 +37,7 @@
 
     <h1 class="header"><fmt:message key="label.addBook" bundle="${local}"/></h1>
 
-    <form role="form" action="/Controller" method="post">
+    <form role="form" action="/Controller" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterIsbn" bundle="${local}"/></label>
             <input type="text" name="isbn" class="form-control" placeholder="${ISBN}">
@@ -69,7 +69,7 @@
         </div>
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterDateEdition" bundle="${local}"/></label>
-            <input type="text" name="date_edition" class="form-control" placeholder="${dateEdition}">
+            <input type="date" name="date_edition" class="form-control">
         </div>
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterPlaceEdition" bundle="${local}"/></label>

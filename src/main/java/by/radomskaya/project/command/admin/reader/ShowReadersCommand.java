@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.reader;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.entity.Reader;
+import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.ReaderLogic;
@@ -21,11 +21,11 @@ public class ShowReadersCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
-        List<Reader> listReader;
+        List<User> listUser;
 
         try {
-            listReader = readerLogic.getReaders();
-            request.setAttribute("readers", listReader);
+            listUser = readerLogic.getReaders();
+            request.setAttribute("readers", listUser);
             page = ADMIN_READERS_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);

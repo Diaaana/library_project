@@ -25,7 +25,7 @@
 
     <thead>
     <tr>
-        <th>Фото</th>
+        <th>Фото профиля</th>
         <th>Логин</th>
         <th>Номер билета</th>
         <th>Фамилия</th>
@@ -38,20 +38,20 @@
     </thead>
 
     <tbody>
-    <c:forEach var="reader" items="${readers}">
+    <c:forEach var="user" items="${readers}">
         <tr>
-            <td><img src="/resource/images/readers/${reader.profilePhoto}" alt="${reader.login}" class="imageBook"></td>
-            <td>${reader.login}</td>
-            <td>${reader.numberTicket}</td>
-            <td>${reader.surname}</td>
-            <td>${reader.name}</td>
-            <td>${reader.middleName}</td>
-            <td>${reader.age}</td>
-            <td>${reader.phoneNumber}</td>
-            <td>${reader.mail}</td>
+            <td><img src="/resource/images/readers/${user.profilePhoto}" alt="${user.login}" class="imageBook"></td>
+            <td>${user.login}</td>
+            <td>${user.numberTicket}</td>
+            <td>${user.surname}</td>
+            <td>${user.name}</td>
+            <td>${user.middleName}</td>
+            <td>${user.age}</td>
+            <td>${user.phoneNumber}</td>
+            <td>${user.mail}</td>
             <td>
                 <div class="form-group">
-                    <a class="btn-link" href="Controller?id=${reader.numberTicket}&command=delete_reader">Удалить</a>
+                    <a class="btn-link" href="Controller?id=${user.numberTicket}&command=delete_reader">Удалить</a>
                 </div>
             </td>
         </tr>

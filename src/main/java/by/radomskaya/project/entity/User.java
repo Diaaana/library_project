@@ -1,6 +1,6 @@
 package by.radomskaya.project.entity;
 
-public class Reader extends Entity {
+public class User extends Entity {
     private int numberTicket;
     private String surname;
     private String name;
@@ -12,9 +12,9 @@ public class Reader extends Entity {
     private String password;
     private String profilePhoto;
 
-    public Reader() {}
+    public User() {}
 
-    public Reader(int numberTicket, String surname, String name, String middleName, int age, String phoneNumber, String mail, String login, String password, String profilePhoto) {
+    public User(int numberTicket, String surname, String name, String middleName, int age, String phoneNumber, String mail, String login, String password, String profilePhoto) {
         this.numberTicket = numberTicket;
         this.surname = surname;
         this.name = name;
@@ -112,18 +112,18 @@ public class Reader extends Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Reader reader = (Reader) o;
+        User user = (User) o;
 
-        if (numberTicket != reader.numberTicket) return false;
-        if (age != reader.age) return false;
-        if (!surname.equals(reader.surname)) return false;
-        if (!name.equals(reader.name)) return false;
-        if (!middleName.equals(reader.middleName)) return false;
-        if (!phoneNumber.equals(reader.phoneNumber)) return false;
-        if (!mail.equals(reader.mail)) return false;
-        if (!login.equals(reader.login)) return false;
-        if (!password.equals(reader.password)) return false;
-        return profilePhoto.equals(reader.profilePhoto);
+        if (numberTicket != user.numberTicket) return false;
+        if (age != user.age) return false;
+        if (!surname.equals(user.surname)) return false;
+        if (!name.equals(user.name)) return false;
+        if (!middleName.equals(user.middleName)) return false;
+        if (!phoneNumber.equals(user.phoneNumber)) return false;
+        if (!mail.equals(user.mail)) return false;
+        if (!login.equals(user.login)) return false;
+        if (!password.equals(user.password)) return false;
+        return profilePhoto.equals(user.profilePhoto);
     }
 
     @Override
@@ -143,7 +143,7 @@ public class Reader extends Entity {
 
     @Override
     public String toString() {
-        return "Reader{" +
+        return "User{" +
                 "numberTicket=" + numberTicket +
                 ", surname='" + surname + '\'' +
                 ", name='" + name + '\'' +

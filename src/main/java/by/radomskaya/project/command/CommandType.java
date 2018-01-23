@@ -27,7 +27,7 @@ public enum CommandType {
     LOCALE(new ChangeLocaleCommand()),
     LOGIN(new LoginCommand(new ReaderLogic(), new AdminLogic(), new LibrarianLogic())),
     LOGOUT(new LogoutCommond()),
-    REGISTRATION(new RegistrationCommand(new UserLogic())),
+    REGISTRATION(new RegistrationCommand(new AdminLogic(), new ReaderLogic(), new LibrarianLogic())),
     ADD_BOOK(new AddBookCommand(new BookLogic(), new AuthorLogic())),
     EDIT_BOOK(new EditBookCommand(new BookLogic())),
     UPDATE_BOOK(new UpdateBookCommand(new BookLogic())),

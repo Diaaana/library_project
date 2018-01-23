@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.librarian;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.entity.Librarian;
+import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.LibrarianLogic;
@@ -16,7 +16,7 @@ public class UpdateLibrarianCommand implements Command {
     private final static String PARAM_LIBRARIAN_SURNAME = "surname";
     private final static String PARAM_LIBRARIAN_NAME = "name";
     private final static String PARAM_LIBRARIAN_MIDDLE_NAME = "middle_name";
-    private final static String PARAM_LIBRARIAN_SHIFT = "shift";
+    private final static String PARAM_LIBRARIAN_LOGIN = "login";
     private LibrarianLogic librarianLogic;
 
     public UpdateLibrarianCommand(LibrarianLogic librarianLogic) {
@@ -26,14 +26,14 @@ public class UpdateLibrarianCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
-        Librarian librarian = new Librarian();
-        List<Librarian> listLibrarians;
+        User librarian = new User();
+        List<User> listLibrarians;
 
-        librarian.setId(Integer.parseInt(request.getParameter(PARAM_ID_LIBRARIAN)));
+        librarian.setNumberTicket(Integer.parseInt(request.getParameter(PARAM_ID_LIBRARIAN)));
         librarian.setSurname(request.getParameter(PARAM_LIBRARIAN_SURNAME));
         librarian.setName(request.getParameter(PARAM_LIBRARIAN_NAME));
         librarian.setMiddleName(request.getParameter(PARAM_LIBRARIAN_MIDDLE_NAME));
-        librarian.setShift(Integer.parseInt(request.getParameter(PARAM_LIBRARIAN_SHIFT)));
+        librarian.setLogin(request.getParameter(PARAM_LIBRARIAN_LOGIN));
 
         try {
             if (librarianLogic.updateLibrarian(librarian)) {

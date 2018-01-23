@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.librarian;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.entity.Librarian;
+import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.LibrarianLogic;
@@ -22,7 +22,7 @@ public class EditLibrarianCommand implements Command {
     public String execute(HttpServletRequest request) throws CommandException {
         String page = null;
         int idLibrarian = Integer.parseInt(request.getParameter(PARAM_ID_LIBRARIAN));
-        Librarian librarian;
+        User librarian;
 
         try {
             librarian = librarianLogic.getLibrarianById(idLibrarian);

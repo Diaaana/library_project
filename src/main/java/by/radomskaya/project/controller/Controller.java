@@ -7,12 +7,14 @@ import by.radomskaya.project.exception.CommandException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
+@MultipartConfig
 public class Controller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -80,7 +82,7 @@ public class Controller extends HttpServlet {
             String login = req.getParameter("login");
             String password = req.getParameter("password");
 
-            Reader reader = new Reader();
+            User reader = new User();
 
             reader.setSurname(surname);
             reader.setName(name);
@@ -108,12 +110,12 @@ public class Controller extends HttpServlet {
             boolean flag = false;
             String login = req.getParameter("login");
             String password = req.getParameter("password");
-            Reader reader = new Reader();
+            User reader = new User();
             reader.setLogin(login);
             reader.setPassword(password);
 
             try {
-                List<Reader> listReader = DAOFactory.getInstance().getReaderDAO().getLoginPassword();
+                List<User> listReader = DAOFactory.getInstance().getReaderDAO().getLoginPassword();
                 for (int i = 0; i < listReader.size(); i++) {
                     if (listReader.get(i).getLogin().equals(login) && listReader.get(i).getPassword().equals(password)) {
                         flag = true;

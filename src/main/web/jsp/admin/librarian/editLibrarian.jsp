@@ -19,35 +19,27 @@
     <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
     <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 
-    <form role="form" action="/Controller" method="get">
+    <form role="form" action="/Controller" method="post">
         <div class="form-group">
             <label class="label">Введите фамилию: </label>
             <input type="text" name="surname" class="form-control" value="${librarian.surname}">
         </div>
         <div class="form-group">
             <label class="label">Введите имя: </label>
-            <input type="text" name="name" class="form-control" value="${librarian.surname}">
+            <input type="text" name="name" class="form-control" value="${librarian.name}">
         </div>
         <div class="form-group">
             <label class="label">Введите отчество: </label>
-            <input type="text" name="middle_name" class="form-control" value="${librarian.surname}">
+            <input type="text" name="middle_name" class="form-control" value="${librarian.middleName}">
         </div>
         <div class="form-group">
-            <label class="label">Выберите смену: </label><br/>
-            <label class="radio-inline">
-                <input type="radio" name="shift" value="1">1
-            </label>
-            <label class="radio-inline">
-                <input type="radio" name="shift" value="2">2
-            </label>
-            <label class="radio-inline">
-                <input type="radio" name="shift" value="3">3
-            </label>
+            <label class="label">Введите логин: </label>
+            <input type="text" name="login" class="form-control" value="${librarian.login}">
         </div>
         <div class="form-group">
             <input type="hidden" name="command" value="update_librarian"/>
-            <input type="hidden" name="id_librarian" value="${librarian.id}"/>
-            <input type="submit" name="add_librarian" class="btn btn-success" value="Добавить"/>
+            <input type="hidden" name="id_librarian" value="${librarian.numberTicket}"/>
+            <input type="submit" name="add_librarian" class="btn btn-success" value="Отредактировать"/>
             <button type="reset" value="clear" onclick="clearForm()" class="btn btn-danger">Очистить</button>
         </div>
     </form>

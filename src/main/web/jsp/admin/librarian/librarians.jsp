@@ -26,7 +26,7 @@
         <th>Фамилия</th>
         <th>Имя</th>
         <th>Отчество</th>
-        <th>Смена</th>
+        <th>Логин</th>
     </tr>
     </thead>
 
@@ -36,11 +36,11 @@
             <td>${librarian.surname}</td>
             <td>${librarian.name}</td>
             <td>${librarian.middleName}</td>
-            <td>${librarian.shift}</td>
+            <td>${librarian.login}</td>
             <td>
                 <div class="form-group">
-                    <a class="btn-link" href="Controller?id_librarian=${librarian.id}&command=delete_librarian">Удалить</a>
-                    <a class="btn-link" href="Controller?id_librarian=${librarian.id}&command=edit_librarian">Редактировать</a>
+                    <a class="btn-link" href="Controller?id_librarian=${librarian.numberTicket}&command=delete_librarian">Удалить</a>
+                    <a class="btn-link" href="Controller?id_librarian=${librarian.numberTicket}&command=edit_librarian">Редактировать</a>
                 </div>
             </td>
         </tr>
@@ -50,7 +50,7 @@
 </table>
 </form>
 
-<a href="${pageContext.request.contextPath}/jsp/admin/addLibrarians.jsp" class="a1">Добавить библиотекаря</a>
+<a href="${pageContext.request.contextPath}/jsp/admin/librarian/addLibrarians.jsp" class="a1">Добавить библиотекаря</a>
 
 
 <jsp:include page="/jsp/layout/footer.jsp"></jsp:include>

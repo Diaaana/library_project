@@ -1,7 +1,7 @@
 package by.radomskaya.project.dao.impl;
 
 import by.radomskaya.project.dao.LibrarianDAO;
-import by.radomskaya.project.entity.Librarian;
+import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.pool.ConnectionPool;
 import by.radomskaya.project.pool.ProxyConnection;
@@ -17,21 +17,26 @@ import java.util.List;
 
 public class LibrarianDAOImpl implements LibrarianDAO {
     private final static Logger LOGGER = LogManager.getLogger(LibrarianDAOImpl.class);
-    private final static String INSERT_LIBRARIAN = "INSERT INTO librarians(surname, name, middle_name, shift, login, password) VALUES(?,?,?,?,?,?);";
-    private final static String SELECT_LIBRARIANS = "SELECT id_librarian, surname, name, middle_name, shift FROM library.librarians;";
-    private final static String SELECT_LIBRARIAN_BY_ID = "SELECT id_librarian, surname, name, middle_name, shift FROM library.librarians WHERE id_librarian = ?;";
-    private final static String CHECK_LOGIN_PASSWORD = "SELECT login, password FROM library.librarians JOIN library.roles on librarians.id_role = roles.id_role WHERE name_role = 'Библиотекарь' AND login = ? AND password = ?";
-    private final static String DELETE_LIBRARIAN = "DELETE FROM library.librarians WHERE id_librarian = ?";
-    private final static String UPDATE_LIBRARIAN = "UPDATE library.librarians SET surname = ?, name = ?, middle_name = ?, shift = ? " +
-            "WHERE id_librarian = ?;";
+    private final static String INSERT_LIBRARIAN = "INSERT INTO users(surname, name, middle_name, login, password, id_role) VALUES(?,?,?,?,?,?);";
+    private final static String SELECT_LIBRARIANS = "SELECT number_ticket, surname, name, middle_name, login FROM library.users " +
+            "JOIN library.roles ON users.id_role = roles.id_role " +
+            "WHERE roles.name_role = 'Библиотекарь';";
+    private final static String SELECT_LIBRARIAN_BY_ID = "SELECT number_ticket, surname, name, middle_name, login FROM library.users " +
+            "JOIN library.roles ON users.id_role = roles.id_role " +
+            "WHERE roles.name_role = 'Библиотекарь' AND number_ticket = ?;";
+    private final static String CHECK_LOGIN_PASSWORD = "SELECT login, password FROM library.users JOIN library.roles on users.id_role = roles.id_role WHERE name_role = 'Библиотекарь' AND login = ? AND password = ?";
+    private final static String DELETE_LIBRARIAN = "DELETE FROM library.users WHERE number_ticket = ?";
+    private final static String UPDATE_LIBRARIAN = "UPDATE library.users SET surname = ?, name = ?, middle_name = ?, login = ? WHERE number_ticket = ?;";
+    private final static int ID_ROLE_LIBRARIAN = 2;
+
 
     @Override
-    public List<Librarian> getAllLibrarians() throws DAOException {
+    public List<User> getAllLibrarians() throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         Statement statement = null;
         ResultSet resultSet;
-        Librarian librarian;
-        List<Librarian> listLibrarian = new ArrayList<>();
+        User librarian;
+        List<User> listLibrarian = new ArrayList<>();
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(SELECT_LIBRARIANS);
@@ -57,11 +62,11 @@ public class LibrarianDAOImpl implements LibrarianDAO {
     }
 
     @Override
-    public Librarian getLibrarianById(int id) throws DAOException {
+    public User getLibrarianById(int id) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
-        Librarian librarian = new Librarian();
+        User librarian = new User();
         try {
             statement = connection.prepareStatement(SELECT_LIBRARIAN_BY_ID);
             statement.setInt(1, id);
@@ -87,7 +92,7 @@ public class LibrarianDAOImpl implements LibrarianDAO {
     }
 
     @Override
-    public boolean addLibrarian(Librarian librarian) throws DAOException {
+    public boolean addLibrarian(User librarian) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
@@ -95,9 +100,9 @@ public class LibrarianDAOImpl implements LibrarianDAO {
             statement.setString(1, librarian.getSurname());
             statement.setString(2, librarian.getName());
             statement.setString(3, librarian.getMiddleName());
-            statement.setInt(4, librarian.getShift());
-            statement.setString(5, librarian.getLogin());
-            statement.setString(6, librarian.getPassword());
+            statement.setString(4, librarian.getLogin());
+            statement.setString(5, librarian.getPassword());
+            statement.setInt(6, ID_ROLE_LIBRARIAN);
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -142,7 +147,7 @@ public class LibrarianDAOImpl implements LibrarianDAO {
     }
 
     @Override
-    public boolean updateLibrarian(Librarian librarian) throws DAOException {
+    public boolean updateLibrarian(User librarian) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
@@ -150,8 +155,8 @@ public class LibrarianDAOImpl implements LibrarianDAO {
             statement.setString(1, librarian.getSurname());
             statement.setString(2, librarian.getName());
             statement.setString(3, librarian.getMiddleName());
-            statement.setInt(4, librarian.getShift());
-            statement.setInt(5, librarian.getId());
+            statement.setString(4, librarian.getLogin());
+            statement.setInt(5, librarian.getNumberTicket());
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -196,13 +201,13 @@ public class LibrarianDAOImpl implements LibrarianDAO {
         }
     }
 
-    private Librarian getLibrarianFromResultSet(ResultSet resultSet) throws SQLException {
-        Librarian librarian = new Librarian();
-        librarian.setId(resultSet.getInt("id_librarian"));
+    private User getLibrarianFromResultSet(ResultSet resultSet) throws SQLException {
+        User librarian = new User();
+        librarian.setNumberTicket(resultSet.getInt("number_ticket"));
         librarian.setSurname(resultSet.getString("surname"));
         librarian.setName(resultSet.getString("name"));
         librarian.setMiddleName(resultSet.getString("middle_name"));
-        librarian.setShift(resultSet.getInt("shift"));
+        librarian.setLogin(resultSet.getString("login"));
         return librarian;
     }
 }
