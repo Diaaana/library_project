@@ -12,7 +12,6 @@
 <body>
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
-<h1>HELLO</h1>
 </body>
 <script src = "${pageContext.request.contextPath}/resource/js/bootstrap.js"></script>
 </html>

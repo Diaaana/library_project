@@ -86,8 +86,11 @@
                 <button class="btn btn-link">${main}</button>
                 <button class="btn btn-link">${books}</button>
                 <button class="btn btn-link">${authors}</button>
-                <button class="btn btn-link">${account}</button>
-                <form action="Controller" method="get">
+                <form action="Controller" method="post">
+                    <input type="hidden" name="command" value="show_orders"/>
+                    <input type="submit" value="Заказы" class="btn btn-link nav-btn"/>
+                </form>
+                <form action="Controller" method="post">
                     <input type="hidden" name="command" value="logout"/>
                     <input type="submit" value="${logout}" class="button"/><br/>
                 </form>

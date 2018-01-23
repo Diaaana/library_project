@@ -18,29 +18,59 @@ import java.util.List;
 public class AuthorDAOImpl implements AuthorDAO {
     private final static Logger LOGGER = LogManager.getLogger(AuthorDAOImpl.class);
     private final static String SELECT_AUTHORS = "SELECT id_author, surname, name, middle_name, country FROM library.authors;";
+    private final static String SELECT_AUTHOR_BY_ID = "SELECT id_author, surname, name, middle_name, country FROM library.authors WHERE id_author = ?;";
     private final static String INSERT_AUTHOR = "INSERT INTO authors(surname, name, middle_name, country) VALUES(?,?,?,?)";
     private final static String DELETE_AUTHOR = "DELETE FROM library.authors WHERE id_author = ?";
+    private final static String UPDATE_AUTHOR = "UPDATE library.authors SET surname = ?, name = ?, middle_name = ?, country = ? " +
+            "WHERE id_author = ?;";
 
     @Override
     public List<Author> getAllAuthors() throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         Statement statement = null;
+        ResultSet resultSet;
+        Author author;
+        List<Author> listAuthors = new ArrayList<>();
         try {
             statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SELECT_AUTHORS);
-            List<Author> listAuthors = new ArrayList<>();
+            resultSet = statement.executeQuery(SELECT_AUTHORS);
             while (resultSet.next()) {
-                Author author = new Author();
-                author.setId(resultSet.getInt("id_author"));
-                author.setSurname(resultSet.getString("surname"));
-                author.setName(resultSet.getString("name"));
-                author.setMiddleName(resultSet.getString("middle_name"));
-                author.setCountryBirth(resultSet.getString("country"));
+                author = getAuthorFromResultSet(resultSet);
                 listAuthors.add(author);
             }
             return listAuthors;
         } catch (SQLException e) {
             throw new DAOException("Error get all authors" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+    }
+
+    @Override
+    public Author getAuthorById(int id) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+        Author author = new Author();
+        try {
+            statement = connection.prepareStatement(SELECT_AUTHOR_BY_ID);
+            statement.setInt(1, id);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                author = getAuthorFromResultSet(resultSet);
+            }
+            return author;
+        } catch (SQLException e) {
+            throw new DAOException("Error get an author by id" + e);
         } finally {
             try {
                 statement.close();
@@ -106,5 +136,44 @@ public class AuthorDAOImpl implements AuthorDAO {
                 LOGGER.error("Error closing connection", e);
             }
         }
+    }
+
+    @Override
+    public boolean updateAuthor(Author author) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(UPDATE_AUTHOR);
+            statement.setString(1, author.getSurname());
+            statement.setString(2, author.getName());
+            statement.setString(3, author.getMiddleName());
+            statement.setString(4, author.getCountryBirth());
+            statement.setInt(5, author.getId());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new DAOException("Error update an author" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+    }
+
+    private Author getAuthorFromResultSet(ResultSet resultSet) throws SQLException {
+        Author author = new Author();
+        author.setId(resultSet.getInt("id_author"));
+        author.setSurname(resultSet.getString("surname"));
+        author.setName(resultSet.getString("name"));
+        author.setMiddleName(resultSet.getString("middle_name"));
+        author.setCountryBirth(resultSet.getString("country"));
+        return author;
     }
 }

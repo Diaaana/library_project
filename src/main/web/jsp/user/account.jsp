@@ -11,6 +11,11 @@
 </head>
 <body>
 
+<div class="container">
+    <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+    <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+</div>
+
 </body>
 <script src = "${pageContext.request.contextPath}/resource/js/bootstrap.js"></script>
 </html>

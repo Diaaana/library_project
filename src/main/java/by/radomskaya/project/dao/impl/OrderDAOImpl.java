@@ -19,8 +19,11 @@ import java.util.List;
 
 public class OrderDAOImpl implements OrderDAO {
     private final static Logger LOGGER = LogManager.getLogger(OrderDAOImpl.class);
-    private final static String SELECT_ORDERS = "SELECT * FROM library.orders";
-    private final static String SELECT_PERSONAL_ORDERS = "SELECT number_ticket, tittle, surname, name, middle_name, image_book " +
+    private final static String SELECT_ALL_ORDERS = "SELECT id_order, number_ticket, books.id_book, tittle, surname, name, middle_name, image_book " +
+            "FROM library.orders " +
+            "JOIN library.books ON books.id_book = orders.id_book " +
+            "JOIN library.authors ON authors.id_author = orders.id_author;";
+    private final static String SELECT_PERSONAL_ORDERS = "SELECT id_order, books.id_book, number_ticket, tittle, surname, name, middle_name, image_book " +
             "FROM library.orders " +
             "JOIN library.books ON orders.id_book = books.id_book " +
             "JOIN library.authors ON orders.id_author = authors.id_author " +
@@ -31,18 +34,21 @@ public class OrderDAOImpl implements OrderDAO {
             "JOIN library.authors ON orders.id_author = authors.id_author " +
             "WHERE number_ticket = ?;";
     private final static String INSERT_ORDER = "INSERT INTO library.orders(number_ticket, id_book, id_author) VALUES(?,?,?)";
-    private final static String DELETE_ORDER = "DELETE FROM library.orders WHERE id_order = ?";
+    private final static String DELETE_ORDER_BY_ID = "DELETE FROM library.orders WHERE id_order = ?";
+    private final static String DELETE_ORDER_BY_NUMBER_TICKET = "DELETE FROM library.orders WHERE number_ticket = ?";
 
     @Override
     public List<Order> getAllOrders() throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         Statement statement = null;
+        ResultSet resultSet;
+        Order order;
+        List<Order> listOrders = new ArrayList<>();
         try {
             statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SELECT_ORDERS);
-            List<Order> listOrders = new ArrayList<>();
+            resultSet = statement.executeQuery(SELECT_ALL_ORDERS);
             while (resultSet.next()) {
-                Order order = new Order();
+                order = getOrdersFromResultSet(resultSet);
                 listOrders.add(order);
             }
             return listOrders;
@@ -66,10 +72,11 @@ public class OrderDAOImpl implements OrderDAO {
     public boolean checkPersonalOrders(int numberTicket) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
+        ResultSet resultSet;
         try {
             statement = connection.prepareStatement(CHECK_PERSONAL_ORDERS);
             statement.setInt(1, numberTicket);
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
             throw new DAOException("Error find orders by number ticket" + e);
@@ -91,12 +98,13 @@ public class OrderDAOImpl implements OrderDAO {
     public List<Order> getPersonalOrders(int numberTicket) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        Order order = new Order();
+        ResultSet resultSet;
+        Order order;
         List<Order> listOrders = new ArrayList<>();
         try {
             statement = connection.prepareStatement(SELECT_PERSONAL_ORDERS);
             statement.setInt(1, numberTicket);
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 order = getOrdersFromResultSet(resultSet);
                 listOrders.add(order);
@@ -146,15 +154,39 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public boolean deleteOrder(Order order) throws DAOException {
+    public void deleteOrderById(int id) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(DELETE_ORDER);
+            statement = connection.prepareStatement(DELETE_ORDER_BY_ID);
+            statement.setInt(1, id);
             statement.executeUpdate();
-            return true;
         } catch (SQLException e) {
-            throw new DAOException("Error delete the order" + e);
+            throw new DAOException("Error delete an order by id" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+    }
+
+    @Override
+    public void deleteOrderByNumberTicket(int numberTicket) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(DELETE_ORDER_BY_NUMBER_TICKET);
+            statement.setInt(1, numberTicket);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error delete an order by number ticket" + e);
         } finally {
             try {
                 statement.close();
@@ -173,7 +205,9 @@ public class OrderDAOImpl implements OrderDAO {
         Order order = new Order();
         Book book = new Book();
         Author author = new Author();
+        order.setId(resultSet.getInt("id_order"));
         order.setNumberTicket(resultSet.getInt("number_ticket"));
+        book.setId(resultSet.getInt("id_book"));
         book.setTittle(resultSet.getString("tittle"));
         book.setImage(resultSet.getString("image_book"));
         order.setBook(book);

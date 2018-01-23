@@ -19,6 +19,11 @@ public class LibrarianLogic {
         return librarianDAO.getAllLibrarians();
     }
 
+    public Librarian getLibrarianById(int id) throws DAOException {
+        LibrarianDAO librarianDAO = DAOFactory.getInstance().getLibrarianDAO();
+        return librarianDAO.getLibrarianById(id);
+    }
+
     public boolean addLibrarian(Librarian librarian) throws DAOException {
         LibrarianDAO librarianDAO = DAOFactory.getInstance().getLibrarianDAO();
         return librarianDAO.addLibrarian(librarian);
@@ -27,5 +32,10 @@ public class LibrarianLogic {
     public boolean deleteLibrarian(int id) throws DAOException {
         LibrarianDAO librarianDAO = DAOFactory.getInstance().getLibrarianDAO();
         return librarianDAO.deleteLibrarian(id);
+    }
+
+    public boolean updateLibrarian(Librarian librarian) throws DAOException {
+        LibrarianDAO librarianDAO = DAOFactory.getInstance().getLibrarianDAO();
+        return librarianDAO.updateLibrarian(librarian);
     }
 }

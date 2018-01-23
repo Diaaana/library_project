@@ -14,6 +14,11 @@ public class AuthorLogic {
         return authorDAO.getAllAuthors();
     }
 
+    public Author getAuthorById(int id) throws DAOException {
+        AuthorDAO authorDAO = DAOFactory.getInstance().getAuthorDAO();
+        return authorDAO.getAuthorById(id);
+    }
+
     public boolean addAuthor(Author author) throws DAOException {
         AuthorDAO authorDAO = DAOFactory.getInstance().getAuthorDAO();
         return authorDAO.addAuthor(author);
@@ -22,5 +27,10 @@ public class AuthorLogic {
     public boolean deleteAuthor(int id) throws DAOException {
         AuthorDAO authorDAO = DAOFactory.getInstance().getAuthorDAO();
         return authorDAO.deleteAuthor(id);
+    }
+
+    public boolean updateAuthor(Author author) throws DAOException {
+        AuthorDAO authorDAO = DAOFactory.getInstance().getAuthorDAO();
+        return authorDAO.updateAuthor(author);
     }
 }
