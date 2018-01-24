@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `library`.`authors` (
   INDEX `country` (`country` ASC)  COMMENT 'Индекс, состоящий из страны рождения автора. Данный индекс необходим, так как возможен запрос на чтение по данному полю.',
   INDEX `surname_name_middlename` (`surname` ASC, `name` ASC, `middle_name` ASC)  COMMENT 'Индекс, состоящий из фамилии, имени и отчества автора. Так как по данным полям наиболее часто выполняется запрос на чтение.')
 ENGINE = InnoDB
-AUTO_INCREMENT = 14
+AUTO_INCREMENT = 18
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Данная таблица предназначена для хранения информации об авторах книг в библиотеке. Первичным ключом является номер автора. ';
 
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `library`.`books` (
   INDEX `tittle_date` (`tittle` ASC, `date_edition` ASC)  COMMENT 'Индекс служит для запроса на чтения по названию книги и даты издания.',
   INDEX `publisher_place` (`publisher` ASC, `place_edition` ASC)  COMMENT 'Индекс для запроса на чтение по таким полям, как издательство и место издания.')
 ENGINE = InnoDB
-AUTO_INCREMENT = 16
+AUTO_INCREMENT = 20
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_danish_ci
 COMMENT = 'Данная таблица служит для хранения информации о книгах. Все поля должны быть не нулевые.';
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `library`.`genres` (
   PRIMARY KEY (`id_genre`),
   INDEX `name_genre` (`name_genre` ASC)  COMMENT 'Индекс, состоящий из названия жанра. Необходим для запроса на чтение по полю \"название жанра\".')
 ENGINE = InnoDB
-AUTO_INCREMENT = 10
+AUTO_INCREMENT = 20
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Данная таблица хранит информацию о жанрах. Все поля являются не нулевыми.';
 
@@ -133,20 +133,20 @@ COMMENT = 'Данная таблица служит для хранения ин
 
 
 -- -----------------------------------------------------
--- Table `library`.`readers`
+-- Table `library`.`users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `library`.`readers` (
+CREATE TABLE IF NOT EXISTS `library`.`users` (
   `number_ticket` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'Поле хранит номер билета читателя, является первичным ключом и уникальным, так как каждый читатель имеет свой уникальный номер билета.',
   `id_role` INT(11) NOT NULL DEFAULT '2' COMMENT 'Поле хранит идентификатор роли пользователя. Является внешним ключом, предназначено для хранения значения первичного ключа таблицы \"roles\" с целью организации связи между этими таблицами.',
   `surname` VARCHAR(45) NOT NULL COMMENT 'Поле хранит фамилию читателя.',
   `name` VARCHAR(45) NOT NULL COMMENT 'Поле хранит имя читателя.',
   `middle_name` VARCHAR(45) NOT NULL COMMENT 'Поле хранит отчество читателя.',
-  `age` INT(11) NOT NULL COMMENT 'Поле хранит дату возраст читателя.',
-  `phone_number` VARCHAR(20) NOT NULL COMMENT 'Поле хранит номер телефона читателя.',
-  `mail` VARCHAR(45) NOT NULL COMMENT 'Поле хранит почтовый адрес читателя.',
+  `age` INT(11) NULL DEFAULT NULL COMMENT 'Поле хранит дату возраст читателя.',
+  `phone_number` VARCHAR(20) NULL DEFAULT NULL COMMENT 'Поле хранит номер телефона читателя.',
+  `mail` VARCHAR(45) NULL DEFAULT NULL COMMENT 'Поле хранит почтовый адрес читателя.',
   `login` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `image` VARCHAR(45) NOT NULL,
+  `image` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`number_ticket`),
   UNIQUE INDEX `number_ticket_UNIQUE` (`number_ticket` ASC)  COMMENT 'Индекс, состоящий из номера билета читателя и являющийся уникальным, так как у каждого читателя уникальный номер билета. Необходим для запроса на чтения по данному полю.',
   INDEX `surname_name_middlename` (`surname` ASC, `name` ASC, `middle_name` ASC)  COMMENT 'Индекс является составным и содержит в себе такие поля, как фамилия, имя и отчество читателя. Необъодим для запроса на чтения по данным полям.',
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `library`.`readers` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 10000
+AUTO_INCREMENT = 10005
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Данная таблица хранит информацию о читателях. Все поля должны быть не нулевыми.';
 
@@ -185,38 +185,13 @@ CREATE TABLE IF NOT EXISTS `library`.`borrow_book` (
     ON UPDATE CASCADE,
   CONSTRAINT `number_ticket`
     FOREIGN KEY (`number_ticket`)
-    REFERENCES `library`.`readers` (`number_ticket`)
+    REFERENCES `library`.`users` (`number_ticket`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
 AUTO_INCREMENT = 17
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Данная таблица хранит информацию о выдаче книг читателям. Все поля являются не нулевыми.';
-
-
--- -----------------------------------------------------
--- Table `library`.`librarians`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `library`.`librarians` (
-  `id_librarian` INT(11) NOT NULL AUTO_INCREMENT,
-  `surname` VARCHAR(45) NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  `middle_name` VARCHAR(45) NOT NULL,
-  `shift` INT(11) NOT NULL,
-  `id_role` INT(11) NOT NULL DEFAULT '3',
-  `login` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_librarian`),
-  INDEX `id_role_idx` (`id_role` ASC),
-  INDEX `id_role_librarian_idx` (`id_role` ASC),
-  CONSTRAINT `id_role_librarian`
-    FOREIGN KEY (`id_role`)
-    REFERENCES `library`.`roles` (`id_role`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 8
-DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
@@ -237,11 +212,11 @@ CREATE TABLE IF NOT EXISTS `library`.`orders` (
     ON UPDATE CASCADE,
   CONSTRAINT `mber_ticket`
     FOREIGN KEY (`number_ticket`)
-    REFERENCES `library`.`readers` (`number_ticket`)
+    REFERENCES `library`.`users` (`number_ticket`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 14
+AUTO_INCREMENT = 19
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Данная таблица хранит данные о заказе книг клиентом. Все поля являются не нулевыми.';
 
