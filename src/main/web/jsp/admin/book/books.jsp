@@ -46,7 +46,7 @@
                 <td>${book.author.surname}</td>
                 <td>${book.author.name}</td>
                 <td>${book.author.middleName}</td>
-                <td>${book.genre}</td>
+                <td>${book.genres}</td>
                 <td>${book.dateEdition}</td>
                 <td>${book.placeEdition}</td>
                 <td>${book.publisher}</td>

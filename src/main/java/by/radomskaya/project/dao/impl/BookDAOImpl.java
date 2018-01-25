@@ -179,7 +179,6 @@ public class BookDAOImpl implements BookDAO {
             if (resultSet.next()) {
                 idBook = resultSet.getInt(1);
             }
-            System.out.println(idBook);
             statement = connection.prepareStatement(INSERT_BOOK_AND_GENRE);
             statement.setInt(1, idBook);
             statement.setInt(2, idGenre);
