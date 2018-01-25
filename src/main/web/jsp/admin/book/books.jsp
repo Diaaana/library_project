@@ -15,7 +15,10 @@
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 
-<a href="${pageContext.request.contextPath}/jsp/admin/book/addBooks.jsp" class="a1">Добавить книгу</a>
+<form action="Controller" method="post">
+    <input type="hidden" name="command" value="get_genres"/>
+    <input type="submit" value="Добавить книгу" class="btn btn-link nav-btn"/>
+</form>
 
 <form action="Controller" method="post">
     <table class="table table-hover">

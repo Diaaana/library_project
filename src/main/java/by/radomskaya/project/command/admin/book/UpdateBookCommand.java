@@ -47,7 +47,6 @@ public class UpdateBookCommand implements Command{
         author.setMiddleName(request.getParameter(PARAM_AUTHOR_MIDDLE_NAME));
         author.setCountryBirth(request.getParameter(PARAM_AUTHOR_COUNTRY));
         book.setAuthor(author);
-        book.setGenre(request.getParameter(PARAM_GENRE));
         book.setDateEdition(request.getParameter(PARAM_DATA_EDITION));
         book.setPlaceEdition(request.getParameter(PARAM_PLACE_EDITION));
         book.setPublisher(request.getParameter(PARAM_PUBLISHER));

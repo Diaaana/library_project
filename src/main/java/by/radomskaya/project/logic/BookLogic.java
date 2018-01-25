@@ -7,6 +7,7 @@ import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.DAOException;
 
 import java.util.List;
+import java.util.Map;
 
 public class BookLogic {
 
@@ -28,11 +29,6 @@ public class BookLogic {
     public boolean updateBook(Book book) throws DAOException {
         BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
         return bookDAO.updateBook(book);
-    }
-
-    public boolean addGenre(Book book) throws DAOException {
-        GenreDAO genreDAO = DAOFactory.getInstance().getGenreDAO();
-        return genreDAO.addGenre(book);
     }
 
     public boolean deleteBook(int id) throws DAOException {
@@ -58,6 +54,19 @@ public class BookLogic {
     public List<Book> getFoundBooksByAuthor(String author) throws DAOException {
         BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
         return bookDAO.getFoundBooksByAuthor(author);
+    }
+
+    public Map<Integer, String> getAllGenres() throws DAOException {
+        GenreDAO genreDAO = DAOFactory.getInstance().getGenreDAO();
+        return genreDAO.getAllGenres();
+    }
+
+    public void addBookAndGenre(String[] genres) throws DAOException {
+        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
+
+        for (int i = 0; i < genres.length; i++) {
+            bookDAO.addBookAndGenre(Integer.parseInt(genres[i]));
+        }
     }
 
 }

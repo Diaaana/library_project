@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="locale" var="local"/>
@@ -23,9 +23,10 @@
     <title><fmt:message key="label.addBook" bundle="${local}"/></title>
 
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/resource/images/icon.png" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href = "${pageContext.request.contextPath}/resource/css/app-style.css">
-    <link rel="stylesheet" type="text/css" href = "${pageContext.request.contextPath}/resource/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href = "${pageContext.request.contextPath}/resource/css/bootstrap-theme.css.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/app-style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/resource/css/bootstrap-theme.css.css">
 
 </head>
 <body class="body-add-books">
@@ -64,9 +65,15 @@
             <input type="text" name="country" class="form-control" placeholder="${country}">
         </div>
         <div class="form-group">
+            <label class="label">Жанры</label>
+            <c:forEach var="genre" items="${genres}">
+                <br/><input type="checkbox" name="genre" value="${genre.key}"> ${genre.value}
+            </c:forEach>
+        </div>
+        <%--<div class="form-group">
             <label class="label"><fmt:message key="label.enterGenre" bundle="${local}"/></label>
             <input type="text" name="genre" class="form-control" placeholder="${genre}">
-        </div>
+        </div>--%>
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterDateEdition" bundle="${local}"/></label>
             <input type="date" name="date_edition" class="form-control">
@@ -89,11 +96,12 @@
         </div>
         <input type="hidden" name="command" value="add_book"/>
         <input type="submit" name="add_book" class="btn btn-success" value="${add}"/>
-        <button type="reset" value="clear" onclick="clearForm()" class="btn btn-danger"><fmt:message key="label.clear" bundle="${local}"/></button>
+        <button type="reset" value="clear" onclick="clearForm()" class="btn btn-danger"><fmt:message key="label.clear"
+                                                                                                     bundle="${local}"/></button>
     </form>
 
 
 </div>
 </body>
-<script src = "/resource/js/bootstrap.js"></script>
+<script src="/resource/js/bootstrap.js"></script>
 </html>

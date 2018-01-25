@@ -1,11 +1,13 @@
 package by.radomskaya.project.entity;
 
+import java.util.Arrays;
+
 public class Book extends Entity {
     private int id;
     private String isbn;
     private String tittle;
     private Author author;
-    private String genre;
+    private String[] genres;
     private String dateEdition;
     private String placeEdition;
     private String publisher;
@@ -18,12 +20,12 @@ public class Book extends Entity {
         this.id = id;
     }
 
-    public Book(int id, String isbn, String tittle, Author author, String genre, String dateEdition, String placeEdition, String publisher, int numberCopies, String image) {
+    public Book(int id, String isbn, String tittle, Author author, String[] genres, String dateEdition, String placeEdition, String publisher, int numberCopies, String image) {
         this.id = id;
         this.isbn = isbn;
         this.tittle = tittle;
         this.author = author;
-        this.genre = genre;
+        this.genres = genres;
         this.dateEdition = dateEdition;
         this.placeEdition = placeEdition;
         this.publisher = publisher;
@@ -63,12 +65,12 @@ public class Book extends Entity {
         this.author = author;
     }
 
-    public String getGenre() {
-        return genre;
+    public String[] getGenres() {
+        return genres;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setGenres(String[] genres) {
+        this.genres = genres;
     }
 
     public String getDateEdition() {
@@ -122,8 +124,8 @@ public class Book extends Entity {
         if (numberCopies != book.numberCopies) return false;
         if (!isbn.equals(book.isbn)) return false;
         if (!tittle.equals(book.tittle)) return false;
-        if (author != null ? !author.equals(book.author) : book.author != null) return false;
-        if (!genre.equals(book.genre)) return false;
+        if (!author.equals(book.author)) return false;
+        if (!Arrays.equals(genres, book.genres)) return false;
         if (!dateEdition.equals(book.dateEdition)) return false;
         if (!placeEdition.equals(book.placeEdition)) return false;
         if (!publisher.equals(book.publisher)) return false;
@@ -135,8 +137,8 @@ public class Book extends Entity {
         int result = id;
         result = 31 * result + isbn.hashCode();
         result = 31 * result + tittle.hashCode();
-        result = 31 * result + (author != null ? author.hashCode() : 0);
-        result = 31 * result + genre.hashCode();
+        result = 31 * result + author.hashCode();
+        result = 31 * result + Arrays.hashCode(genres);
         result = 31 * result + dateEdition.hashCode();
         result = 31 * result + placeEdition.hashCode();
         result = 31 * result + publisher.hashCode();
@@ -152,7 +154,7 @@ public class Book extends Entity {
                 ", isbn='" + isbn + '\'' +
                 ", tittle='" + tittle + '\'' +
                 ", author=" + author +
-                ", genre='" + genre + '\'' +
+                ", genres=" + Arrays.toString(genres) +
                 ", dateEdition='" + dateEdition + '\'' +
                 ", placeEdition='" + placeEdition + '\'' +
                 ", publisher='" + publisher + '\'' +

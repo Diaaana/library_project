@@ -41,6 +41,7 @@ public enum CommandType {
     SHOW_READERS(new ShowReadersCommand(new ReaderLogic())),
     SHOW_LIBRARIANS(new ShowLibrariansCommand(new LibrarianLogic())),
     GET_BOOKS(new GetBooksCommand(new BookLogic())),
+    GET_GENRES(new GetGenresCommand(new BookLogic())),
     FIND_BOOK_BY_TITTLE(new FindBookByTittleCommand(new BookLogic())),
     FIND_BOOK_BY_AUTHOR(new FindBookByAuthorCommand(new BookLogic())),
     DELETE_BOOK(new DeleteBookCommand(new BookLogic())),

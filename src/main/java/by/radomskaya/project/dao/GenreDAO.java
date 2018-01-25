@@ -1,8 +1,9 @@
 package by.radomskaya.project.dao;
 
-import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.DAOException;
 
+import java.util.Map;
+
 public interface GenreDAO {
-    boolean addGenre(Book book) throws DAOException;
+    Map<Integer, String> getAllGenres() throws DAOException;
 }

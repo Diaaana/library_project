@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static by.radomskaya.project.constant.PageConstant.ADMIN_ADD_BOOKS_PAGE;
 import static by.radomskaya.project.constant.PageConstant.ADMIN_BOOKS_PAGE;
@@ -44,6 +45,9 @@ public class AddBookCommand implements Command {
         String page = null;
         Book book = new Book();
         Author author = new Author();
+        List<Book> listBooks;
+        String[] genres = request.getParameterValues(PARAM_GENRE);
+
         try {
             book.setIsbn(request.getParameter(PARAM_ISBN));
             book.setTittle(request.getParameter(PARAM_TITTLE));
@@ -52,19 +56,20 @@ public class AddBookCommand implements Command {
             author.setMiddleName(request.getParameter(PARAM_AUTHOR_MIDDLE_NAME));
             author.setCountryBirth(request.getParameter(PARAM_AUTHOR_COUNTRY));
             book.setAuthor(author);
-            book.setGenre(request.getParameter(PARAM_GENRE));
+            book.setGenres(genres);
             book.setDateEdition(request.getParameter(PARAM_DATA_EDITION));
             book.setPlaceEdition(request.getParameter(PARAM_PLACE_EDITION));
             book.setPublisher(request.getParameter(PARAM_PUBLISHER));
             book.setNumberCopies(Integer.parseInt(request.getParameter(PARAM_NUMBER_COPIES)));
-            // book.setImage(request.getParameter(PARAM_IMAGE));
             Part filePart = request.getPart(PARAM_IMAGE);
             String imageName = getImageName(filePart);
             book.setImage(imageName);
-           // String webInfPath = request.getServletContext().getRealPath("/");
 
-            if (bookLogic.addBook(book) && authorLogic.addAuthor(author) && bookLogic.addGenre(book)) {
-                request.setAttribute("success", "Все хорошо");
+            if (authorLogic.addAuthor(author) && bookLogic.addBook(book)) {
+                bookLogic.addBookAndGenre(genres);
+                //request.setAttribute("success", "Все хорошо");
+                listBooks = bookLogic.getBooks();
+                request.setAttribute("books", listBooks);
                 page = ADMIN_BOOKS_PAGE;
             } else {
                 page = ADMIN_ADD_BOOKS_PAGE;

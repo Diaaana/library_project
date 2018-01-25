@@ -56,6 +56,10 @@ public class BookDAOImpl implements BookDAO {
             "JOIN library.genres ON book_genre.id_genre = genres.id_genre " +
             "SET isbn = ?, tittle = ?, surname = ?, name = ?, middle_name = ?, name_genre = ?, date_edition = ?, place_edition = ?, publisher = ?, number_copies = ? " +
             "WHERE books.id_book = ?;";
+    private final static String GET_LAST_ID = "(SELECT id_book FROM library.books ORDER BY id_book desc limit 1) " +
+            "UNION (SELECT id_author FROM library.authors ORDER BY id_author desc limit 1)";
+    private final static String INSERT_BOOK_AND_AUTHOR = "INSERT INTO library.book_author(id_book, id_author) VALUES(?,?);";
+    private final static String INSERT_BOOK_AND_GENRE = "INSERT INTO library.book_genre(id_book, id_genre) VALUES(?,?);";
 
     @Override
     public List<Book> getBooksAndAuthors() throws DAOException {
@@ -122,6 +126,7 @@ public class BookDAOImpl implements BookDAO {
     public boolean addBook(Book book) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
+        ResultSet resultSet = null;
         try {
             statement = connection.prepareStatement(INSERT_BOOK);
             statement.setString(1, book.getIsbn());
@@ -132,9 +137,55 @@ public class BookDAOImpl implements BookDAO {
             statement.setInt(6, book.getNumberCopies());
             statement.setString(7, book.getImage());
             statement.executeUpdate();
+
+            statement = connection.prepareStatement(GET_LAST_ID);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                int idBook = resultSet.getInt(1);
+                resultSet.next();
+                int idAuthor = resultSet.getInt(1);
+
+                statement = connection.prepareStatement(INSERT_BOOK_AND_AUTHOR);
+                statement.setInt(1, idBook);
+                statement.setInt(2, idAuthor);
+                statement.executeUpdate();
+            }
             return true;
         } catch (SQLException e) {
-            throw new DAOException("Error add book" + e);
+            throw new DAOException("Error add book " + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+    }
+
+    @Override
+    public void addBookAndGenre(int idGenre) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        int idBook = 0;
+        try {
+            statement = connection.prepareStatement(GET_LAST_ID);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                idBook = resultSet.getInt(1);
+            }
+            System.out.println(idBook);
+            statement = connection.prepareStatement(INSERT_BOOK_AND_GENRE);
+            statement.setInt(1, idBook);
+            statement.setInt(2, idGenre);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException("Error add book " + e);
         } finally {
             try {
                 statement.close();
@@ -299,7 +350,7 @@ public class BookDAOImpl implements BookDAO {
             statement.setString(3, book.getAuthor().getSurname());
             statement.setString(4, book.getAuthor().getName());
             statement.setString(5, book.getAuthor().getMiddleName());
-            statement.setString(6, book.getGenre());
+            /*statement.setString(6, book.getGenre());*/
             statement.setString(7, book.getDateEdition());
             statement.setString(8, book.getPlaceEdition());
             statement.setString(9, book.getPublisher());
@@ -335,7 +386,7 @@ public class BookDAOImpl implements BookDAO {
         author.setName(resultSet.getString("name"));
         author.setMiddleName(resultSet.getString("middle_name"));
         book.setAuthor(author);
-        book.setGenre(resultSet.getString("name_genre"));
+        /*book.setGenre(resultSet.getString("name_genre"));*/
         book.setDateEdition(resultSet.getString("date_edition"));
         book.setPlaceEdition(resultSet.getString("place_edition"));
         book.setPublisher(resultSet.getString("publisher"));
