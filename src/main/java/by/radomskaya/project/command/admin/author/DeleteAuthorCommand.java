@@ -28,7 +28,7 @@ public class DeleteAuthorCommand implements Command {
         try {
             if (authorLogic.deleteAuthor(id)) {
                 listAuthors = authorLogic.getAuthors();
-                request.setAttribute("author", listAuthors);
+                request.setAttribute("authors", listAuthors);
                 page = ADMIN_AUTHORS_PAGE;
             }
 

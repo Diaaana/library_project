@@ -28,6 +28,7 @@
             <th>Имя</th>
             <th>Отчество</th>
             <th>Страна рождения</th>
+            <th></th>
         </tr>
         </thead>
 
@@ -39,10 +40,8 @@
                 <td>${author.middleName}</td>
                 <td>${author.countryBirth}</td>
                 <td>
-                    <div class="form-group">
-                        <a class="btn-link" href="Controller?id_author=${author.id}&command=delete_author">Удалить</a>
-                        <a class="btn-link" href="Controller?id_author=${author.id}&command=edit_author">Редактировать</a>
-                    </div>
+                    <a class="btn-delete" href="Controller?id_author=${author.id}&command=delete_author">Удалить</a>
+                    <a class="btn-edit" href="Controller?id_author=${author.id}&command=edit_author">Редактировать</a>
                 </td>
             </tr>
         </c:forEach>

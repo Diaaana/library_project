@@ -38,6 +38,7 @@ public class LoginCommand implements Command {
         try {
             if (adminLogic.checkAdmin(loginValue, passwordValue)) {
                 session.setAttribute("role", "admin");
+                request.setAttribute("adminLogin", loginValue);
                 page = ADMIN_MAIN_PAGE;
             } else if (readerLogic.checkReader(loginValue, passwordValue)) {
                 session.setAttribute("role", "reader");
@@ -50,6 +51,7 @@ public class LoginCommand implements Command {
                 page = USER_MAIN_PAGE;
             } else if (librarianLogic.checkLibrarian(loginValue, passwordValue)) {
                 session.setAttribute("role", "librarian");
+                request.setAttribute("librarianLogin", loginValue);
                 page = LIBRARIAN_MAIN_PAGE;
             } else {
                 session.setAttribute("role", null);

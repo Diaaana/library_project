@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.sql.Date;
 import java.util.List;
 
 import static by.radomskaya.project.constant.PageConstant.ADMIN_ADD_BOOKS_PAGE;
@@ -47,7 +48,9 @@ public class AddBookCommand implements Command {
         Author author = new Author();
         List<Book> listBooks;
         String[] genres = request.getParameterValues(PARAM_GENRE);
-
+        for (int i = 0; i < genres.length; i++) {
+            System.out.println(genres[i]);
+        }
         try {
             book.setIsbn(request.getParameter(PARAM_ISBN));
             book.setTittle(request.getParameter(PARAM_TITTLE));
@@ -57,7 +60,7 @@ public class AddBookCommand implements Command {
             author.setCountryBirth(request.getParameter(PARAM_AUTHOR_COUNTRY));
             book.setAuthor(author);
             book.setGenres(genres);
-            book.setDateEdition(request.getParameter(PARAM_DATA_EDITION));
+            book.setDateEdition(Date.valueOf(request.getParameter(PARAM_DATA_EDITION)));
             book.setPlaceEdition(request.getParameter(PARAM_PLACE_EDITION));
             book.setPublisher(request.getParameter(PARAM_PUBLISHER));
             book.setNumberCopies(Integer.parseInt(request.getParameter(PARAM_NUMBER_COPIES)));

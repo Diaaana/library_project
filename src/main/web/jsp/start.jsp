@@ -22,7 +22,7 @@
     <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
     <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 
-    <form role="form" action="Controller" method="get" class="form-login">
+    <form role="form" action="Controller" method="post" class="form-login">
 
         <div class="form-group">
             <label class="label"><fmt:message key="label.login" bundle="${local}"/></label>
@@ -40,5 +40,5 @@
     </form>
 </div>
 </body>
-<script src="${pageContext.request.contextPath}/resource/js/script.js"></script>
+<script src="${pageContext.request.contextPath}/resource/js/reader/script.js"></script>
 </html>

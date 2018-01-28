@@ -1,4 +1,4 @@
-function validationForm() {
+function checkRegistration() {
     if (document.form.surname.value == "") {
         alert("Пожалуйста, введите Вашу фамилию!");
         return false;
@@ -63,14 +63,6 @@ function validationForm() {
         alert("Некорректный адрес электронной почты!");
         return false;
     }
-
-    /*var x = document.form.mail.value;
-    var atpos = x.indexOf("@");
-    var dotpos = x.lastIndexOf(".");
-    if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= x.length) {
-        alert("Некорректный адрес e-mail!");
-        return false;
-    }*/
 
     if (document.form.login.value.length < 5) {
         alert("Имя пользователя должно содержать больше 5 символов!");

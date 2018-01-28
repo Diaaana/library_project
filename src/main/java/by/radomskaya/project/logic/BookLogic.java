@@ -21,6 +21,11 @@ public class BookLogic {
         return bookDAO.getBookById(id);
     }
 
+    public List<Book> findBooksByGenre(String genre) throws DAOException {
+        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
+        return bookDAO.foundBookByGenre(genre);
+    }
+
     public boolean addBook(Book book) throws DAOException {
         BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
         return bookDAO.addBook(book);
@@ -65,7 +70,7 @@ public class BookLogic {
         BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
 
         for (int i = 0; i < genres.length; i++) {
-            bookDAO.addBookAndGenre(Integer.parseInt(genres[i]));
+            bookDAO.addBookAndGenre(genres[i]);
         }
     }
 

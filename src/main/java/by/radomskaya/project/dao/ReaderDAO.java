@@ -11,4 +11,7 @@ public interface ReaderDAO {
     boolean addReader(User user) throws DAOException;
     boolean deleteReader(int numberTicket) throws DAOException;
     boolean checkLoginPasswordUser(String login, String password) throws DAOException;
+    User getUserByTicket(int numberTicket) throws DAOException;
+    boolean changePassword(int numberTicket, String password) throws DAOException;
+    String getPassword(int numberTicket) throws DAOException;
 }

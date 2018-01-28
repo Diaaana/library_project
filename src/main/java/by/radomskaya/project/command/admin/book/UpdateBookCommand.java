@@ -8,6 +8,7 @@ import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.BookLogic;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Date;
 import java.util.List;
 
 import static by.radomskaya.project.constant.PageConstant.ADMIN_BOOKS_PAGE;
@@ -47,7 +48,7 @@ public class UpdateBookCommand implements Command{
         author.setMiddleName(request.getParameter(PARAM_AUTHOR_MIDDLE_NAME));
         author.setCountryBirth(request.getParameter(PARAM_AUTHOR_COUNTRY));
         book.setAuthor(author);
-        book.setDateEdition(request.getParameter(PARAM_DATA_EDITION));
+        book.setDateEdition(Date.valueOf(request.getParameter(PARAM_DATA_EDITION)));
         book.setPlaceEdition(request.getParameter(PARAM_PLACE_EDITION));
         book.setPublisher(request.getParameter(PARAM_PUBLISHER));
         book.setNumberCopies(Integer.parseInt(request.getParameter(PARAM_NUMBER_COPIES)));

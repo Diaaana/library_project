@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Библиотекарь</title>
@@ -12,7 +13,11 @@
 <body>
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
 
+<c:set var="librarian" scope="request" value="${requestScope.librarianLogin}"/>
 
+<div class="container">
+    <h1 class="welcome">Добро пожаловать, ${librarian} !</h1>
+</div>
 
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 </body>

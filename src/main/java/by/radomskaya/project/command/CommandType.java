@@ -14,10 +14,10 @@ import by.radomskaya.project.command.common.LogoutCommond;
 import by.radomskaya.project.command.librarian.CheckOrderCommand;
 import by.radomskaya.project.command.librarian.ShowOrdersCommand;
 import by.radomskaya.project.command.librarian.TakeOrderCommand;
-import by.radomskaya.project.command.user.*;
-import by.radomskaya.project.command.user.book.FindBookByAuthorCommand;
-import by.radomskaya.project.command.user.book.FindBookByTittleCommand;
-import by.radomskaya.project.command.user.book.GetBooksCommand;
+import by.radomskaya.project.command.user.RegistrationCommand;
+import by.radomskaya.project.command.user.account.AccountCommand;
+import by.radomskaya.project.command.user.account.ChangePasswordCommand;
+import by.radomskaya.project.command.user.book.*;
 import by.radomskaya.project.command.user.order.AddToCartCommand;
 import by.radomskaya.project.command.user.order.DeleteOrderCommand;
 import by.radomskaya.project.command.user.order.GetPersonalOrdersCommand;
@@ -41,19 +41,23 @@ public enum CommandType {
     SHOW_READERS(new ShowReadersCommand(new ReaderLogic())),
     SHOW_LIBRARIANS(new ShowLibrariansCommand(new LibrarianLogic())),
     GET_BOOKS(new GetBooksCommand(new BookLogic())),
+    GET_PERSONAL_BOOK(new GetPersonalBookCommand(new BookLogic())),
     GET_GENRES(new GetGenresCommand(new BookLogic())),
     FIND_BOOK_BY_TITTLE(new FindBookByTittleCommand(new BookLogic())),
     FIND_BOOK_BY_AUTHOR(new FindBookByAuthorCommand(new BookLogic())),
+    FIND_BOOK_BY_GENRE(new FindBookByGenreCommand(new BookLogic())),
     DELETE_BOOK(new DeleteBookCommand(new BookLogic())),
     DELETE_AUTHOR(new DeleteAuthorCommand(new AuthorLogic())),
     DELETE_READER(new DeleteReaderCommand(new ReaderLogic())),
     DELETE_LIBRARIAN(new DeleteLibrarianCommand(new LibrarianLogic())),
-    ADD_TO_CART(new AddToCartCommand(new OrderLogic())),
+    ADD_TO_CART(new AddToCartCommand(new OrderLogic(), new BookLogic())),
     GET_PERSONAL_ORDERS(new GetPersonalOrdersCommand(new OrderLogic())),
     SHOW_ORDERS(new ShowOrdersCommand(new OrderLogic())),
     CHECK_ORDER(new CheckOrderCommand()),
     TAKE_ORDER(new TakeOrderCommand(new OrderLogic())),
-    DELETE_ORDER(new DeleteOrderCommand(new OrderLogic()));
+    DELETE_ORDER(new DeleteOrderCommand(new OrderLogic())),
+    ACCOUNT(new AccountCommand(new ReaderLogic())),
+    CHANGE_PASSWORD(new ChangePasswordCommand(new ReaderLogic()));
 
     private Command command;
 

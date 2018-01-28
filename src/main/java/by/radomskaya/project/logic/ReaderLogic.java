@@ -33,4 +33,19 @@ public class ReaderLogic {
         ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
         return readerDAO.deleteReader(numberTicket);
     }
+
+    public User getReaderByTicket(int numberTicket) throws DAOException {
+        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
+        return readerDAO.getUserByTicket(numberTicket);
+    }
+
+    public boolean changePassword(int numberTicket, String password) throws DAOException {
+        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
+        return readerDAO.changePassword(numberTicket, password);
+    }
+
+    public String getPassword(int numberTicket) throws DAOException {
+        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
+        return readerDAO.getPassword(numberTicket);
+    }
 }

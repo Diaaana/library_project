@@ -23,8 +23,8 @@ public class BorrowBookDAOImpl implements BorrowBookDAO {
             statement = connection.prepareStatement(INSERT_BORROWED_BOOK);
             statement.setInt(1, order.getNumberTicket());
             statement.setInt(2, order.getBook().getId());
-            statement.setString(3, order.getDateBorrow());
-            statement.setString(4, order.getDateReturn());
+            statement.setDate(3, order.getDateBorrow());
+            statement.setDate(4, order.getDateReturn());
             statement.setString(5, order.getMethodBorrow());
             statement.executeUpdate();
         } catch (SQLException e) {

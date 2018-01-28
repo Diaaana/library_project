@@ -18,9 +18,10 @@ public class PageConstant {
 
     public final static String REGISTRATION_PAGE = "/jsp/user/registration.jsp";
     public final static String USER_MAIN_PAGE = "/jsp/user/main.jsp";
-    public final static String USER_BOOKS_PAGE = "/jsp/user/books.jsp";
+    public final static String USER_BOOKS_PAGE = "/jsp/user/book/books.jsp";
+    public final static String USER_PERSONAL_BOOK_PAGE = "/jsp/user/book/personalBook.jsp";
     public final static String USER_ORDERS_CART_PAGE = "/jsp/user/ordersCart.jsp";
-    public final static String USER_ACCOUNT_PAGE = "/jsp/user/account.jsp";
+    public final static String USER_ACCOUNT_PAGE = "/jsp/user/account/account.jsp";
 
     public final static String LIBRARIAN_MAIN_PAGE = "/jsp/librarian/main.jsp";
     public final static String LIBRARIAN_EDIT_PAGE = "/jsp/librarian/main.jsp";

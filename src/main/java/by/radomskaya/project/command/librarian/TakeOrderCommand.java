@@ -8,6 +8,7 @@ import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.OrderLogic;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Date;
 import java.util.List;
 
 import static by.radomskaya.project.constant.PageConstant.LIBRARIAN_ORDERS_PAGE;
@@ -35,8 +36,8 @@ public class TakeOrderCommand implements Command {
         int idOrder = Integer.parseInt(request.getParameter(PARAM_ID_ORDER));
         int numberTicket = Integer.parseInt(request.getParameter(PARAM_NUMBER_TICKET));
         int idBook = Integer.parseInt(request.getParameter(PARAM_ID_BOOK));
-        String dateBorrow= request.getParameter(PARAM_DATE_BORROW);
-        String dateReturn = request.getParameter(PARAM_DATE_RETURN);
+        Date dateBorrow= Date.valueOf(request.getParameter(PARAM_DATE_BORROW));
+        Date dateReturn = Date.valueOf(request.getParameter(PARAM_DATE_RETURN));
         String methodBorrow = request.getParameter(PARAM_METHOD_BORROW);
 
         System.out.println(idOrder);

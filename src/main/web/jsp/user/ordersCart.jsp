@@ -11,10 +11,8 @@
 
 </head>
 <body>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
 <div class="container">
-
-    <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
-    <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 
     <c:if test="${requestScope.orders != null}"/>
     <table class="table table-hover">
@@ -26,6 +24,7 @@
             <th>Имя</th>
             <th>Отчество</th>
             <th>Изображение</th>
+            <td></td>
         </tr>
         </thead>
         <tbody>
@@ -36,16 +35,17 @@
                 <td>${order.author.surname}</td>
                 <td>${order.author.name}</td>
                 <td>${order.author.middleName}</td>
-                <td><img src="/resource/images/books/${order.book.image}" alt="${order.book.tittle}" class="imageBook"></td>
+                <td><img src="/resource/images/books/${order.book.image}" alt="${order.book.tittle}" class="imageBook">
+                </td>
                 <td>
-                <div class="form-group">
-                    <a class="btn-link" href="Controller?id_order=${order.id}&number_ticket=${order.numberTicket}&command=delete_order">Удалить</a>
-                </div>
+                    <a class="btn-book-delete"
+                       href="Controller?id_order=${order.id}&number_ticket=${order.numberTicket}&command=delete_order">Удалить</a>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
+    <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 </div>
 </body>
 </html>

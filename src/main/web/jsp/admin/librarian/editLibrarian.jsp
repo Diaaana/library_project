@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Title</title>
@@ -14,10 +14,10 @@
 
 <c:set var="librarian" scope="request" value="${requestScope.librarian}"/>
 
-<div class="container">
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 
-    <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
-    <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<div class="container">
 
     <form role="form" action="/Controller" method="post">
         <div class="form-group">

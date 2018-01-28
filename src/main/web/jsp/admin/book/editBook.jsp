@@ -24,12 +24,11 @@
     <title>Редактирование</title>
 </head>
 <body>
+
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+
 <div class="container">
-
-    <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
-    <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
-
-
 
     <form role="form" action="/Controller" method="post">
         <div class="form-group">

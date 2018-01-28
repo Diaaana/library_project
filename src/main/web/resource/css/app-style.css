@@ -16,25 +16,148 @@
     background-color: #c6c8ca;
 }
 
-.my-nav {
-    width: 100%;
-    margin-top: 5%;
-}
-
 .nav-button-group {
     width: 100%;
 }
 
 .nav-btn {
-    margin: 5%;
-    padding: 5%;
+    margin-top: 70px;
+    padding-right: 180px;
+    padding-bottom: 20px;
+    border: none;
+    background-color: inherit;
+    font-size: 38px;
+}
+
+.nav-btn:hover {
+    border: none;
+    outline: none;
+    color: #802e36;
+}
+
+.menu-style {
+    background-color: #0c5460;
+    margin-left: -350px;
+    margin-right: -350px;
 }
 
 .form-login {
     position: relative;
-    right: 27%;
-    width: 90%;
-    margin-top: 15%;
+    left: -330px;
+    width: 1000px;
+    margin-top: 20%;
+}
+
+.btn-function {
+    position: relative;
+    left: 10px;
+    margin: 50px;
+    border: none;
+    background-color: inherit;
+    font-size: 38px;
+}
+
+.btn-function:hover,:focus {
+    border: none;
+    outline: none;
+    color: #802e36;
+}
+
+.a-function {
+    position: relative;
+    left: 10px;
+    margin: 50px;
+    background-color: inherit;
+    font-size: 38px;
+}
+
+.a-function:hover,:focus {
+    text-decoration: none;
+    color: #802e36;
+}
+
+.form-book {
+    padding-left: 50px;
+    padding-right: 50px;
+    background-color: #fcf8e3;
+}
+
+.btn-book {
+    position: relative;
+    left: 350px;
+    padding: 20px;
+}
+
+.btn-book-delete {
+    position: relative;
+    top: 20px;
+    font-size: 30px;
+}
+
+.btn-book-edit {
+    position: relative;
+    top: 80px;
+    left: -150px;
+    font-size: 30px;
+}
+
+.btn-book-delete :hover, :focus {
+    text-decoration: none;
+}
+
+.btn-book-edit :hover, :focus {
+    text-decoration: none;
+}
+
+.btn-delete {
+    font-size: 30px;
+    padding-right: 50px;
+}
+
+.btn-edit {
+    font-size: 30px;
+}
+
+.btn-delete :hover, :focus {
+    text-decoration: none;
+}
+
+.btn-edit :hover, :focus {
+    text-decoration: none;
+}
+
+.a-cart {
+    font-size: 30px;
+}
+
+.a-cart:hover,:focus {
+    text-decoration: none;
+}
+
+.parameter-book {
+    font-size: 30px;
+    padding: 30px;
+}
+
+.persImageBook {
+    position: relative;
+    left: 300px;
+    width: 600px;
+    height: 700px;
+    padding: 30px;
+}
+
+.heading {
+    position: relative;
+    left: 900px;
+    padding: 50px;
+}
+
+.welcome {
+    position: relative;
+    top: 300px;
+    left: 100px;
+    font-size: 85px;
 }
 
 .imageBook {

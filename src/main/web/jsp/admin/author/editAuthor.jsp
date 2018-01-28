@@ -18,11 +18,10 @@
 
 <c:set var="author" scope="request" value="${requestScope.author}"/>
 
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+
 <div class="container">
-
-    <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
-    <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
-
 
     <form role="form" action="/Controller" method="post">
         <div class="form-group">
@@ -44,7 +43,8 @@
         <input type="hidden" name="command" value="update_author"/>
         <input type="hidden" name="id_author" value="${author.id}"/>
         <input type="submit" name="add_book" class="btn btn-success" value="Отредактировать"/>
-        <button type="reset" value="clear" onclick="clearForm()" class="btn btn-danger"><fmt:message key="label.clear" bundle="${local}"/></button>
+        <button type="reset" value="clear" onclick="clearForm()" class="btn btn-danger"><fmt:message key="label.clear"
+                                                                                                     bundle="${local}"/></button>
     </form>
 
 

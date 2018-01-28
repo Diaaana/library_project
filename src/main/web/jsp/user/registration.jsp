@@ -33,7 +33,7 @@
 
     <h1 class="header">${registration}</h1>
 
-        <form role="form" action="/Controller" name="form" onsubmit="return validationForm();" method="post" enctype="multipart/form-data">
+        <form role="form" action="/Controller" name="form" onsubmit="return checkRegistration();" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label class="label">Выберите: </label><br/>
                 <label class="radio-inline">
@@ -87,5 +87,5 @@
 </div>
 
 </body>
-<script src = "/resource/js/script.js"></script>
+<script src = "/resource/js/reader/registration.js"></script>
 </html>

@@ -1,5 +1,6 @@
 package by.radomskaya.project.entity;
 
+import java.sql.Date;
 import java.util.Arrays;
 
 public class Book extends Entity {
@@ -8,7 +9,7 @@ public class Book extends Entity {
     private String tittle;
     private Author author;
     private String[] genres;
-    private String dateEdition;
+    private Date dateEdition;
     private String placeEdition;
     private String publisher;
     private int numberCopies;
@@ -20,7 +21,7 @@ public class Book extends Entity {
         this.id = id;
     }
 
-    public Book(int id, String isbn, String tittle, Author author, String[] genres, String dateEdition, String placeEdition, String publisher, int numberCopies, String image) {
+    public Book(int id, String isbn, String tittle, Author author, String[] genres, Date dateEdition, String placeEdition, String publisher, int numberCopies, String image) {
         this.id = id;
         this.isbn = isbn;
         this.tittle = tittle;
@@ -73,11 +74,11 @@ public class Book extends Entity {
         this.genres = genres;
     }
 
-    public String getDateEdition() {
+    public Date getDateEdition() {
         return dateEdition;
     }
 
-    public void setDateEdition(String dateEdition) {
+    public void setDateEdition(Date dateEdition) {
         this.dateEdition = dateEdition;
     }
 
@@ -125,6 +126,7 @@ public class Book extends Entity {
         if (!isbn.equals(book.isbn)) return false;
         if (!tittle.equals(book.tittle)) return false;
         if (!author.equals(book.author)) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
         if (!Arrays.equals(genres, book.genres)) return false;
         if (!dateEdition.equals(book.dateEdition)) return false;
         if (!placeEdition.equals(book.placeEdition)) return false;
@@ -155,7 +157,7 @@ public class Book extends Entity {
                 ", tittle='" + tittle + '\'' +
                 ", author=" + author +
                 ", genres=" + Arrays.toString(genres) +
-                ", dateEdition='" + dateEdition + '\'' +
+                ", dateEdition=" + dateEdition +
                 ", placeEdition='" + placeEdition + '\'' +
                 ", publisher='" + publisher + '\'' +
                 ", numberCopies=" + numberCopies +

@@ -31,14 +31,15 @@
 </head>
 <body class="body-add-books">
 
-<div class="container">
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 
-    <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
-    <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<div class="container">
 
     <h1 class="header"><fmt:message key="label.addBook" bundle="${local}"/></h1>
 
-    <form role="form" action="/Controller" method="post" enctype="multipart/form-data">
+    <form role="form" name="form" action="/Controller" method="post" onsubmit="return checkAddBook();" enctype="multipart/form-data"
+          class="form-book">
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterIsbn" bundle="${local}"/></label>
             <input type="text" name="isbn" class="form-control" placeholder="${ISBN}">
@@ -67,7 +68,7 @@
         <div class="form-group">
             <label class="label">Жанры</label>
             <c:forEach var="genre" items="${genres}">
-                <br/><input type="checkbox" name="genre" value="${genre.key}"> ${genre.value}
+                <br/><input type="checkbox" name="genre" value="${genre.value}"> ${genre.value}
             </c:forEach>
         </div>
         <%--<div class="form-group">
@@ -94,14 +95,18 @@
             <label class="label">Добавьте фото</label>
             <input type="file" name="image" class="form-control" placeholder="Фото">
         </div>
-        <input type="hidden" name="command" value="add_book"/>
-        <input type="submit" name="add_book" class="btn btn-success" value="${add}"/>
-        <button type="reset" value="clear" onclick="clearForm()" class="btn btn-danger"><fmt:message key="label.clear"
-                                                                                                     bundle="${local}"/></button>
+        <div class="btn-book">
+            <input type="hidden" name="command" value="add_book"/>
+            <input type="submit" name="add_book" class="btn btn-success" value="${add}"/>
+            <button type="reset" value="clear" onclick="clearForm()" class="btn btn-danger"><fmt:message
+                    key="label.clear"
+                    bundle="${local}"/></button>
+        </div>
     </form>
 
 
 </div>
 </body>
-<script src="/resource/js/bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/resource/js/book/addBook.js"></script>
+<script src="${pageContext.request.contextPath}/resource/js/bootstrap.js"></script>
 </html>

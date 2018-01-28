@@ -1,8 +1,8 @@
 package by.radomskaya.project.dao.impl;
 
 import by.radomskaya.project.dao.ReaderDAO;
-import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.entity.User;
+import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.pool.ConnectionPool;
 import by.radomskaya.project.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
@@ -23,6 +23,9 @@ public class ReaderDAOImpl implements ReaderDAO {
     private final static String CHECK_LOGIN_PASSWORD = "SELECT login, password FROM library.users JOIN library.roles on users.id_role = roles.id_role WHERE name_role = 'Читатель' AND login = ? AND password = ?";
     private final static String DELETE_READER = "DELETE FROM library.users WHERE number_ticket = ?";
     private final static String SELECT_NUMBER_TICKET = "SELECT number_ticket FROM library.users WHERE login = ? AND password = ?;";
+    private final static String GET_READER_BY_TICKET = "SELECT number_ticket, surname, name, middle_name, age, phone_number, mail, login, password, image FROM library.users WHERE number_ticket = ?";
+    private final static String GET_PASSWORD_BY_TICKET = "SELECT password FROM library.users WHERE number_ticket = ?";
+    private final static String CHANGE_PASSWORD = "UPDATE library.users SET password = ? WHERE number_ticket = ?;";
     private final static int ID_ROLE_READER = 3;
 
 
@@ -168,6 +171,102 @@ public class ReaderDAOImpl implements ReaderDAO {
             return resultSet.next();
         } catch (SQLException e) {
             throw new DAOException("Error check reader by login and password" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+    }
+
+    @Override
+    public User getUserByTicket(int numberTicket) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+        User user = new User();
+        try {
+            statement = connection.prepareStatement(GET_READER_BY_TICKET);
+            statement.setInt(1, numberTicket);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                user.setNumberTicket(resultSet.getInt("number_ticket"));
+                user.setSurname(resultSet.getString("surname"));
+                user.setName(resultSet.getString("name"));
+                user.setMiddleName(resultSet.getString("middle_name"));
+                user.setAge(resultSet.getInt("age"));
+                user.setPhoneNumber(resultSet.getString("phone_number"));
+                user.setMail(resultSet.getString("mail"));
+                user.setLogin(resultSet.getString("login"));
+                user.setProfilePhoto(resultSet.getString("image"));
+                user.setLogin(resultSet.getString("login"));
+                user.setPassword(resultSet.getString("password"));
+            }
+            return user;
+        } catch (SQLException e) {
+            throw new DAOException("Error get an user by number ticket" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+    }
+
+    @Override
+    public boolean changePassword(int numberTicket, String password) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(CHANGE_PASSWORD);
+            statement.setString(1, password);
+            statement.setInt(2, numberTicket);
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new DAOException("Error get an user by number ticket" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+    }
+
+    @Override
+    public String getPassword(int numberTicket) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+        String password = new String();
+        try {
+            statement = connection.prepareStatement(GET_PASSWORD_BY_TICKET);
+            statement.setInt(1, numberTicket);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                password = resultSet.getString("password");
+            }
+            return password;
+        } catch (SQLException e) {
+            throw new DAOException("Error get an user by number ticket" + e);
         } finally {
             try {
                 statement.close();

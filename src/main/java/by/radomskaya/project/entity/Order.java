@@ -1,17 +1,20 @@
 package by.radomskaya.project.entity;
 
+
+import java.sql.Date;
+
 public class Order {
     private int id;
     private int numberTicket;
     private Book book;
     private Author author;
-    private String dateBorrow;
-    private String dateReturn;
+    private Date dateBorrow;
+    private Date dateReturn;
     private String methodBorrow;
 
     public Order() {}
 
-    public Order(int id, int numberTicket, Book book, Author author, String dateBorrow, String dateReturn, String methodBorrow) {
+    public Order(int id, int numberTicket, Book book, Author author, Date dateBorrow, Date dateReturn, String methodBorrow) {
         this.id = id;
         this.numberTicket = numberTicket;
         this.book = book;
@@ -53,19 +56,19 @@ public class Order {
         this.author = author;
     }
 
-    public String getDateBorrow() {
+    public Date getDateBorrow() {
         return dateBorrow;
     }
 
-    public void setDateBorrow(String dateBorrow) {
+    public void setDateBorrow(Date dateBorrow) {
         this.dateBorrow = dateBorrow;
     }
 
-    public String getDateReturn() {
+    public Date getDateReturn() {
         return dateReturn;
     }
 
-    public void setDateReturn(String dateReturn) {
+    public void setDateReturn(Date dateReturn) {
         this.dateReturn = dateReturn;
     }
 
@@ -86,22 +89,22 @@ public class Order {
 
         if (id != order.id) return false;
         if (numberTicket != order.numberTicket) return false;
-        if (book != null ? !book.equals(order.book) : order.book != null) return false;
-        if (author != null ? !author.equals(order.author) : order.author != null) return false;
-        if (dateBorrow != null ? !dateBorrow.equals(order.dateBorrow) : order.dateBorrow != null) return false;
-        if (dateReturn != null ? !dateReturn.equals(order.dateReturn) : order.dateReturn != null) return false;
-        return methodBorrow != null ? methodBorrow.equals(order.methodBorrow) : order.methodBorrow == null;
+        if (!book.equals(order.book)) return false;
+        if (!author.equals(order.author)) return false;
+        if (!dateBorrow.equals(order.dateBorrow)) return false;
+        if (!dateReturn.equals(order.dateReturn)) return false;
+        return methodBorrow.equals(order.methodBorrow);
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + numberTicket;
-        result = 31 * result + (book != null ? book.hashCode() : 0);
-        result = 31 * result + (author != null ? author.hashCode() : 0);
-        result = 31 * result + (dateBorrow != null ? dateBorrow.hashCode() : 0);
-        result = 31 * result + (dateReturn != null ? dateReturn.hashCode() : 0);
-        result = 31 * result + (methodBorrow != null ? methodBorrow.hashCode() : 0);
+        result = 31 * result + book.hashCode();
+        result = 31 * result + author.hashCode();
+        result = 31 * result + dateBorrow.hashCode();
+        result = 31 * result + dateReturn.hashCode();
+        result = 31 * result + methodBorrow.hashCode();
         return result;
     }
 
@@ -112,8 +115,8 @@ public class Order {
                 ", numberTicket=" + numberTicket +
                 ", book=" + book +
                 ", author=" + author +
-                ", dateBorrow='" + dateBorrow + '\'' +
-                ", dateReturn='" + dateReturn + '\'' +
+                ", dateBorrow=" + dateBorrow +
+                ", dateReturn=" + dateReturn +
                 ", methodBorrow='" + methodBorrow + '\'' +
                 '}';
     }
