@@ -1,6 +1,9 @@
 package by.radomskaya.project.command.user.book;
 
 import by.radomskaya.project.command.Command;
+import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
@@ -9,10 +12,7 @@ import by.radomskaya.project.logic.BookLogic;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static by.radomskaya.project.constant.PageConstant.USER_BOOKS_PAGE;
-
 public class FindBookByAuthorCommand implements Command {
-    private final String PARAM_AUTHOR = "author";
     private BookLogic bookLogic;
 
     public FindBookByAuthorCommand(BookLogic bookLogic) {
@@ -20,21 +20,28 @@ public class FindBookByAuthorCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
-        String page = null;
-        String author = request.getParameter(PARAM_AUTHOR);
+    public Router execute(HttpServletRequest request) throws CommandException {
+        Router router = new Router();
+        String page;
         List<Book> listFoundBooksByAuthor;
 
         try {
-            if (bookLogic.findBooksByAuthor(author)) {
-                listFoundBooksByAuthor = bookLogic.getFoundBooksByAuthor(author);
-                request.setAttribute("foundBooksByAuthor", listFoundBooksByAuthor);
-                page = USER_BOOKS_PAGE;
+            String author = request.getParameter(RequestParameter.PARAM_AUTHOR);
+            listFoundBooksByAuthor = bookLogic.getFoundBooksByAuthor(author);
+
+            if (listFoundBooksByAuthor.isEmpty()) {
+                request.setAttribute("messageFindBook", "empty");
+                page = PageConstant.USER_FIND_BOOKS_PAGE;
+            } else {
+                request.setAttribute("foundBooks", listFoundBooksByAuthor);
+                page = PageConstant.USER_FIND_BOOKS_PAGE;
             }
         } catch (DAOException e) {
             throw new CommandException(e);
         }
 
-        return page;
+        router.setPagePath(page);
+        router.setRoute(Router.RouteType.FORWARD);
+        return router;
     }
 }

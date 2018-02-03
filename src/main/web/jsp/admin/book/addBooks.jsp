@@ -12,6 +12,7 @@
 <fmt:message key="label.country" bundle="${local}" var="country"/>
 <fmt:message key="label.genre" bundle="${local}" var="genre"/>
 <fmt:message key="label.dateEdition" bundle="${local}" var="dateEdition"/>
+<fmt:message key="label.date" bundle="${local}" var="date"/>
 <fmt:message key="label.placeEdition" bundle="${local}" var="placeEdition"/>
 <fmt:message key="label.publisher" bundle="${local}" var="publisher"/>
 <fmt:message key="label.numberCopies" bundle="${local}" var="numberCopies"/>
@@ -20,25 +21,24 @@
 
 <html>
 <head>
-    <title><fmt:message key="label.addBook" bundle="${local}"/></title>
+    <title><fmt:message key="label.adding" bundle="${local}"/></title>
 
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/resource/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/app-style.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap.css">
     <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/resource/css/bootstrap-theme.css.css">
+          href="${pageContext.request.contextPath}/resource/css/bootstrap-theme.css">
+    <script src="${pageContext.request.contextPath}/resource/js/book/addBook.js"></script>
+    <script src="${pageContext.request.contextPath}/resource/js/bootstrap.js"></script>
 
 </head>
-<body class="body-add-books">
-
+<body class="body">
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 
 <div class="container">
 
-    <h1 class="header"><fmt:message key="label.addBook" bundle="${local}"/></h1>
-
-    <form role="form" name="form" action="/Controller" method="post" onsubmit="return checkAddBook();" enctype="multipart/form-data"
+    <form role="form" name="form" action="/Controller" method="post" onsubmit="return checkAddBook();"
+          enctype="multipart/form-data"
           class="form-book">
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterIsbn" bundle="${local}"/></label>
@@ -66,18 +66,14 @@
             <input type="text" name="country" class="form-control" placeholder="${country}">
         </div>
         <div class="form-group">
-            <label class="label">Жанры</label>
+            <label class="label"><fmt:message key="label.genres" bundle="${local}"/></label>
             <c:forEach var="genre" items="${genres}">
                 <br/><input type="checkbox" name="genre" value="${genre.value}"> ${genre.value}
             </c:forEach>
         </div>
-        <%--<div class="form-group">
-            <label class="label"><fmt:message key="label.enterGenre" bundle="${local}"/></label>
-            <input type="text" name="genre" class="form-control" placeholder="${genre}">
-        </div>--%>
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterDateEdition" bundle="${local}"/></label>
-            <input type="date" name="date_edition" class="form-control">
+            <input type="text" name="date_edition" placeholder="${date}" class="form-control">
         </div>
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterPlaceEdition" bundle="${local}"/></label>
@@ -92,21 +88,21 @@
             <input type="text" name="number_copies" class="form-control" placeholder="${numberCopies}">
         </div>
         <div class="form-group">
-            <label class="label">Добавьте фото</label>
-            <input type="file" name="image" class="form-control" placeholder="Фото">
+            <span class="btn btn-default btn-file">
+                <input type="file" name="image"><fmt:message key="label.addImage" bundle="${local}"/>
+            </span>
         </div>
         <div class="btn-book">
             <input type="hidden" name="command" value="add_book"/>
-            <input type="submit" name="add_book" class="btn btn-success" value="${add}"/>
-            <button type="reset" value="clear" onclick="clearForm()" class="btn btn-danger"><fmt:message
+            <input type="submit" name="add_book" class="button" value="${add}"/>
+            <button type="reset" value="clear" onclick="clearForm()" class="button"><fmt:message
                     key="label.clear"
                     bundle="${local}"/></button>
         </div>
+
     </form>
 
-
 </div>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 </body>
-<script src="${pageContext.request.contextPath}/resource/js/book/addBook.js"></script>
-<script src="${pageContext.request.contextPath}/resource/js/bootstrap.js"></script>
 </html>

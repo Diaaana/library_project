@@ -1,4 +1,4 @@
-.body {
+/*.body {
     background-image: url(/resource/images/background.jpg);
     background-repeat: no-repeat;
     background-position: center center;
@@ -6,17 +6,29 @@
     background-clip: border-box;
     background-origin: content-box;
     background-size: cover;
+}*/
+
+html {
+    position: relative;
+    min-height: 100%;
 }
 
-.body-registration {
-    background-color: #bfa099;
+body {
+    margin-bottom: 60px;
 }
 
-.body-add-books {
-    background-color: #c6c8ca;
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
 }
 
-.nav-button-group {
+.body {
+    background-color: #a48b7a;
+}
+
+/*.nav-button-group {
     width: 100%;
 }
 
@@ -33,17 +45,11 @@
     border: none;
     outline: none;
     color: #802e36;
-}
-
-.menu-style {
-    background-color: #0c5460;
-    margin-left: -350px;
-    margin-right: -350px;
-}
+}*/
 
 .form-login {
     position: relative;
-    left: -330px;
+    left: 100px;
     width: 1000px;
     margin-top: 20%;
 }
@@ -57,29 +63,15 @@
     font-size: 38px;
 }
 
-.btn-function:hover,:focus {
+.btn-function:hover, :focus {
     border: none;
     outline: none;
-    color: #802e36;
-}
-
-.a-function {
-    position: relative;
-    left: 10px;
-    margin: 50px;
-    background-color: inherit;
-    font-size: 38px;
-}
-
-.a-function:hover,:focus {
-    text-decoration: none;
     color: #802e36;
 }
 
 .form-book {
     padding-left: 50px;
     padding-right: 50px;
-    background-color: #fcf8e3;
 }
 
 .btn-book {
@@ -88,55 +80,49 @@
     padding: 20px;
 }
 
-.btn-book-delete {
+.a-function {
+    color: #a6e5e2;
+    font-size: 30px;
+    margin: 20px;
+}
+
+.a-function:hover, .a-function:focus {
+    color: #ffc3a0;
+    text-decoration: none;
+}
+
+.a-forgot-password {
     position: relative;
-    top: 20px;
-    font-size: 30px;
+    left: 300px;
+    top: -50px;
+    color: #a6e5e2;
+    font-size: 17px
 }
 
-.btn-book-edit {
-    position: relative;
-    top: 80px;
-    left: -150px;
-    font-size: 30px;
-}
-
-.btn-book-delete :hover, :focus {
+.a-forgot-password:hover, .a-forgot-password:focus {
+    color: #ffc3a0;
     text-decoration: none;
 }
 
-.btn-book-edit :hover, :focus {
-    text-decoration: none;
+.find-book {
+    height: 50px;
+    width: 200px;
+    background-color: #ffc3a0;
 }
 
-.btn-delete {
-    font-size: 30px;
-    padding-right: 50px;
+.find-book-input {
+    height: 50px;
 }
 
-.btn-edit {
-    font-size: 30px;
-}
-
-.btn-delete :hover, :focus {
-    text-decoration: none;
-}
-
-.btn-edit :hover, :focus {
-    text-decoration: none;
-}
-
-.a-cart {
-    font-size: 30px;
-}
-
-.a-cart:hover,:focus {
-    text-decoration: none;
-}
-
-.parameter-book {
+.parameter {
+    color: white;
     font-size: 30px;
     padding: 30px;
+}
+
+.h-parameter {
+    position: relative;
+    left: 50px;
 }
 
 .persImageBook {
@@ -145,6 +131,16 @@
     width: 600px;
     height: 700px;
     padding: 30px;
+}
+
+.profile-photo {
+    position: relative;
+    left: 300px;
+    width: 600px;
+    height: 700px;
+    padding: 30px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px #46757a, 0 0 13px #0a343e;
 }
 
 .heading {
@@ -165,9 +161,11 @@
     height: 200px;
 }
 
-.button-login {
-    background-color: #752c42;
-    color: #fcfff0;
+.button {
+    background-color: #ffc3a0;
+    color: #fffbec;
+    width: 170px;
+    height: 50px;
 }
 
 .button-registr {
@@ -192,62 +190,157 @@
 
 .label {
     font-size: 200%;
-    color: #fcf8e3;
+    color: #5a5050;
 }
 
 .footer {
-    position: fixed;
-    left: 0; bottom: 0;
+    position: absolute;
+    top: 1000px;
     padding-top: 19px;
-    color: #f7f1e7;
+    font-size: 30px;
+    color: #5a5050;
 }
 
 .footer-button {
-    position: fixed;
-    right: 0; bottom: 0;
-    padding-right: 1%;
+    position: relative;
+    left: 1500px;
+    top: 20px;
+    padding-left: 50px;
 }
 
 .button-footer {
-    font-size: 50px;
+    font-size: 25px;
     border: none;
     background-color: inherit;
-    color: #3d0c43;
+    color: #5a5050;
 }
 
 .button-footer:hover {
     text-decoration: none;
-    color: #ce9ab9;
+    color: #b5a49c;
 }
 
-
-.button {
-    border: none;
-    background-color: inherit;
+.pos-alert {
+    position: relative;
+    top: 150px;
+    left: 100px;
 }
 
-.button:hover {
-    border: none;
+@media (max-width: 550px) {
+    .menu-main {
+        padding-top: 0;
+    }
 }
 
-.a-registration {
+.menu-main {
+    list-style: none;
+    margin: 40px 0 5px;
+    padding: 25px 0 5px;
+    text-align: center;
+}
+
+.menu-main li {
+    display: inline-block;
+}
+
+.menu-main li:after {
+    content: "|";
+    color: #606060;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.menu-main li:last-child:after {
+    content: none
+}
+
+.menu-main a {
+    text-decoration: none;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    letter-spacing: 2px;
+    position: relative;
+    padding-bottom: 20px;
+    margin: 0 34px 0 30px;
+    font-size: 17px;
+    text-transform: uppercase;
+    display: inline-block;
+    transition: color .2s;
+}
+
+.menu-main a, .menu-main a:visited {
+    color: #a6e5e2;
+}
+
+.menu-main a.current, .menu-main a:hover, .menu-main a:focus {
+    color: #ffc3a0;
+    text-decoration: none
+}
+
+.menu-main a:before,
+.menu-main a:after {
+    content: "";
     position: absolute;
-    top:1%;
-    left: 45%;
-    color: #802e36;
-    font-size: 300%;
+    height: 4px;
+    top: auto;
+    right: 50%;
+    bottom: -5px;
+    left: 50%;
+    background: #ffc3a0;
+    transition: .8s;
 }
 
-.a-registration:hover {
-    text-decoration: none;
-    color: #fcfae4;
+.menu-main a:hover:before, .menu-main .current:before {
+    left: 0;
 }
 
-.a1 {
-    color: #f1b0b7;
+.menu-main a:hover:after, .menu-main .current:after {
+    right: 0;
 }
 
-.a1:hover {
-    text-decoration: none;
-    color: #fcf8e3;
+@media (max-width: 550px) {
+    .menu-main {
+        padding-top: 0
+    }
+
+    .menu-main li {
+        display: block;
+    }
+
+    .menu-main li:after {
+        content: none
+    }
+
+    .menu-main a {
+        padding: 25px 0 20px;
+        margin: 0 30px;
+    }
+}
+
+.found-div {
+    position: relative;
+    left: 450px;
+}
+
+.one-found-div {
+    padding: 50px;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
 }

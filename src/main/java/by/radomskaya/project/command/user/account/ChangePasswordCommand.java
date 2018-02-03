@@ -1,19 +1,19 @@
 package by.radomskaya.project.command.user.account;
 
 import by.radomskaya.project.command.Command;
+import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.ReaderLogic;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import static by.radomskaya.project.constant.PageConstant.USER_ACCOUNT_PAGE;
+import static by.radomskaya.project.constant.PageConstant.USER_CHANGE_PASSWORD_PAGE;
 
 public class ChangePasswordCommand implements Command {
-    private final String PARAM_NUMBER_TICKET = "number_ticket";
-    private final String PARAM_OLD_PASSWORD = "old_password";
-    private final String PARAM_NEW_PASSWORD = "new_password";
-    private final String PARAM_REPEAT_NEW_PASSWORD = "repeat_new_password";
     private ReaderLogic readerLogic;
 
     public ChangePasswordCommand(ReaderLogic readerLogic) {
@@ -21,29 +21,35 @@ public class ChangePasswordCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
+    public Router execute(HttpServletRequest request) throws CommandException {
+        HttpSession session = request.getSession();
+        Router router = new Router();
         String page = null;
         String truePassword;
-        int numberTicket = Integer.parseInt(request.getParameter(PARAM_NUMBER_TICKET));
-        String oldPassword = request.getParameter(PARAM_OLD_PASSWORD);
-        String newPassword = request.getParameter(PARAM_NEW_PASSWORD);
-        String repeatNewPassword = request.getParameter(PARAM_REPEAT_NEW_PASSWORD);
+
+        int numberTicket = Integer.parseInt(request.getParameter(RequestParameter.PARAM_NUMBER_TICKET));
+        String oldPassword = request.getParameter(RequestParameter.PARAM_OLD_PASSWORD);
+        String newPassword = request.getParameter(RequestParameter.PARAM_NEW_PASSWORD);
+        String repeatNewPassword = request.getParameter(RequestParameter.PARAM_REPEAT_NEW_PASSWORD);
 
         try {
             truePassword = readerLogic.getPassword(numberTicket);
-            if (oldPassword.equals(truePassword)) {
-                if (repeatNewPassword.equals(newPassword)) {
-                    if (readerLogic.changePassword(numberTicket, newPassword)) {
-                        page = USER_ACCOUNT_PAGE;
-                    }
-                }
-            } else {
-                System.out.println("Неправильный пароль");
+            if (!oldPassword.equals(truePassword)) {
+                session.setAttribute("messageWrongTruePassword", "error");
+                page = USER_CHANGE_PASSWORD_PAGE;
+            } else if (!repeatNewPassword.equals(newPassword)) {
+                session.setAttribute("messageWrongRepeatPassword", "error");
+                page = USER_CHANGE_PASSWORD_PAGE;
+            } else if (readerLogic.changePassword(numberTicket, newPassword)) {
+                session.setAttribute("messageChangePassword", "success");
+                page = USER_ACCOUNT_PAGE;
             }
         } catch (DAOException e) {
             throw new CommandException(e);
         }
 
-        return page;
+        router.setPagePath(page);
+        router.setRoute(Router.RouteType.REDIRECT);
+        return router;
     }
 }

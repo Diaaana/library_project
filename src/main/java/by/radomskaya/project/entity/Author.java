@@ -1,7 +1,6 @@
 package by.radomskaya.project.entity;
 
 public class Author extends Entity {
-    private int id;
     private String surname;
     private String name;
     private String middleName;
@@ -10,23 +9,15 @@ public class Author extends Entity {
     public Author() {}
 
     public Author(int id) {
-        this.id = id;
+        super(id);
     }
 
     public Author(int id, String surname, String name, String middleName, String countryBirth) {
-        this.id = id;
+        super(id);
         this.surname = surname;
         this.name = name;
         this.middleName = middleName;
         this.countryBirth = countryBirth;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getSurname() {
@@ -65,22 +56,22 @@ public class Author extends Entity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         Author author = (Author) o;
 
-        if (id != author.id) return false;
         if (!surname.equals(author.surname)) return false;
         if (!name.equals(author.name)) return false;
-        if (middleName != null ? !middleName.equals(author.middleName) : author.middleName != null) return false;
+        if (!middleName.equals(author.middleName)) return false;
         return countryBirth.equals(author.countryBirth);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = super.hashCode();
         result = 31 * result + surname.hashCode();
         result = 31 * result + name.hashCode();
-        result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
+        result = 31 * result + middleName.hashCode();
         result = 31 * result + countryBirth.hashCode();
         return result;
     }
@@ -88,7 +79,6 @@ public class Author extends Entity {
     @Override
     public String toString() {
         return "Author{" +
-                "id=" + id +
                 ", surname='" + surname + '\'' +
                 ", name='" + name + '\'' +
                 ", middleName='" + middleName + '\'' +

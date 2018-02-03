@@ -3,7 +3,7 @@
 <head>
     <title>Error Page</title>
 </head>
-<body>
+<body class="body">
 Request from ${pageContext.errorData.requestURI} is failed <br/>
 Servlet name: ${pageContext.errorData.servletName} <br/>
 Status code: ${pageContext.errorData.statusCode} <br/>

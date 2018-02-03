@@ -14,7 +14,8 @@ public class User extends Entity {
 
     public User() {}
 
-    public User(int numberTicket, String surname, String name, String middleName, int age, String phoneNumber, String mail, String login, String password, String profilePhoto) {
+    public User(int id, int numberTicket, String surname, String name, String middleName, int age, String phoneNumber, String mail, String login, String password, String profilePhoto) {
+        super(id);
         this.numberTicket = numberTicket;
         this.surname = surname;
         this.name = name;
@@ -144,7 +145,8 @@ public class User extends Entity {
     @Override
     public String toString() {
         return "User{" +
-                "numberTicket=" + numberTicket +
+                "id=" + getId() +
+                ", numberTicket=" + numberTicket +
                 ", surname='" + surname + '\'' +
                 ", name='" + name + '\'' +
                 ", middleName='" + middleName + '\'' +

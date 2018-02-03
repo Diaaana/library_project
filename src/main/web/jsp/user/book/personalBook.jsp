@@ -1,5 +1,21 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="locale" var="local"/>
+
+<fmt:message key="label.isbn" bundle="${local}" var="ISBN"/>
+<fmt:message key="label.tittle" bundle="${local}" var="tittle"/>
+<fmt:message key="label.surnameAuthor" bundle="${local}" var="surname"/>
+<fmt:message key="label.nameAuthor" bundle="${local}" var="name"/>
+<fmt:message key="label.middleNameAuthor" bundle="${local}" var="middleName"/>
+<fmt:message key="label.genre" bundle="${local}" var="genre"/>
+<fmt:message key="label.dateEdition" bundle="${local}" var="dateEdition"/>
+<fmt:message key="label.placeEdition" bundle="${local}" var="placeEdition"/>
+<fmt:message key="label.publisher" bundle="${local}" var="publisher"/>
+<fmt:message key="label.numberCopies" bundle="${local}" var="numberCopies"/>
+<fmt:message key="label.addToCart" bundle="${local}" var="addToCart"/>
+
 <html>
 <head>
     <title>Подробнее</title>
@@ -11,19 +27,21 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap-theme.css">
 
 </head>
-<body>
+<body class="body">
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
 
 <c:set var="book" scope="request" value="${requestScope.personalBook}"/>
 
 <div class="container">
 
+<c:if test="${sessionScope.role == 'reader'}">
     <div class="col-md-4 col-md-offset-5">
-        <a class="a-cart"
-           href="Controller?number_ticket=${user.numberTicket}&id_book=${book.id}&id_author=${book.author.id}&command=add_to_cart">Добавить в корзину</a>
+        <a class="a-function"
+           href="/Controller?number_ticket=${user.numberTicket}&id_book=${book.id}&id_author=${book.author.id}&command=add_to_cart">${addToCart}</a>
     </div>
+</c:if>
 
-    <form action="Controller" method="post">
+    <form action="/Controller" method="post">
         <c:if test="${book != null}">
 
             <div class="image">
@@ -31,17 +49,17 @@
             </div>
 
             <div class="col-md-4">
-                <p class="parameter-book">Международный номер: ${book.isbn}</p>
-                <p class="parameter-book">Название книги: ${book.tittle}</p>
-                <p class="parameter-book">Дата публикации: ${book.dateEdition}</p>
-                <p class="parameter-book">Место публикации: ${book.placeEdition}</p>
+                <p class="parameter">${ISBN}: </p><h2 class="h-parameter">${book.isbn}</h2>
+                <p class="parameter">${tittle}: </p><h2 class="h-parameter">${book.tittle}</h2>
+                <p class="parameter">${surname}: </p><h2 class="h-parameter">${book.author.surname}</h2>
+                <p class="parameter">${name}: </p><h2 class="h-parameter">${book.author.name}</h2>
+                <p class="parameter">${middleName}: </p><h2 class="h-parameter">${book.author.middleName}</h2>
             </div>
             <div class="col-md-4 col-md-offset-4">
-                <p class="parameter-book">Издательство: ${book.publisher}</p>
-                <p class="parameter-book">Количество экземпляров: ${book.numberCopies}</p>
-                <p class="parameter-book">Фамилия автора: ${book.author.surname}</p>
-                <p class="parameter-book">Имя автора: ${book.author.name}</p>
-                <p class="parameter-book">Отчество автора: ${book.author.middleName}</p>
+                <p class="parameter">${dateEdition}: </p><h2 class="h-parameter">${book.dateEdition}</h2>
+                <p class="parameter">${placeEdition}: </p><h2 class="h-parameter">${book.placeEdition}</h2>
+                <p class="parameter">${publisher}: </p><h2 class="h-parameter">${book.publisher}</h2>
+                <p class="parameter">${numberCopies}: </p><h2 class="h-parameter">${book.numberCopies}</h2>
             </div>
         </c:if>
     </form>

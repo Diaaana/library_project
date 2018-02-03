@@ -1,5 +1,7 @@
 package by.radomskaya.project.controller;
 
+import static by.radomskaya.project.constant.PageConstant.START_PAGE;
+
 public class Router {
 
     public enum RouteType {
@@ -14,6 +16,9 @@ public class Router {
     }
 
     public void setPagePath(String pagePath) {
+        if (pagePath == null) {
+            this.pagePath = START_PAGE;
+        }
         this.pagePath = pagePath;
     }
 

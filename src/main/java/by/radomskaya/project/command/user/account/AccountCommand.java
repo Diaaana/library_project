@@ -1,17 +1,18 @@
 package by.radomskaya.project.command.user.account;
 
 import by.radomskaya.project.command.Command;
+import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.ReaderLogic;
 
 import javax.servlet.http.HttpServletRequest;
-
-import static by.radomskaya.project.constant.PageConstant.USER_ACCOUNT_PAGE;
+import javax.servlet.http.HttpSession;
 
 public class AccountCommand implements Command {
-    private final String PARAM_NUMBER_TICKET = "number_ticket";
     private ReaderLogic readerLogic;
 
     public AccountCommand(ReaderLogic readerLogic) {
@@ -19,19 +20,24 @@ public class AccountCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
-        String page = null;
-        int numberTicket = Integer.parseInt(request.getParameter(PARAM_NUMBER_TICKET));
+    public Router execute(HttpServletRequest request) throws CommandException {
+        HttpSession session = request.getSession(true);
+        Router router = new Router();
+        String page;
         User user;
 
         try {
+            int numberTicket = Integer.parseInt(request.getParameter(RequestParameter.PARAM_NUMBER_TICKET));
             user = readerLogic.getReaderByTicket(numberTicket);
-            request.setAttribute("user", user);
-            page = USER_ACCOUNT_PAGE;
+
+            session.setAttribute("userData", user);
+            page = PageConstant.USER_ACCOUNT_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }
 
-        return page;
+        router.setPagePath(page);
+        router.setRoute(Router.RouteType.FORWARD);
+        return router;
     }
 }

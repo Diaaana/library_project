@@ -9,6 +9,7 @@ import by.radomskaya.project.command.admin.librarian.*;
 import by.radomskaya.project.command.admin.reader.DeleteReaderCommand;
 import by.radomskaya.project.command.admin.reader.ShowReadersCommand;
 import by.radomskaya.project.command.common.ChangeLocaleCommand;
+import by.radomskaya.project.command.common.ForgotPasswordCommand;
 import by.radomskaya.project.command.common.LoginCommand;
 import by.radomskaya.project.command.common.LogoutCommond;
 import by.radomskaya.project.command.librarian.CheckOrderCommand;
@@ -17,23 +18,25 @@ import by.radomskaya.project.command.librarian.TakeOrderCommand;
 import by.radomskaya.project.command.user.RegistrationCommand;
 import by.radomskaya.project.command.user.account.AccountCommand;
 import by.radomskaya.project.command.user.account.ChangePasswordCommand;
+import by.radomskaya.project.command.user.account.EditAccountCommand;
+import by.radomskaya.project.command.user.account.UpdateAccountCommand;
 import by.radomskaya.project.command.user.book.*;
 import by.radomskaya.project.command.user.order.AddToCartCommand;
 import by.radomskaya.project.command.user.order.DeleteOrderCommand;
+import by.radomskaya.project.command.user.order.GetApprovedOrdersCommand;
 import by.radomskaya.project.command.user.order.GetPersonalOrdersCommand;
 import by.radomskaya.project.logic.*;
 
 public enum CommandType {
     LOCALE(new ChangeLocaleCommand()),
-    LOGIN(new LoginCommand(new ReaderLogic(), new AdminLogic(), new LibrarianLogic())),
+    LOGIN(new LoginCommand(new ReaderLogic())),
     LOGOUT(new LogoutCommond()),
-    REGISTRATION(new RegistrationCommand(new AdminLogic(), new ReaderLogic(), new LibrarianLogic())),
+    REGISTRATION(new RegistrationCommand(new ReaderLogic(), new LibrarianLogic())),
     ADD_BOOK(new AddBookCommand(new BookLogic(), new AuthorLogic())),
     EDIT_BOOK(new EditBookCommand(new BookLogic())),
     UPDATE_BOOK(new UpdateBookCommand(new BookLogic())),
     EDIT_AUTHOR(new EditAuthorCommand(new AuthorLogic())),
     UPDATE_AUTHOR(new UpdateAuthorCommand(new AuthorLogic())),
-    ADD_LIBRARIAN(new AddLibrarianCommand(new LibrarianLogic())),
     EDIT_LIBRARIAN(new EditLibrarianCommand(new LibrarianLogic())),
     UPDATE_LIBRARIAN(new UpdateLibrarianCommand(new LibrarianLogic())),
     SHOW_BOOKS(new ShowBooksCommand(new BookLogic())),
@@ -57,7 +60,11 @@ public enum CommandType {
     TAKE_ORDER(new TakeOrderCommand(new OrderLogic())),
     DELETE_ORDER(new DeleteOrderCommand(new OrderLogic())),
     ACCOUNT(new AccountCommand(new ReaderLogic())),
-    CHANGE_PASSWORD(new ChangePasswordCommand(new ReaderLogic()));
+    CHANGE_PASSWORD(new ChangePasswordCommand(new ReaderLogic())),
+    FORGOT_PASSWORD(new ForgotPasswordCommand(new ReaderLogic())),
+    GET_APPROVED_ORDERS(new GetApprovedOrdersCommand(new OrderLogic())),
+    EDIT_ACCOUNT(new EditAccountCommand(new ReaderLogic())),
+    UPDATE_ACCOUNT(new UpdateAccountCommand(new ReaderLogic()));
 
     private Command command;
 

@@ -92,7 +92,7 @@ public class LibrarianDAOImpl implements LibrarianDAO {
     }
 
     @Override
-    public boolean addLibrarian(User librarian) throws DAOException {
+    public void addLibrarian(User librarian) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
@@ -104,7 +104,6 @@ public class LibrarianDAOImpl implements LibrarianDAO {
             statement.setString(5, librarian.getPassword());
             statement.setInt(6, ID_ROLE_LIBRARIAN);
             statement.executeUpdate();
-            return true;
         } catch (SQLException e) {
             throw new DAOException("Error add librarian" + e);
         } finally {

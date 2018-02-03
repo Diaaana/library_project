@@ -1,22 +1,19 @@
 package by.radomskaya.project.command.admin.librarian;
 
 import by.radomskaya.project.command.Command;
+import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.LibrarianLogic;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import static by.radomskaya.project.constant.PageConstant.ADMIN_LIBRARIANS_PAGE;
-
 public class UpdateLibrarianCommand implements Command {
-    private final static String PARAM_ID_LIBRARIAN = "id_librarian";
-    private final static String PARAM_LIBRARIAN_SURNAME = "surname";
-    private final static String PARAM_LIBRARIAN_NAME = "name";
-    private final static String PARAM_LIBRARIAN_MIDDLE_NAME = "middle_name";
-    private final static String PARAM_LIBRARIAN_LOGIN = "login";
     private LibrarianLogic librarianLogic;
 
     public UpdateLibrarianCommand(LibrarianLogic librarianLogic) {
@@ -24,29 +21,39 @@ public class UpdateLibrarianCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
+    public Router execute(HttpServletRequest request) throws CommandException {
+        Router router = new Router();
+        HttpSession session = request.getSession();
         String page = null;
-        User librarian = new User();
+        User librarian;
         List<User> listLibrarians;
 
-        librarian.setNumberTicket(Integer.parseInt(request.getParameter(PARAM_ID_LIBRARIAN)));
-        librarian.setSurname(request.getParameter(PARAM_LIBRARIAN_SURNAME));
-        librarian.setName(request.getParameter(PARAM_LIBRARIAN_NAME));
-        librarian.setMiddleName(request.getParameter(PARAM_LIBRARIAN_MIDDLE_NAME));
-        librarian.setLogin(request.getParameter(PARAM_LIBRARIAN_LOGIN));
-
         try {
+            librarian = setLibrarianFromRequest(request);
+
             if (librarianLogic.updateLibrarian(librarian)) {
-                //success message
                 listLibrarians = librarianLogic.getLibrarians();
-                request.setAttribute("librarians", listLibrarians);
-                page = ADMIN_LIBRARIANS_PAGE;
+                session.setAttribute("librarians", listLibrarians);
+                request.setAttribute("messageUpdate", "success");
+                page = PageConstant.ADMIN_LIBRARIANS_PAGE;
             }
 
         } catch (DAOException e) {
             throw new CommandException(e);
         }
 
-        return page;
+        router.setPagePath(page);
+        router.setRoute(Router.RouteType.REDIRECT);
+        return router;
+    }
+
+    private User setLibrarianFromRequest(HttpServletRequest request) {
+        User librarian = new User();
+        librarian.setNumberTicket(Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_LIBRARIAN)));
+        librarian.setSurname(request.getParameter(RequestParameter.PARAM_SURNAME));
+        librarian.setName(request.getParameter(RequestParameter.PARAM_NAME));
+        librarian.setMiddleName(request.getParameter(RequestParameter.PARAM_MIDDLE_NAME));
+        librarian.setLogin(request.getParameter(RequestParameter.PARAM_LOGIN));
+        return librarian;
     }
 }

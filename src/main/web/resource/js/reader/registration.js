@@ -1,11 +1,14 @@
 function checkRegistration() {
-    if (document.form.surname.value == "") {
+    if (document.form.role.value == "") {
+        alert("Пожалуйста, выберите роль!");
+        return false;
+    } else if (document.form.surname.value == "") {
         alert("Пожалуйста, введите Вашу фамилию!");
         return false;
     } else if (document.form.name.value == "") {
         alert("Пожалуйста, введите Ваше имя!");
         return false;
-    } else if (document.form.middleName.value == "") {
+    } else if (document.form.middle_name.value == "") {
         alert("Пожалуйста, введите Ваше отчество!");
         return false;
     } else if (document.form.age.value == "") {
@@ -16,6 +19,9 @@ function checkRegistration() {
         return false;
     } else if (document.form.mail.value == "") {
         alert("Пожалуйста, введите Вашу электронную почту!");
+        return false;
+    } else if (document.form.profile_photo.value == "") {
+        alert("Пожалуйста, выберите фото профиля!");
         return false;
     } else if (document.form.login.value == "") {
         alert("Пожалуйста, введите логин!");
@@ -33,12 +39,12 @@ function checkRegistration() {
         return false;
     }
 
-    if (!(/^[A-ZА-Я][a-zа-я]+$/.test(document.form.name.value))) {
+    if (!(/^[A-ZА-Я][a-zа-я\-]+$/.test(document.form.name.value))) {
         alert("Имя должно содержать только буквы и начинаться с заглавной буквы!");
         return false;
     }
 
-    if (!(/^[A-ZА-Я][a-zа-я]+$/.test(document.form.middleName.value))) {
+    if (!(/^[A-ZА-Я][a-zа-я]+$/.test(document.form.middle_name.value))) {
         alert("Отчество должно содержать только буквы и начинаться с заглавной буквы!");
         return false;
     }
@@ -84,7 +90,6 @@ function checkRegistration() {
         alert("Пароли не совпадают!");
         return false;
     }
-
 }
 
 

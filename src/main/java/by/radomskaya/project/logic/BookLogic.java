@@ -10,67 +10,54 @@ import java.util.List;
 import java.util.Map;
 
 public class BookLogic {
+    private BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
+    private GenreDAO genreDAO = DAOFactory.getInstance().getGenreDAO();
 
     public List<Book> getBooks() throws DAOException {
-        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
         return bookDAO.getBooksAndAuthors();
     }
 
     public Book getBookById(int id) throws DAOException {
-        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
         return bookDAO.getBookById(id);
     }
 
     public List<Book> findBooksByGenre(String genre) throws DAOException {
-        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
-        return bookDAO.foundBookByGenre(genre);
+        return bookDAO.getFoundBooksByGenre(genre);
     }
 
     public boolean addBook(Book book) throws DAOException {
-        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
         return bookDAO.addBook(book);
     }
 
     public boolean updateBook(Book book) throws DAOException {
-        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
         return bookDAO.updateBook(book);
     }
 
     public boolean deleteBook(int id) throws DAOException {
-        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
         return bookDAO.deleteBook(id);
     }
 
-    public boolean findBooksByTittle(String tittle) throws DAOException {
-        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
-        return bookDAO.findBooksByTittle(tittle);
-    }
-
-    public boolean findBooksByAuthor(String author) throws DAOException {
-        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
-        return bookDAO.findBooksByAuthor(author);
-    }
-
     public List<Book> getFoundBooksByTittle(String tittle) throws DAOException {
-        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
         return bookDAO.getFoundBooksByTittle(tittle);
     }
 
     public List<Book> getFoundBooksByAuthor(String author) throws DAOException {
-        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
         return bookDAO.getFoundBooksByAuthor(author);
     }
 
     public Map<Integer, String> getAllGenres() throws DAOException {
-        GenreDAO genreDAO = DAOFactory.getInstance().getGenreDAO();
         return genreDAO.getAllGenres();
     }
 
     public void addBookAndGenre(String[] genres) throws DAOException {
-        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
-
         for (int i = 0; i < genres.length; i++) {
             bookDAO.addBookAndGenre(genres[i]);
+        }
+    }
+
+    public void updateBookAndGenre(String[] genres, int idBook) throws DAOException {
+        for (int i = 0; i < genres.length; i++) {
+            bookDAO.updateBookAndGenre(genres[i], idBook);
         }
     }
 

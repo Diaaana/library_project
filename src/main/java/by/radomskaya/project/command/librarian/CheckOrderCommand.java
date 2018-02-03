@@ -1,39 +1,42 @@
 package by.radomskaya.project.command.librarian;
 
 import by.radomskaya.project.command.Command;
+import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.entity.Order;
+import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static by.radomskaya.project.constant.PageConstant.LIBRARIAN_TAKE_ORDER_PAGE;
-
 public class CheckOrderCommand implements Command {
-    private final String PARAM_ID_ORDER = "id_order";
-    private final String PARAM_ID_BOOK = "id_book";
-    private final String PARAM_NUMBER_TICKET = "number_ticket";
-
     public CheckOrderCommand() { }
 
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
-        String page = null;
+    public Router execute(HttpServletRequest request) throws CommandException {
+        Router router = new Router();
+        String page;
         Order order = new Order();
         Book book = new Book();
+        User user = new User();
 
-        int idOrder = Integer.parseInt(request.getParameter(PARAM_ID_ORDER));
-        int numberTicket = Integer.parseInt(request.getParameter((PARAM_NUMBER_TICKET)));
-        int idBook = Integer.parseInt(request.getParameter((PARAM_ID_BOOK)));
+        int idOrder = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_ORDER));
+        int idUser = Integer.parseInt(request.getParameter((RequestParameter.PARAM_ID_READER)));
+        int idBook = Integer.parseInt(request.getParameter((RequestParameter.PARAM_ID_BOOK)));
 
         book.setId(idBook);
+        user.setId(idUser);
         order.setId(idOrder);
-        order.setNumberTicket(numberTicket);
+        order.setUser(user);
         order.setBook(book);
 
         request.setAttribute("order", order);
-        page = LIBRARIAN_TAKE_ORDER_PAGE;
+        page = PageConstant.LIBRARIAN_TAKE_ORDER_PAGE;
 
-        return page;
+        router.setPagePath(page);
+        router.setRoute(Router.RouteType.FORWARD);
+        return router;
     }
 }

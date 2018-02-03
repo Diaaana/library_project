@@ -3,9 +3,8 @@ package by.radomskaya.project.entity;
 
 import java.sql.Date;
 
-public class Order {
-    private int id;
-    private int numberTicket;
+public class Order extends Entity {
+    private User user;
     private Book book;
     private Author author;
     private Date dateBorrow;
@@ -14,9 +13,9 @@ public class Order {
 
     public Order() {}
 
-    public Order(int id, int numberTicket, Book book, Author author, Date dateBorrow, Date dateReturn, String methodBorrow) {
-        this.id = id;
-        this.numberTicket = numberTicket;
+    public Order(int id, User user, Book book, Author author, Date dateBorrow, Date dateReturn, String methodBorrow) {
+        super(id);
+        this.user = user;
         this.book = book;
         this.author = author;
         this.dateBorrow = dateBorrow;
@@ -24,20 +23,12 @@ public class Order {
         this.methodBorrow = methodBorrow;
     }
 
-    public int getId() {
-        return id;
+    public User getUser() {
+        return user;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getNumberTicket() {
-        return numberTicket;
-    }
-
-    public void setNumberTicket(int numberTicket) {
-        this.numberTicket = numberTicket;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Book getBook() {
@@ -84,11 +75,11 @@ public class Order {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         Order order = (Order) o;
 
-        if (id != order.id) return false;
-        if (numberTicket != order.numberTicket) return false;
+        if (!user.equals(order.user)) return false;
         if (!book.equals(order.book)) return false;
         if (!author.equals(order.author)) return false;
         if (!dateBorrow.equals(order.dateBorrow)) return false;
@@ -98,8 +89,8 @@ public class Order {
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + numberTicket;
+        int result = super.hashCode();
+        result = 31 * result + user.hashCode();
         result = 31 * result + book.hashCode();
         result = 31 * result + author.hashCode();
         result = 31 * result + dateBorrow.hashCode();
@@ -111,8 +102,7 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + id +
-                ", numberTicket=" + numberTicket +
+                "user=" + user +
                 ", book=" + book +
                 ", author=" + author +
                 ", dateBorrow=" + dateBorrow +

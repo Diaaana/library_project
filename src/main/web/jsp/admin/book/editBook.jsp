@@ -21,16 +21,22 @@
 
 <html>
 <head>
-    <title>Редактирование</title>
-</head>
-<body>
+    <title><fmt:message key="label.editing" bundle="${local}"/></title>
 
+    <link rel="shortcut icon" href="/resource/images/icon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/resource/css/app-style.css">
+    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap-theme.css.css">
+    <script src="${pageContext.request.contextPath}/resource/js/book/editBook.js"></script>
+    <script src="${pageContext.request.contextPath}/resource/js/bootstrap.js"></script>
+
+</head>
+<body class="body">
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 
 <div class="container">
 
-    <form role="form" action="/Controller" method="post">
+    <form role="form" action="/Controller" method="post" name="form" onsubmit="return checkEditBook();" enctype="multipart/form-data">
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterIsbn" bundle="${local}"/></label>
             <input type="text" name="isbn" class="form-control" value="${book.isbn}">
@@ -54,7 +60,9 @@
         </div>
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterGenre" bundle="${local}"/></label>
-            <input type="text" name="genre" class="form-control" value="${book.genre}">
+            <c:forEach var="genre" items="${genres}">
+                <br/><input type="checkbox" name="genre" value="${genre.value}"> ${genre.value}
+            </c:forEach>
         </div>
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterDateEdition" bundle="${local}"/></label>
@@ -72,19 +80,17 @@
             <label class="label"><fmt:message key="label.enterNumberCopies" bundle="${local}"/></label>
             <input type="text" name="number_copies" class="form-control" value="${book.numberCopies}">
         </div>
-        <%--<div class="form-group">
-            <label class="label">Добавьте фото</label>
-            <input type="file" name="image" class="form-control" placeholder="Фото">
-        </div>--%>
+        <div class="form-group">
+            <span class="btn btn-default btn-file">
+                <input type="file" name="image"><fmt:message key="label.addImage" bundle="${local}"/>
+            </span>
+        </div>
         <input type="hidden" name="command" value="update_book"/>
         <input type="hidden" name="id_book" value="${book.id}"/>
-        <input type="submit" name="add_book" class="btn btn-success" value="Отредактировать"/>
-        <button type="reset" value="clear" onclick="clearForm()" class="btn btn-danger"><fmt:message key="label.clear"
-                                                                                                     bundle="${local}"/></button>
+        <input type="hidden" name="old_image" value="${book.image}"/>
+        <input type="submit" class="button" value="Отредактировать"/>
     </form>
-
-
 </div>
-
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 </body>
 </html>

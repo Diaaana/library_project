@@ -1,6 +1,7 @@
 package by.radomskaya.project.command.admin.book;
 
 import by.radomskaya.project.command.Command;
+import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
@@ -19,8 +20,9 @@ public class ShowBooksCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
-        String page = null;
+    public Router execute(HttpServletRequest request) throws CommandException {
+        Router router = new Router();
+        String page;
         List<Book> listBooks;
 
         try {
@@ -31,6 +33,8 @@ public class ShowBooksCommand implements Command {
             throw new CommandException(e);
         }
 
-        return page;
+        router.setPagePath(page);
+        router.setRoute(Router.RouteType.FORWARD);
+        return router;
     }
 }

@@ -1,6 +1,9 @@
 package by.radomskaya.project.command.user.book;
 
 import by.radomskaya.project.command.Command;
+import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
@@ -9,10 +12,7 @@ import by.radomskaya.project.logic.BookLogic;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static by.radomskaya.project.constant.PageConstant.USER_BOOKS_PAGE;
-
 public class FindBookByGenreCommand implements Command {
-    private final String PARAM_GENRE = "genre";
     private BookLogic bookLogic;
 
     public FindBookByGenreCommand(BookLogic bookLogic) {
@@ -20,18 +20,27 @@ public class FindBookByGenreCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
+    public Router execute(HttpServletRequest request) throws CommandException {
+        Router router = new Router();
         String page = null;
-        String genre = request.getParameter(PARAM_GENRE);
         List<Book> listFoundBooksByGenre;
 
         try {
+            String genre = request.getParameter(RequestParameter.PARAM_GENRE);
             listFoundBooksByGenre = bookLogic.findBooksByGenre(genre);
-            request.setAttribute("foundBooksByGenre", listFoundBooksByGenre);
-            page = USER_BOOKS_PAGE;
+
+            if (listFoundBooksByGenre.isEmpty()) {
+                request.setAttribute("messageFindBook", "empty");
+                page = PageConstant.USER_FIND_BOOKS_PAGE;
+            } else {
+                request.setAttribute("foundBooks", listFoundBooksByGenre);
+                page = PageConstant.USER_FIND_BOOKS_PAGE;
+            }
         } catch (DAOException e) {
             throw new CommandException(e);
         }
-        return page;
+        router.setPagePath(page);
+        router.setRoute(Router.RouteType.FORWARD);
+        return router;
     }
 }

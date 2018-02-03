@@ -1,6 +1,9 @@
 package by.radomskaya.project.command.user.order;
 
 import by.radomskaya.project.command.Command;
+import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Order;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
@@ -9,10 +12,7 @@ import by.radomskaya.project.logic.OrderLogic;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static by.radomskaya.project.constant.PageConstant.USER_ORDERS_CART_PAGE;
-
 public class GetPersonalOrdersCommand implements Command {
-    private final String PARAM_NUMBER_TICKET = "number_ticket";
     private OrderLogic orderLogic;
 
     public GetPersonalOrdersCommand(OrderLogic orderLogic) {
@@ -20,21 +20,28 @@ public class GetPersonalOrdersCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
+    public Router execute(HttpServletRequest request) throws CommandException {
+        Router router = new Router();
         String page = null;
-        int numberTicket = Integer.parseInt(request.getParameter(PARAM_NUMBER_TICKET));
         List<Order> listOrders;
 
         try {
-            if (orderLogic.checkPersonalOrders(numberTicket)) {
-                listOrders = orderLogic.getPersonalOrders(numberTicket);
+            int idUser = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_READER));
+
+            if (orderLogic.checkPersonalOrders(idUser)) {
+                listOrders = orderLogic.getPersonalOrders(idUser);
                 request.setAttribute("orders", listOrders);
-                page = USER_ORDERS_CART_PAGE;
+                page = PageConstant.USER_ORDERS_CART_PAGE;
+            } else {
+                request.setAttribute("messageOrders", "empty");
+                page = PageConstant.USER_ORDERS_CART_PAGE;
             }
         } catch (DAOException e) {
             throw new CommandException(e);
         }
 
-        return page;
+        router.setPagePath(page);
+        router.setRoute(Router.RouteType.FORWARD);
+        return router;
     }
 }

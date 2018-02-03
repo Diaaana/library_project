@@ -1,6 +1,9 @@
 package by.radomskaya.project.command.admin.author;
 
 import by.radomskaya.project.command.Command;
+import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Author;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
@@ -8,10 +11,7 @@ import by.radomskaya.project.logic.AuthorLogic;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static by.radomskaya.project.constant.PageConstant.ADMIN_EDIT_AUTHOR_PAGE;
-
 public class EditAuthorCommand implements Command {
-    private final String PARAM_ID_AUTHOR = "id_author";
     private AuthorLogic authorLogic;
 
     public EditAuthorCommand(AuthorLogic authorLogic) {
@@ -19,19 +19,23 @@ public class EditAuthorCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
+    public Router execute(HttpServletRequest request) throws CommandException {
+        Router router = new Router();
         String page = null;
         Author author;
-        int idAuthor = Integer.parseInt(request.getParameter(PARAM_ID_AUTHOR));
 
         try {
+            int idAuthor = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_AUTHOR));
+
             author = authorLogic.getAuthorById(idAuthor);
             request.setAttribute("author", author);
-            page = ADMIN_EDIT_AUTHOR_PAGE;
+            page = PageConstant.ADMIN_EDIT_AUTHOR_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }
 
-        return page;
+        router.setPagePath(page);
+        router.setRoute(Router.RouteType.FORWARD);
+        return router;
     }
 }

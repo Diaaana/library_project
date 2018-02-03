@@ -1,6 +1,9 @@
 package by.radomskaya.project.command.admin.librarian;
 
 import by.radomskaya.project.command.Command;
+import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
@@ -8,10 +11,7 @@ import by.radomskaya.project.logic.LibrarianLogic;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static by.radomskaya.project.constant.PageConstant.ADMIN_EDIT_LIBRARIAN_PAGE;
-
 public class EditLibrarianCommand implements Command {
-    private final String PARAM_ID_LIBRARIAN = "id_librarian";
     private LibrarianLogic librarianLogic;
 
     public EditLibrarianCommand(LibrarianLogic librarianLogic) {
@@ -19,20 +19,24 @@ public class EditLibrarianCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
-        String page = null;
-        int idLibrarian = Integer.parseInt(request.getParameter(PARAM_ID_LIBRARIAN));
+    public Router execute(HttpServletRequest request) throws CommandException {
+        Router router = new Router();
+        String page;
         User librarian;
 
         try {
+            int idLibrarian = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_LIBRARIAN));
             librarian = librarianLogic.getLibrarianById(idLibrarian);
+
             request.setAttribute("librarian", librarian);
-            page = ADMIN_EDIT_LIBRARIAN_PAGE;
+            page = PageConstant.ADMIN_EDIT_LIBRARIAN_PAGE;
 
         } catch (DAOException e) {
             throw new CommandException(e);
         }
 
-        return page;
+        router.setPagePath(page);
+        router.setRoute(Router.RouteType.FORWARD);
+        return router;
     }
 }

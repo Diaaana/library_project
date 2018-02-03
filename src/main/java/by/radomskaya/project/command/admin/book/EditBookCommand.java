@@ -1,17 +1,18 @@
 package by.radomskaya.project.command.admin.book;
 
 import by.radomskaya.project.command.Command;
+import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.BookLogic;
 
 import javax.servlet.http.HttpServletRequest;
-
-import static by.radomskaya.project.constant.PageConstant.ADMIN_EDIT_BOOK_PAGE;
+import java.util.Map;
 
 public class EditBookCommand implements Command {
-    private final String PARAM_ID_BOOK = "id_book";
     private BookLogic bookLogic;
 
     public EditBookCommand(BookLogic bookLogic) {
@@ -19,18 +20,27 @@ public class EditBookCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
-        String page = null;
+    public Router execute(HttpServletRequest request) throws CommandException {
+        Router router = new Router();
+        String page;
         Book book;
-        int idBook = Integer.parseInt(request.getParameter(PARAM_ID_BOOK));
+        Map<Integer, String> mapGenres;
 
         try {
+            int idBook = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_BOOK));
+
             book = bookLogic.getBookById(idBook);
             request.setAttribute("book", book);
-            page = ADMIN_EDIT_BOOK_PAGE;
+            mapGenres = bookLogic.getAllGenres();
+            request.setAttribute("genres", mapGenres);
+
+            page = PageConstant.ADMIN_EDIT_BOOK_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }
-        return page;
+
+        router.setPagePath(page);
+        router.setRoute(Router.RouteType.FORWARD);
+        return router;
     }
 }

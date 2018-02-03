@@ -1,64 +1,71 @@
 package by.radomskaya.project.command.common;
 
 import by.radomskaya.project.command.Command;
+import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.constant.RoleType;
+import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
-import by.radomskaya.project.logic.AdminLogic;
-import by.radomskaya.project.logic.LibrarianLogic;
 import by.radomskaya.project.logic.ReaderLogic;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static by.radomskaya.project.constant.PageConstant.*;
-
 public class LoginCommand implements Command {
-    private final String PARAM_LOGIN = "login";
-    private final String PARAM_PASSWORD = "password";
     private ReaderLogic readerLogic;
-    private AdminLogic adminLogic;
-    private LibrarianLogic librarianLogic;
 
-    public LoginCommand(ReaderLogic readerLogic, AdminLogic adminLogic, LibrarianLogic librarianLogic) {
+    public LoginCommand(ReaderLogic readerLogic) {
         this.readerLogic = readerLogic;
-        this.adminLogic = adminLogic;
-        this.librarianLogic = librarianLogic;
     }
 
     @Override
-    public String execute(HttpServletRequest request) throws CommandException {
-        String page = null;
-        int numberTicket;
-        String loginValue = request.getParameter(PARAM_LOGIN);
-        String passwordValue = request.getParameter(PARAM_PASSWORD);
-        User user = new User();
-        HttpSession session = request.getSession(true);
+    public Router execute(HttpServletRequest request) throws CommandException {
+        Router router = new Router();
+        String page;
+        String roleType;
+        String loginValue = request.getParameter(RequestParameter.PARAM_LOGIN);
+        String passwordValue = request.getParameter(RequestParameter.PARAM_PASSWORD);
+        User user;
 
         try {
-            if (adminLogic.checkAdmin(loginValue, passwordValue)) {
-                session.setAttribute("role", "admin");
-                request.setAttribute("adminLogin", loginValue);
-                page = ADMIN_MAIN_PAGE;
-            } else if (readerLogic.checkReader(loginValue, passwordValue)) {
-                session.setAttribute("role", "reader");
-
-                numberTicket = readerLogic.getNumberTicket(loginValue, passwordValue);
-                user.setLogin(loginValue);
-                user.setPassword(passwordValue);
-                user.setNumberTicket(numberTicket);
-                session.setAttribute("reader", user);
-                page = USER_MAIN_PAGE;
-            } else if (librarianLogic.checkLibrarian(loginValue, passwordValue)) {
-                session.setAttribute("role", "librarian");
-                request.setAttribute("librarianLogin", loginValue);
-                page = LIBRARIAN_MAIN_PAGE;
-            } else {
-                session.setAttribute("role", null);
-                page = START_PAGE;
-            }
+            roleType = readerLogic.checkLoginPassword(loginValue, passwordValue);
+            user = readerLogic.getUserByLoginPassword(loginValue, passwordValue);
+            page = setRole(request, roleType, user);
         } catch (DAOException e) {
             throw new CommandException(e);
+        }
+
+        router.setPagePath(page);
+        router.setRoute(Router.RouteType.FORWARD);
+        return router;
+    }
+
+    private String setRole(HttpServletRequest request, String roleType, User user) {
+        HttpSession session = request.getSession();
+        String page = null;
+        switch (roleType) {
+            case RoleType.ADMIN:
+                session.setAttribute("role", "admin");
+                request.setAttribute("adminLogin", user.getLogin());
+                page = PageConstant.ADMIN_MAIN_PAGE;
+                break;
+            case RoleType.LIBRARIAN:
+                session.setAttribute("role", "librarian");
+                request.setAttribute("librarianLogin", user.getLogin());
+                page = PageConstant.LIBRARIAN_MAIN_PAGE;
+                break;
+            case RoleType.READER:
+                session.setAttribute("role", "reader");
+                session.setAttribute("reader", user);
+                page = PageConstant.USER_MAIN_PAGE;
+                break;
+            default:
+                session.setAttribute("role", null);
+                request.setAttribute("messageLogin", "error");
+                page = PageConstant.START_PAGE;
+                break;
         }
 
         return page;

@@ -20,10 +20,12 @@ public class BookDAOImpl implements BookDAO {
     private final static Logger LOGGER = LogManager.getLogger(BookDAOImpl.class);
 
     private final static String INSERT_BOOK = "INSERT INTO books(isbn, tittle, date_edition, place_edition, publisher, number_copies, image_book) VALUES(?,?,?,?,?,?,?)";
-    private final static String SELECT_BOOKS_AND_AUTHORS = "SELECT books.id_book, isbn, tittle, authors.id_author, surname, name, middle_name, date_edition, place_edition, publisher, number_copies, image_book " +
-            "FROM library.books "+
+    private final static String SELECT_BOOKS_AND_AUTHORS = "SELECT books.id_book, isbn, tittle, authors.id_author, surname, name, middle_name, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
+            "FROM library.books " +
             "JOIN library.book_author ON books.id_book = book_author.id_book " +
-            "JOIN library.authors ON book_author.id_author = authors.id_author;";
+            "JOIN library.authors ON book_author.id_author = authors.id_author " +
+            "JOIN library.book_genre ON book_genre.id_book = books.id_book " +
+            "JOIN library.genres ON genres.id_genre = book_genre.id_genre;";
     private final static String SELECT_BOOK_BY_ID = "SELECT books.id_book, isbn, tittle, authors.id_author, surname, name, middle_name, date_edition, place_edition, publisher, number_copies, image_book " +
             "FROM library.books " +
             "JOIN library.book_author ON books.id_book = book_author.id_book " +
@@ -36,14 +38,12 @@ public class BookDAOImpl implements BookDAO {
             "JOIN library.book_genre ON book_genre.id_book = books.id_book " +
             "JOIN library.genres ON genres.id_genre = book_genre.id_genre " +
             "WHERE name_genre = ?";
-    private final static String FIND_BOOKS_BY_TITTLE = "SELECT tittle FROM library.books WHERE tittle = ?;";
     private final static String SELECT_FIND_BOOKS_BY_TITTLE = "SELECT books.id_book, authors.id_author, isbn, tittle, surname, name, middle_name, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
             "FROM library.books JOIN library.book_genre ON book_genre.id_book = books.id_book " +
             "JOIN library.genres ON book_genre.id_genre = genres.id_genre " +
             "JOIN library.book_author ON books.id_book = book_author.id_book " +
             "JOIN library.authors ON authors.id_author = book_author.id_author " +
             "WHERE tittle = ?;";
-    private final static String FIND_BOOKS_BY_AUTHOR = "SELECT surname FROM library.books JOIN library.book_author ON books.id_book = book_author.id_book JOIN library.authors ON book_author.id_author = authors.id_author WHERE surname = ?;";
     private final static String SELECT_FIND_BOOKS_BY_AUTHOR = "SELECT books.id_book, authors.id_author, isbn, tittle, surname, name, middle_name, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
             "FROM library.books JOIN library.book_genre ON book_genre.id_book = books.id_book " +
             "JOIN library.genres ON book_genre.id_genre = genres.id_genre " +
@@ -56,13 +56,17 @@ public class BookDAOImpl implements BookDAO {
             "JOIN library.authors ON book_author.id_author = authors.id_author " +
             "JOIN library.book_genre ON books.id_book = book_genre.id_book " +
             "JOIN library.genres ON book_genre.id_genre = genres.id_genre " +
-            "SET isbn = ?, tittle = ?, surname = ?, name = ?, middle_name = ?, name_genre = ?, date_edition = ?, place_edition = ?, publisher = ?, number_copies = ? " +
+            "SET isbn = ?, tittle = ?, surname = ?, name = ?, middle_name = ?, date_edition = ?, place_edition = ?, publisher = ?, number_copies = ? " +
             "WHERE books.id_book = ?;";
+    private final static String UPDATE_BOOK_AND_GENRE = "UPDATE library.book_genre SET id_genre = ? WHERE id_book = ?;";
     private final static String GET_LAST_ID = "(SELECT id_book FROM library.books ORDER BY id_book desc limit 1) " +
             "UNION (SELECT id_author FROM library.authors ORDER BY id_author desc limit 1)";
     private final static String INSERT_BOOK_AND_AUTHOR = "INSERT INTO library.book_author(id_book, id_author) VALUES(?,?);";
     private final static String INSERT_BOOK_AND_GENRE = "INSERT INTO library.book_genre(id_book, id_genre) VALUES(?,?);";
     private final static String GET_ID_GENRE = "SELECT id_genre FROM library.genres WHERE name_genre = ?";
+    private final static String GET_GENRE_BY_ID_BOOK = "SELECT name_genre FROM library.books " +
+            "JOIN library.book_genre ON books.id_book = book_genre.id_book " +
+            "JOIN library.genres ON book_genre.id_genre = genres.id_genre WHERE books.id_book = ?;";
 
     @Override
     public List<Book> getBooksAndAuthors() throws DAOException {
@@ -126,7 +130,7 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public List<Book> foundBookByGenre(String genre) throws DAOException {
+    public List<Book> getFoundBooksByGenre(String genre) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
@@ -243,16 +247,25 @@ public class BookDAOImpl implements BookDAO {
     }
 
     @Override
-    public boolean findBooksByTittle(String tittle) throws DAOException {
+    public void updateBookAndGenre(String genre, int idBook) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
+        int idGenre = 0;
         try {
-            statement = connection.prepareStatement(FIND_BOOKS_BY_TITTLE);
-            statement.setString(1, tittle);
+
+            statement = connection.prepareStatement(GET_ID_GENRE);
+            statement.setString(1, genre);
             ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
+            if (resultSet.next()) {
+                idGenre = resultSet.getInt(1);
+            }
+
+            statement = connection.prepareStatement(UPDATE_BOOK_AND_GENRE);
+            statement.setInt(1, idGenre);
+            statement.setInt(2, idBook);
+            statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DAOException("Error find a book by tittle" + e);
+            throw new DAOException("Error update genre" + e);
         } finally {
             try {
                 statement.close();
@@ -267,49 +280,25 @@ public class BookDAOImpl implements BookDAO {
         }
     }
 
-    @Override
-    public boolean findBooksByAuthor(String author) throws DAOException {
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement(FIND_BOOKS_BY_AUTHOR);
-            statement.setString(1, author);
-            ResultSet resultSet = statement.executeQuery();
-            return resultSet.next();
-        } catch (SQLException e) {
-            throw new DAOException("Error find a book by author" + e);
-        } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
-            }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
-            }
-        }
-    }
 
     @Override
     public List<Book> getFoundBooksByTittle(String tittle) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        Book book = new Book();
-        List<Book> listBook = new ArrayList<>();
+        ResultSet resultSet;
+        Book book;
+        List<Book> listBooks = new ArrayList<>();
         try {
             statement = connection.prepareStatement(SELECT_FIND_BOOKS_BY_TITTLE);
             statement.setString(1, tittle);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 book = getBooksFromResultSet(resultSet);
-                listBook.add(book);
+                listBooks.add(book);
             }
-            return listBook;
+            return listBooks;
         } catch (SQLException e) {
-            throw new DAOException("Error get found book by tittle" + e);
+            throw new DAOException("Error found book by tittle" + e);
         } finally {
             try {
                 statement.close();
@@ -328,20 +317,20 @@ public class BookDAOImpl implements BookDAO {
     public List<Book> getFoundBooksByAuthor(String author) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         Book book;
-        List<Book> listBook = new ArrayList<>();
+        List<Book> listBooks = new ArrayList<>();
         try {
             statement = connection.prepareStatement(SELECT_FIND_BOOKS_BY_AUTHOR);
             statement.setString(1, author);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 book = getBooksFromResultSet(resultSet);
-                listBook.add(book);
+                listBooks.add(book);
             }
-            return listBook;
+            return listBooks;
         } catch (SQLException e) {
-            throw new DAOException("Error get found book by author" + e);
+            throw new DAOException("Error found book by author" + e);
         } finally {
             try {
                 statement.close();
@@ -392,13 +381,12 @@ public class BookDAOImpl implements BookDAO {
             statement.setString(3, book.getAuthor().getSurname());
             statement.setString(4, book.getAuthor().getName());
             statement.setString(5, book.getAuthor().getMiddleName());
-            /*statement.setString(6, book.getGenre());*/
-            statement.setDate(7, book.getDateEdition());
-            statement.setString(8, book.getPlaceEdition());
-            statement.setString(9, book.getPublisher());
-            statement.setInt(10, book.getNumberCopies());
+            statement.setDate(6, book.getDateEdition());
+            statement.setString(7, book.getPlaceEdition());
+            statement.setString(8, book.getPublisher());
+            statement.setInt(9, book.getNumberCopies());
             //statement.setString(10, book.getImage());
-            statement.setInt(11, book.getId());
+            statement.setInt(10, book.getId());
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -417,12 +405,15 @@ public class BookDAOImpl implements BookDAO {
         }
     }
 
-    private Book getBooksFromResultSet(ResultSet resultSet) throws SQLException {
+    private Book getBooksFromResultSet(ResultSet resultSet) throws SQLException, DAOException {
         Book book = new Book();
         Author author = new Author();
+        List<String> listGenres;
         book.setId(resultSet.getInt("id_book"));
         book.setIsbn(resultSet.getString("isbn"));
         book.setTittle(resultSet.getString("tittle"));
+        listGenres = getGenres(book.getId());
+        book.setGenres(listGenres);
         author.setId(resultSet.getInt("id_author"));
         author.setSurname(resultSet.getString("surname"));
         author.setName(resultSet.getString("name"));
@@ -434,5 +425,36 @@ public class BookDAOImpl implements BookDAO {
         book.setNumberCopies(resultSet.getInt("number_copies"));
         book.setImage(resultSet.getString("image_book"));
         return book;
+    }
+
+    private List<String> getGenres(int idBook) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<String> listGenres = new ArrayList<>();
+        String genre;
+        try {
+            statement = connection.prepareStatement(GET_GENRE_BY_ID_BOOK);
+            statement.setInt(1, idBook);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                genre = resultSet.getString("name_genre");
+                listGenres.add(genre);
+            }
+            return listGenres;
+        } catch (SQLException e) {
+            throw new DAOException("Error get genres by id book" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
     }
 }

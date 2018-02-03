@@ -8,44 +8,61 @@ import by.radomskaya.project.exception.DAOException;
 import java.util.List;
 
 public class ReaderLogic {
+    private ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
 
-    public boolean registrationReader(User user) throws DAOException {
-        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
-        return readerDAO.addReader(user);
+    public void registrationReader(User user) throws DAOException {
+        readerDAO.addReader(user);
     }
 
-    public boolean checkReader(String login, String password) throws DAOException {
-        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
-        return readerDAO.checkLoginPasswordUser(login, password);
+    public String checkLoginPassword(String login, String password) throws DAOException {
+        return readerDAO.checkLoginPassword(login, password);
+    }
+
+    public User getUserByLoginPassword(String login, String password) throws DAOException {
+        return readerDAO.getUserByLoginPassword(login, password);
+    }
+
+    public int getIdUser(String login, String password) throws DAOException {
+        return readerDAO.getIdUser(login, password);
     }
 
     public int getNumberTicket(String login, String password) throws DAOException {
-        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
         return readerDAO.getNumberTicket(login, password);
     }
 
     public List<User> getReaders() throws DAOException {
-        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
         return readerDAO.getAllReaders();
     }
 
-    public boolean deleteReader(int numberTicket) throws DAOException {
-        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
-        return readerDAO.deleteReader(numberTicket);
+    public boolean deleteReader(int idUser) throws DAOException {
+        return readerDAO.deleteReader(idUser);
     }
 
     public User getReaderByTicket(int numberTicket) throws DAOException {
-        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
         return readerDAO.getUserByTicket(numberTicket);
     }
 
     public boolean changePassword(int numberTicket, String password) throws DAOException {
-        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
         return readerDAO.changePassword(numberTicket, password);
     }
 
     public String getPassword(int numberTicket) throws DAOException {
-        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
         return readerDAO.getPassword(numberTicket);
+    }
+
+    public void forgotPassword(int numberTicket, String login, String password) throws DAOException {
+        readerDAO.forgotPassword(numberTicket, login, password);
+    }
+
+    public boolean updateUser(User user) throws DAOException {
+        return readerDAO.updateUser(user);
+    }
+
+    public boolean checkLogin(String login) throws DAOException {
+        return readerDAO.checkLogin(login);
+    }
+
+    public boolean checkLoginAndTicket(String login, int numberTicket) throws DAOException {
+        return readerDAO.checkLoginAndTicket(login, numberTicket);
     }
 }

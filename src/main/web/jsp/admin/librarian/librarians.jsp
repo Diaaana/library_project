@@ -1,58 +1,83 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="${sessionScope.locale}"/>
+<fmt:setBundle basename="locale" var="local"/>
 <html>
 <head>
-    <title>Библиотекари</title>
+    <title><fmt:message key="label.librarians" bundle="${local}"/></title>
 
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/resource/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/app-style.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap-theme.css">
+    <script src="${pageContext.request.contextPath}/resource/js/bootstrap.js"></script>
+    <script src="${pageContext.request.contextPath}/resource/js/jquery-3.2.1.js"></script>
 
 </head>
-<body>
-<jsp:include page="/jsp/layout/layout.jsp"></jsp:include>
+<body class="body">
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
 
-<div class="heading">
-    <h1>Библиотекари</h1>
-</div>
+<c:if test="${requestScope.messageAdd == 'success'}">
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        <fmt:message key="message.successAddLibrarian" bundle="${local}"/>
+    </div>
+</c:if>
 
-<a href="${pageContext.request.contextPath}/jsp/admin/librarian/addLibrarians.jsp" class="a-function">Добавить библиотекаря</a> <br />
+<c:if test="${requestScope.messageEdit == 'success'}">
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        <fmt:message key="message.successEditLibrarian" bundle="${local}"/>
+    </div>
+</c:if>
 
-<form action="Controller" method="post">
+<c:if test="${requestScope.messageDelete == 'success'}">
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert">×</a>
+        <fmt:message key="message.successDeleteLibrarian" bundle="${local}"/>
+    </div>
+</c:if>
 
-    <table class="table table-hover">
+<div class="container">
 
-        <thead>
-        <tr>
-            <th>Фамилия</th>
-            <th>Имя</th>
-            <th>Отчество</th>
-            <th>Логин</th>
-            <th></th>
-        </tr>
-        </thead>
+    <form action="/Controller" method="post">
 
-        <tbody>
-        <c:forEach var="librarian" items="${librarians}">
+        <table class="table table-hover">
+
+            <thead>
             <tr>
-                <td>${librarian.surname}</td>
-                <td>${librarian.name}</td>
-                <td>${librarian.middleName}</td>
-                <td>${librarian.login}</td>
-                <td>
-                    <a class="btn-delete" href="Controller?id_librarian=${librarian.numberTicket}&command=delete_librarian">Удалить</a>
-                    <a class="btn-edit" href="Controller?id_librarian=${librarian.numberTicket}&command=edit_librarian">Редактировать</a>
-                </td>
+                <th><fmt:message key="label.surname" bundle="${local}"/></th>
+                <th><fmt:message key="label.name" bundle="${local}"/></th>
+                <th><fmt:message key="label.middleName" bundle="${local}"/></th>
+                <th><fmt:message key="label.loginValue" bundle="${local}"/></th>
+                <th></th>
             </tr>
-        </c:forEach>
-        </tbody>
+            </thead>
 
-    </table>
-</form>
+            <tbody>
+            <c:forEach var="librarian" items="${librarians}">
+                <tr>
+                    <td>${librarian.surname}</td>
+                    <td>${librarian.name}</td>
+                    <td>${librarian.middleName}</td>
+                    <td>${librarian.login}</td>
+                    <td>
+                        <a class="a-function"
+                           href="/Controller?id_librarian=${librarian.numberTicket}&command=delete_librarian"><fmt:message key="label.delete" bundle="${local}"/>
+                            <span class="glyphicon glyphicon-trash"></span></a>
+                        <a class="a-function"
+                           href="/Controller?id_librarian=${librarian.numberTicket}&command=edit_librarian"><fmt:message key="label.edit" bundle="${local}"/> <span class="glyphicon glyphicon-pencil"></span></a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
 
-<jsp:include page="/jsp/layout/footer.jsp"></jsp:include>
+        </table>
+    </form>
 
+</div>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 </body>
-<script src="${pageContext.request.contextPath}/resource/js/bootstrap.js"></script>
 </html>

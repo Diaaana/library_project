@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="locale" var="local"/>
@@ -18,74 +19,86 @@
 
 <html>
 <head>
-    <meta charset="UTF-8">
     <title>${registration}</title>
 
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/resource/images/icon.png" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href = "${pageContext.request.contextPath}/resource/css/app-style.css">
-    <link rel="stylesheet" type="text/css" href = "${pageContext.request.contextPath}/resource/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href = "${pageContext.request.contextPath}/resource/css/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/app-style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap-theme.css">
+    <script src="${pageContext.request.contextPath}/resource/js/reader/registration.js"></script>
+    <script src="${pageContext.request.contextPath}/resource/js/jquery-3.2.1.js"></script>
 
 </head>
-<body class="body-registration">
-
+<body class="body">
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
 <div class="container">
 
-    <h1 class="header">${registration}</h1>
+    <c:if test="${requestScope.messageSameLogin == 'true'}">
+        <div id="error" class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert">×</a>
+            <fmt:message key="message.sameLogin" bundle="${local}"/>
+        </div>
+    </c:if>
 
-        <form role="form" action="/Controller" name="form" onsubmit="return checkRegistration();" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label class="label">Выберите: </label><br/>
-                <label class="radio-inline">
-                    <input type="radio" name="role" value="admin">Администратор
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="role" value="librarian">Библиотекарь
-                </label>
-                <label class="radio-inline">
-                    <input type="radio" name="role" value="reader">Читатель
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="text" name="surname" placeholder="${surname}" class="form-control field"><br/>
-            </div>
-            <div class="form-group">
-                <input type="text" name="name" placeholder="${name}" class="form-control field"><br/>
-            </div>
-            <div class="form-group">
-                <input type="text" name="middle_name" placeholder="${middleName}" class="form-control field"><br/>
-            </div>
-            <div class="form-group">
-                <input type="text" name="age" placeholder="${age}" class="form-control field"><br/>
-            </div>
-            <div class="form-group">
-                <input type="text" name="phone" placeholder="${phone}" class="form-control field"><br/>
-            </div>
-            <div class="form-group">
-                <input type="text" name="mail" placeholder="${mail}" class="form-control field"><br/>
-            </div>
-            <div class="form-group">
-                <input type="file" name="profile_photo" class="form-control field"><br/>
-            </div>
-            <div class="form-group">
-                <input type="text" name="login" placeholder="${login}" class="form-control field"><br/>
-            </div>
-            <div class="form-group">
-                <input type="password" name="password" placeholder="${password}" class="form-control field"><br/>
-            </div>
-            <div class="form-group">
-                <input type="password" name="password2" placeholder="${repeatPassword}" class="form-control field"><br/>
-            </div>
-            <div class="form-group">
-                <input type="hidden" name="command" value="registration"/>
-                <input type="submit" name="registration" value="${toRegistr}" class="button-registr">
-                <button type="reset" value="clear" onclick="clearForm()" class="button-registr">${clear}</button>
-            </div>
-        </form>
-
-<jsp:include page="../layout/footer.jsp"></jsp:include>
+    <form role="form" action="/Controller" name="form" onsubmit="return checkRegistration();" method="post"
+          enctype="multipart/form-data">
+        <div class="form-group">
+            <label class="label"><fmt:message key="label.makeChoice" bundle="${local}"/> </label>
+            <label class="radio-inline">
+                <input type="radio" name="role" value="Библиотекарь"><fmt:message key="label.librarian" bundle="${local}"/>
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="role" value="Читатель"><fmt:message key="label.reader" bundle="${local}"/>
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="label"><fmt:message key="label.enterSurname" bundle="${local}"/></label>
+            <input type="text" name="surname" placeholder="${surname}" class="form-control field"><br/>
+        </div>
+        <div class="form-group">
+            <label class="label"><fmt:message key="label.enterName" bundle="${local}"/></label>
+            <input type="text" name="name" placeholder="${name}" class="form-control field"><br/>
+        </div>
+        <div class="form-group">
+            <label class="label"><fmt:message key="label.enterMiddleName" bundle="${local}"/></label>
+            <input type="text" name="middle_name" placeholder="${middleName}" class="form-control field"><br/>
+        </div>
+        <div class="form-group">
+            <label class="label"><fmt:message key="label.enterAge" bundle="${local}"/></label>
+            <input type="text" name="age" placeholder="${age}" class="form-control field"><br/>
+        </div>
+        <div class="form-group">
+            <label class="label"><fmt:message key="label.enterPhone" bundle="${local}"/></label>
+            <input type="text" name="phone" placeholder="${phone}" class="form-control field"><br/>
+        </div>
+        <div class="form-group">
+            <label class="label"><fmt:message key="label.enterMail" bundle="${local}"/></label>
+            <input type="text" name="mail" placeholder="${mail}" class="form-control field"><br/>
+        </div>
+        <div class="form-group">
+            <span class="btn btn-default btn-file">
+                <input type="file" name="profile_photo"><fmt:message key="label.addProfilePhoto" bundle="${local}"/>
+            </span>
+        </div>
+        <div class="form-group">
+            <label class="label"><fmt:message key="label.enterLogin" bundle="${local}"/></label>
+            <input type="text" name="login" placeholder="${login}" class="form-control field"><br/>
+        </div>
+        <div class="form-group">
+            <label class="label"><fmt:message key="label.enterPassword" bundle="${local}"/></label>
+            <input type="password" name="password" placeholder="${password}" class="form-control field"><br/>
+        </div>
+        <div class="form-group">
+            <label class="label"><fmt:message key="label.repeatPassword" bundle="${local}"/></label>
+            <input type="password" name="password2" placeholder="${repeatPassword}" class="form-control field"><br/>
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="command" value="registration"/>
+            <input type="submit" name="registration" value="${toRegistr}" class="button">
+            <button type="reset" value="clear" onclick="clearForm()" class="button">${clear}</button>
+        </div>
+    </form>
 </div>
-
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 </body>
-<script src = "/resource/js/reader/registration.js"></script>
 </html>

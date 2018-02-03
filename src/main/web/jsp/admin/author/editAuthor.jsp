@@ -6,24 +6,23 @@
 
 <html>
 <head>
-    <title>Редактирование</title>
+    <title><fmt:message key="label.editing" bundle="${local}"/></title>
 
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/resource/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/app-style.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/bootstrap-theme.css">
+    <script src="${pageContext.request.contextPath}/resource/js/author/author.js"></script>
+    <script src="${pageContext.request.contextPath}/resource/js/bootstrap.js"></script>
 
 </head>
-<body>
-
-<c:set var="author" scope="request" value="${requestScope.author}"/>
-
+<body class="body">
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<c:set var="author" scope="request" value="${requestScope.author}"/>
 
 <div class="container">
 
-    <form role="form" action="/Controller" method="post">
+    <form role="form" action="/Controller" method="post" name="form" onsubmit="return checkAuthor();">
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterSurnameAuthor" bundle="${local}"/></label>
             <input type="text" name="surname" class="form-control" value="${author.surname}">
@@ -37,18 +36,14 @@
             <input type="text" name="middle_name" class="form-control" value="${author.middleName}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterMiddleNameAuthor" bundle="${local}"/></label>
+            <label class="label"><fmt:message key="label.enterCountryAuthor" bundle="${local}"/></label>
             <input type="text" name="country" class="form-control" value="${author.countryBirth}">
         </div>
         <input type="hidden" name="command" value="update_author"/>
         <input type="hidden" name="id_author" value="${author.id}"/>
-        <input type="submit" name="add_book" class="btn btn-success" value="Отредактировать"/>
-        <button type="reset" value="clear" onclick="clearForm()" class="btn btn-danger"><fmt:message key="label.clear"
-                                                                                                     bundle="${local}"/></button>
-    </form>
-
-
+        <input type="submit" class="button" value="<fmt:message key="label.edit" bundle="${local}"/>"/>
+     </form>
 </div>
-
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 </body>
 </html>
