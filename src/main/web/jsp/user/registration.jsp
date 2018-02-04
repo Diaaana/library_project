@@ -5,9 +5,14 @@
     <link rel="shortcut icon" href="/resource/images/icon.png" type="image/x-icon">
     <title>Регистрация</title>
     <link rel="stylesheet" type="text/css" href = "/resource/css/style.css">
+    <link rel="stylesheet" type="text/css" href = "/resource/css/bootstrap.css">
 </head>
 <body>
-<h1>РЕГИСТРАЦИЯ</h1>
+
+<jsp:include page="../layout/footer.jsp"></jsp:include>
+
+<h1 class="header">РЕГИСТРАЦИЯ</h1>
+
 <div class="form">
     <form action="/Controller" name="form" onsubmit="return validationForm();">
         <div class="input">

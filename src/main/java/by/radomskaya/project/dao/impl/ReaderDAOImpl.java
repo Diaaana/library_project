@@ -19,10 +19,9 @@ import java.util.List;
 public class ReaderDAOImpl implements ReaderDAO {
     private static final Logger LOGGER = LogManager.getLogger(ReaderDAOImpl.class);
 
-    private static final String SELECT_READERS = "SELECT readers.number_ticket, readers.surname, readers.name, readers.middle_name, readers.age, readers.phone_number, readers.mail " +
-            "FROM library.readers JOIN library.roles ON roles.id_role = readers.id_role WHERE roles.name_role = 'Пользователь';";
+    private static final String SELECT_READERS = "SELECT number_ticket, surname, name, middle_name, age, phone_number, mail  FROM library.readers JOIN library.roles ON roles.id_role = readers.id_role WHERE roles.name_role = 'Пользователь'";
     private static final String INSERT_READER = "INSERT INTO readers(surname, name, middle_name, age, phone_number, mail, login, password) VALUES(?,?,?,?,?,?,?,?)";
-    private static final String CHECK_LOGIN_PASSWORD = "SELECT readers.number_ticket FROM library.readers WHERE login = ? AND password = ?;";
+    private static final String CHECK_LOGIN_PASSWORD = "SELECT login, password FROM library.readers JOIN library.roles on readers.id_role = roles.id_role WHERE name_role = 'Пользователь' AND login = ? AND password = ?";
 
     @Override
     public List<Reader> getAllReaders() throws DAOException {
@@ -93,7 +92,7 @@ public class ReaderDAOImpl implements ReaderDAO {
     }
 
     @Override
-    public boolean checkLoginPassword(String login, String password) throws DAOException {
+    public boolean checkLoginPasswordUser(String login, String password) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
@@ -117,4 +116,5 @@ public class ReaderDAOImpl implements ReaderDAO {
             }
         }
     }
+
 }

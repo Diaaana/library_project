@@ -4,6 +4,8 @@
     <title>Main</title>
 </head>
 <body>
+<jsp:include page="../layout/layout.jsp"></jsp:include>
+<jsp:include page="../layout/footer.jsp"></jsp:include>
 <h1>HELLO</h1>
 </body>
 </html>
