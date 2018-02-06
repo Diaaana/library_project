@@ -28,30 +28,6 @@ public class User extends Entity {
         this.profilePhoto = profilePhoto;
     }
 
-    public User(int numberTicket, String surname, String name, String middleName, int age, String phoneNumber, String mail, String login, String password, String profilePhoto) {
-        this.numberTicket = numberTicket;
-        this.surname = surname;
-        this.name = name;
-        this.middleName = middleName;
-        this.age = age;
-        this.phoneNumber = phoneNumber;
-        this.mail = mail;
-        this.login = login;
-        this.password = password;
-        this.profilePhoto = profilePhoto;
-    }
-
-    public User(int numberTicket, String surname, String name, String middleName, int age, String phoneNumber, String mail, String login) {
-        this.numberTicket = numberTicket;
-        this.surname = surname;
-        this.name = name;
-        this.middleName = middleName;
-        this.age = age;
-        this.phoneNumber = phoneNumber;
-        this.mail = mail;
-        this.login = login;
-    }
-
     public User(int id, String surname, String name, String middleName, String login) {
         super(id);
         this.surname = surname;

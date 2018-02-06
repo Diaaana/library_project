@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <fmt:message key="label.tittle" bundle="${local}" var="tittle"/>
 <fmt:message key="label.surnameAuthor" bundle="${local}" var="surname"/>
@@ -14,6 +14,8 @@
 <fmt:message key="label.moreInfo" bundle="${local}" var="moreInfo"/>
 
 <c:set var="user" scope="session" value="${sessionScope.user}"/>
+<c:set var="currentPage" scope="session" value="${sessionScope.currentPage}"/>
+<c:set var="noOfPages" scope="request" value="${requestScope.noOfPages}"/>
 
 <html>
 <head>
@@ -29,7 +31,7 @@
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
 <c:if test="${requestScope.messageAdd == 'success'}">
     <div id="error" class="alert alert-success">
@@ -40,7 +42,7 @@
 
 <div class="form-inline found-div">
     <div class="one-found-div">
-        <form action="/Controller" method="post">
+        <form action="${pageContext.request.contextPath}/Controller" method="post">
             <input type="hidden" name="command" value="find_book_by_tittle"/>
             <input type="text" name="book" placeholder="${tittle}" class="find-book-input"/>
             <input type="submit" value="${searchTittle}" class="find-book"/>
@@ -48,7 +50,7 @@
     </div>
 
     <div class="one-found-div">
-        <form action="/Controller" method="post">
+        <form action="${pageContext.request.contextPath}/Controller" method="post">
             <input type="hidden" name="command" value="find_book_by_author"/>
             <input type="text" name="author"
                    placeholder="${surname}" class="find-book-input">
@@ -58,7 +60,7 @@
     </div>
 
     <div class="one-found-div">
-        <form action="/Controller" method="post">
+        <form action="${pageContext.request.contextPath}/Controller" method="post">
             <input type="hidden" name="command" value="find_book_by_genre"/>
             <input type="text" name="genre" placeholder=${genre} class="find-book-input">
             <input type="submit" value="${searchGenre}" class="find-book"/>
@@ -66,37 +68,37 @@
     </div>
 </div>
 
-<form action="/Controller" method="post">
+<form action="${pageContext.request.contextPath}/Controller" method="post">
     <c:if test="${sessionScope.books != null}">
         <table class="table table-hover">
             <thead>
             <tr>
+                <th><fmt:message key="label.image" bundle="${local}"/></th>
                 <th><fmt:message key="label.tittle" bundle="${local}"/></th>
                 <th><fmt:message key="label.genre" bundle="${local}"/></th>
                 <th><fmt:message key="label.surname" bundle="${local}"/></th>
                 <th><fmt:message key="label.name" bundle="${local}"/></th>
                 <th><fmt:message key="label.middleName" bundle="${local}"/></th>
-                <th><fmt:message key="label.image" bundle="${local}"/></th>
             </tr>
             </thead>
             <tbody>
 
             <c:forEach var="book" items="${books}">
             <tr>
+                <td><img src="/resource/images/book/${book.image}" alt="${book.tittle}" class="imageBook"></td>
                 <td>${book.tittle}</td>
                 <td>${book.genres}</td>
                 <td>${book.author.surname}</td>
                 <td>${book.author.name}</td>
                 <td>${book.author.middleName}</td>
-                <td><img src="/resource/images/book/${book.image}" alt="${book.tittle}" class="imageBook"></td>
                 <td>
                     <div class="form-group">
                         <c:if test="${sessionScope.role == 'reader'}">
                             <a class="a-function"
-                               href="/Controller?&id_reader=${user.id}&id_book=${book.id}&id_author=${book.author.id}&command=add_to_cart">${addToCart}</a>
+                               href="${pageContext.request.contextPath}/Controller?&id_reader=${user.id}&id_book=${book.id}&id_author=${book.author.id}&command=add_to_cart">${addToCart}</a>
                         </c:if>
                         <a class="a-function"
-                           href="/Controller?id_book=${book.id}&command=get_personal_book">${moreInfo}</a>
+                           href="${pageContext.request.contextPath}/Controller?id_book=${book.id}&command=get_personal_book">${moreInfo}</a>
                     </div>
                 </td>
                 </c:forEach>
@@ -106,6 +108,33 @@
     </c:if>
 </form>
 
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<ul class="pagination place-pagination">
+    <c:if test="${currentPage gt 1}">
+        <li>
+            <a class="page-link" href="${pageContext.request.contextPath}/Controller?command=get_books&page=${currentPage - 1}"> ←</a>
+        </li>
+    </c:if>
+    <c:forEach begin="1" end="${noOfPages}" var="i">
+        <c:choose>
+            <c:when test="${currentPage eq i}">
+                <li>
+                    <a class="page-link">${i}</a>
+                </li>
+            </c:when>
+            <c:otherwise>
+                <li>
+                    <a class="page-link" href="${pageContext.request.contextPath}/Controller?command=get_books&page=${i}">${i}</a>
+                </li>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+    <c:if test="${currentPage lt noOfPages}">
+        <li>
+            <a class="page-link" href="${pageContext.request.contextPath}/Controller?command=get_books&page=${currentPage + 1}"> →</a>
+        </li>
+    </c:if>
+</ul>
+
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

@@ -50,8 +50,8 @@ public class ReaderLogic {
         return readerDAO.getPassword(numberTicket);
     }
 
-    public void forgotPassword(int numberTicket, String login, String password) throws DAOException {
-        readerDAO.forgotPassword(numberTicket, login, password);
+    public void forgotPassword(int numberTicket, String password) throws DAOException {
+        readerDAO.forgotPassword(numberTicket, password);
     }
 
     public boolean updateUser(User user) throws DAOException {
@@ -62,7 +62,7 @@ public class ReaderLogic {
         return readerDAO.checkLogin(login);
     }
 
-    public boolean checkLoginAndTicket(String login, int numberTicket) throws DAOException {
-        return readerDAO.checkLoginAndTicket(login, numberTicket);
+    public boolean checkMailAndTicket(String mail, int numberTicket) throws DAOException {
+        return readerDAO.checkMailAndTicket(mail, numberTicket);
     }
 }

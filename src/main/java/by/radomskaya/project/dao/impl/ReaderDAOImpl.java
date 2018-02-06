@@ -26,12 +26,12 @@ public class ReaderDAOImpl implements ReaderDAO {
     private final static String GET_PASSWORD_BY_TICKET = "SELECT password FROM library.users WHERE number_ticket = ?";
     private final static String CHECK_LOGIN_PASSWORD = "SELECT name_role FROM library.users JOIN library.roles ON roles.id_role = users.id_role WHERE login = ? AND password = ?";
     private final static String CHECK_LOGIN = "SELECT login FROM library.users WHERE login = ?";
-    private final static String CHECK_LOGIN_AND_TICKET = "SELECT login, number_ticket FROM library.users WHERE login = ? AND number_ticket = ?";
+    private final static String CHECK_MAIL_AND_TICKET = "SELECT mail, number_ticket FROM library.users WHERE mail = ? AND number_ticket = ?";
     private final static String INSERT_READER = "INSERT INTO users(number_ticket, surname, name, middle_name, age, phone_number, mail, image, login, password, id_role) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
     private final static String DELETE_READER = "DELETE FROM library.users WHERE id_user = ?";
     private final static String UPDATE_USER = "UPDATE library.users SET surname = ?, name = ?, middle_name = ?, age = ?, phone_number = ?, mail = ?, image = ?, login = ? WHERE number_ticket = ?";
     private final static String CHANGE_PASSWORD = "UPDATE library.users SET password = ? WHERE number_ticket = ?;";
-    private final static String FORGOT_AND_CHANGE_PASSWORD = "UPDATE library.users SET password = ? WHERE number_ticket = ? AND login = ?";
+    private final static String FORGOT_AND_CHANGE_PASSWORD = "UPDATE library.users SET password = ? WHERE number_ticket = ?";
     private final static int ID_ROLE_READER = 3;
 
 
@@ -335,14 +335,13 @@ public class ReaderDAOImpl implements ReaderDAO {
     }
 
     @Override
-    public void forgotPassword(int numberTicket, String login, String password) throws DAOException {
+    public void forgotPassword(int numberTicket, String password) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(FORGOT_AND_CHANGE_PASSWORD);
             statement.setString(1, password);
             statement.setInt(2, numberTicket);
-            statement.setString(3, login);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Error get an user by number ticket" + e);
@@ -420,18 +419,18 @@ public class ReaderDAOImpl implements ReaderDAO {
     }
 
     @Override
-    public boolean checkLoginAndTicket(String login, int numberTicket) throws DAOException {
+    public boolean checkMailAndTicket(String mail, int numberTicket) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         try {
-            statement = connection.prepareStatement(CHECK_LOGIN_AND_TICKET);
-            statement.setString(1, login);
+            statement = connection.prepareStatement(CHECK_MAIL_AND_TICKET);
+            statement.setString(1, mail);
             statement.setInt(2, numberTicket);
             resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
-            throw new DAOException("Error check reader by login and number ticket" + e);
+            throw new DAOException("Error check reader by mail and number ticket" + e);
         } finally {
             try {
                 statement.close();

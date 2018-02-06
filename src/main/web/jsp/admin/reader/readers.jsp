@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="suc" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <html>
 <head>
@@ -18,59 +19,57 @@
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
-<c:if test="${requestScope.messageDelete == 'success'}">
-    <div class="alert alert-success">
-        <a href="#" class="close" data-dismiss="alert">×</a>
-        <fmt:message key="message.successDeleteReader" bundle="${local}"/>
-    </div>
-</c:if>
+<suc:success successMessage="${messageDeleteReader}"/>
 
 <div class="container">
 
-    <form action="/Controller" method="post">
+    <form action="${pageContext.request.contextPath}/Controller" method="post">
+        <c:if test="${not empty requestScope.readers}">
+            <table class="table table-hover">
 
-        <table class="table table-hover">
-
-            <thead>
-            <tr>
-                <th><fmt:message key="label.profilePhoto" bundle="${local}"/></th>
-                <th><fmt:message key="label.loginValue" bundle="${local}"/></th>
-                <th><fmt:message key="label.numberTicket" bundle="${local}"/></th>
-                <th><fmt:message key="label.surname" bundle="${local}"/></th>
-                <th><fmt:message key="label.name" bundle="${local}"/></th>
-                <th><fmt:message key="label.middleName" bundle="${local}"/></th>
-                <th><fmt:message key="label.age" bundle="${local}"/></th>
-                <th><fmt:message key="label.phone" bundle="${local}"/></th>
-                <th><fmt:message key="label.mail" bundle="${local}"/></th>
-                <th></th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <c:forEach var="user" items="${readers}">
+                <thead>
                 <tr>
-                    <td><img src="/resource/images/reader/${user.profilePhoto}" alt="${user.login}" class="imageBook">
-                    </td>
-                    <td>${user.login}</td>
-                    <td>${user.numberTicket}</td>
-                    <td>${user.surname}</td>
-                    <td>${user.name}</td>
-                    <td>${user.middleName}</td>
-                    <td>${user.age}</td>
-                    <td>${user.phoneNumber}</td>
-                    <td>${user.mail}</td>
-                    <td>
-                        <a class="a-function" href="/Controller?id_reader=${user.id}&command=delete_reader"><fmt:message key="label.delete" bundle="${local}"/> </a>
-                    </td>
+                    <th><fmt:message key="label.profilePhoto" bundle="${local}"/></th>
+                    <th><fmt:message key="label.loginValue" bundle="${local}"/></th>
+                    <th><fmt:message key="label.numberTicket" bundle="${local}"/></th>
+                    <th><fmt:message key="label.surname" bundle="${local}"/></th>
+                    <th><fmt:message key="label.name" bundle="${local}"/></th>
+                    <th><fmt:message key="label.middleName" bundle="${local}"/></th>
+                    <th><fmt:message key="label.age" bundle="${local}"/></th>
+                    <th><fmt:message key="label.phone" bundle="${local}"/></th>
+                    <th><fmt:message key="label.mail" bundle="${local}"/></th>
+                    <th></th>
                 </tr>
-            </c:forEach>
-            </tbody>
+                </thead>
 
-        </table>
+                <tbody>
+                <c:forEach var="user" items="${readers}">
+                    <tr>
+                        <td><img src="/resource/images/reader/${user.profilePhoto}" alt="${user.login}"
+                                 class="imageBook">
+                        </td>
+                        <td>${user.login}</td>
+                        <td>${user.numberTicket}</td>
+                        <td>${user.surname}</td>
+                        <td>${user.name}</td>
+                        <td>${user.middleName}</td>
+                        <td>${user.age}</td>
+                        <td>${user.phoneNumber}</td>
+                        <td>${user.mail}</td>
+                        <td>
+                            <a class="a-function"
+                               href="${pageContext.request.contextPath}/Controller?id_reader=${user.id}&command=delete_reader"><fmt:message
+                                    key="label.delete" bundle="${local}"/> </a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </c:if>
     </form>
 </div>
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

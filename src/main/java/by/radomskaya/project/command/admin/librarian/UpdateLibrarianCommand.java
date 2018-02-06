@@ -1,8 +1,8 @@
 package by.radomskaya.project.command.admin.librarian;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.JspPage;
-import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.constant.JspPageConstants;
+import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
@@ -35,8 +35,7 @@ public class UpdateLibrarianCommand implements Command {
             if (librarianLogic.updateLibrarian(librarian)) {
                 listLibrarians = librarianLogic.getLibrarians();
                 session.setAttribute("librarians", listLibrarians);
-                request.setAttribute("messageUpdate", "success");
-                page = JspPage.ADMIN_LIBRARIANS_PAGE;
+                page = JspPageConstants.ADMIN_LIBRARIANS_PAGE;
             }
 
         } catch (DAOException e) {
@@ -50,11 +49,11 @@ public class UpdateLibrarianCommand implements Command {
 
     private User setLibrarianFromRequest(HttpServletRequest request) {
         User librarian = new User();
-        int id = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_LIBRARIAN));
-        String surname = request.getParameter(RequestParameter.PARAM_SURNAME);
-        String name = request.getParameter(RequestParameter.PARAM_NAME);
-        String middleName = request.getParameter(RequestParameter.PARAM_MIDDLE_NAME);
-        String login = request.getParameter(RequestParameter.PARAM_LOGIN);
+        int id = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_LIBRARIAN));
+        String surname = request.getParameter(ParameterConstants.PARAM_SURNAME);
+        String name = request.getParameter(ParameterConstants.PARAM_NAME);
+        String middleName = request.getParameter(ParameterConstants.PARAM_MIDDLE_NAME);
+        String login = request.getParameter(ParameterConstants.PARAM_LOGIN);
 
         if (InputParamValidator.isValidateLibrarianData(surname, name, middleName, login)) {
             librarian = new User(id, surname, name, middleName, login);

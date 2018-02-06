@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <fmt:message key="label.isbn" bundle="${local}" var="ISBN"/>
 <fmt:message key="label.tittle" bundle="${local}" var="tittle"/>
@@ -28,7 +28,7 @@
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
 <c:set var="book" scope="request" value="${requestScope.personalBook}"/>
 
@@ -37,11 +37,11 @@
 <c:if test="${sessionScope.role == 'reader'}">
     <div class="col-md-4 col-md-offset-5">
         <a class="a-function"
-           href="/Controller?number_ticket=${user.numberTicket}&id_book=${book.id}&id_author=${book.author.id}&command=add_to_cart">${addToCart}</a>
+           href="${pageContext.request.contextPath}/Controller?number_ticket=${user.numberTicket}&id_book=${book.id}&id_author=${book.author.id}&command=add_to_cart">${addToCart}</a>
     </div>
 </c:if>
 
-    <form action="/Controller" method="post">
+    <form action="${pageContext.request.contextPath}/Controller" method="post">
         <c:if test="${book != null}">
 
             <div class="tittle">${book.tittle}</div>
@@ -64,6 +64,6 @@
         </c:if>
     </form>
 </div>
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

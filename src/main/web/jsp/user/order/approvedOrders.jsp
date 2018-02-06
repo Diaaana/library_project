@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <html>
 <head>
@@ -16,7 +16,7 @@
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
 <div class="container">
     <c:if test="${requestScope.approvedOrders != null}"/>
@@ -42,6 +42,6 @@
     </table>
 </div>
 
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

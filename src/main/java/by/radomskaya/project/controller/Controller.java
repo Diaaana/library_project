@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
-import static by.radomskaya.project.constant.JspPage.START_PAGE;
+import static by.radomskaya.project.constant.JspPageConstants.START_PAGE;
 
 @MultipartConfig
 @WebServlet("/Controller")

@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="suc" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <html>
 <head>
@@ -18,40 +19,22 @@
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
 <c:set var="currentPage" scope="session" value="${sessionScope.currentPage}"/>
 <c:set var="noOfPages" scope="request" value="${requestScope.noOfPages}"/>
 
-<c:if test="${sessionScope.messageAdd == 'success'}">
-    <div class="alert alert-success">
-        <a href="#" class="close" data-dismiss="alert">×</a>
-        <fmt:message key="message.successAddBook" bundle="${local}"/>
-    </div>
-</c:if>
+<suc:success successMessage="${messageDeleteBook}"/>
 
-<c:if test="${requestScope.messageEdit == 'success'}">
-    <div class="alert alert-success">
-        <a href="#" class="close" data-dismiss="alert">×</a>
-        <fmt:message key="message.successEditBook" bundle="${local}"/>
-    </div>
-</c:if>
-
-<c:if test="${requestScope.messageDelete == 'success'}">
-    <div class="alert alert-success">
-        <a href="#" class="close" data-dismiss="alert">×</a>
-        <fmt:message key="message.successDeleteBook" bundle="${local}"/>
-    </div>
-</c:if>
-
-    <form action="/Controller" method="post">
-        <a href="Controller?command=get_genres" class="a-function"><fmt:message key="label.addNewBook" bundle="${local}"/> <span
+<form action="${pageContext.request.contextPath}/Controller" method="post">
+    <a href="Controller?command=get_genres" class="a-function"><fmt:message key="label.addNewBook" bundle="${local}"/>
+        <span
                 class="glyphicon glyphicon-plus"></span></a>
-    </form>
+</form>
 
-    <form action="/Controller" method="post">
+<form action="${pageContext.request.contextPath}/Controller" method="post">
+    <c:if test="${not empty requestScope.books}">
         <table class="table table-hover table-condensed">
-
             <thead>
             <tr>
                 <th><fmt:message key="label.image" bundle="${local}"/></th>
@@ -83,43 +66,51 @@
                     <td>${book.publisher}</td>
                     <td>${book.numberCopies}</td>
                     <td>
-                        <a class="a-function" href="/Controller?id_book=${book.id}&command=delete_book"><fmt:message key="label.delete" bundle="${local}"/>
+                        <a class="a-function"
+                           href="${pageContext.request.contextPath}/Controller?id_book=${book.id}&command=delete_book"><fmt:message
+                                key="label.delete" bundle="${local}"/>
                             <span class="glyphicon glyphicon-trash"></span></a>
-                        <a class="a-function" href="/Controller?id_book=${book.id}&command=edit_book"><fmt:message key="label.edit" bundle="${local}"/></a>
+                        <a class="a-function"
+                           href="${pageContext.request.contextPath}/Controller?id_book=${book.id}&command=edit_book"><fmt:message
+                                key="label.edit" bundle="${local}"/></a>
                     </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
-    </form>
+    </c:if>
+</form>
 
-        <ul class="pagination">
-            <c:if test="${currentPage gt 1}">
+<ul class="pagination place-pagination">
+    <c:if test="${currentPage gt 1}">
+        <li>
+            <a class="page-link"
+               href="${pageContext.request.contextPath}/Controller?command=show_books&page=${currentPage - 1}"> ←</a>
+        </li>
+    </c:if>
+    <c:forEach begin="1" end="${noOfPages}" var="i">
+        <c:choose>
+            <c:when test="${currentPage eq i}">
                 <li>
-                    <a class="page-link" href="/Controller?command=show_books&page=${currentPage - 1}"> ←</a>
+                    <a class="page-link">${i}</a>
                 </li>
-            </c:if>
-            <c:forEach begin="1" end="${noOfPages}" var="i">
-                <c:choose>
-                    <c:when test="${currentPage eq i}">
-                        <li>
-                            <a class="page-link">${i}</a>
-                        </li>
-                    </c:when>
-                    <c:otherwise>
-                        <li>
-                            <a class="page-link" href="/Controller?command=show_books&page=${i}">${i}</a>
-                        </li>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-            <c:if test="${currentPage lt noOfPages}">
+            </c:when>
+            <c:otherwise>
                 <li>
-                    <a class="page-link" href="/Controller?command=show_books&page=${currentPage + 1}"> →</a>
+                    <a class="page-link"
+                       href="${pageContext.request.contextPath}/Controller?command=show_books&page=${i}">${i}</a>
                 </li>
-            </c:if>
-        </ul>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+    <c:if test="${currentPage lt noOfPages}">
+        <li>
+            <a class="page-link"
+               href="${pageContext.request.contextPath}/Controller?command=show_books&page=${currentPage + 1}"> →</a>
+        </li>
+    </c:if>
+</ul>
 
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

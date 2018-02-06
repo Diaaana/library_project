@@ -21,11 +21,16 @@ public class BookLogic {
     public List<Book> getBooksWithPages(int noPage) throws DAOException {
         List<Book> listBooks = getBooks();
         int step = (noPage - 1) * QUANTITY_DATA_ON_PAGE;
+        System.out.println(step);
+        System.out.println(listBooks.size());
         if (step + QUANTITY_DATA_ON_PAGE >= listBooks.size()) {
+            System.out.println(8);
             listBooks = listBooks.subList(step, listBooks.size());
         } else {
+            System.out.println(9);
             listBooks = listBooks.subList(step, step + QUANTITY_DATA_ON_PAGE);
         }
+
         return listBooks;
     }
 
@@ -33,6 +38,7 @@ public class BookLogic {
         int noOfPages;
         noOfPages = bookDAO.countBooks();
         return (int) Math.ceil(noOfPages * 1.0 / QUANTITY_DATA_ON_PAGE);
+
     }
 
     public Book getBookById(int id) throws DAOException {

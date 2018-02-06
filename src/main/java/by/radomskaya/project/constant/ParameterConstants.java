@@ -1,6 +1,7 @@
 package by.radomskaya.project.constant;
 
-public class RequestParameter {
+public class ParameterConstants {
+    public final static String PARAM_PAGE = "page";
     public final static String PARAM_ROLE = "role";
     public final static String PARAM_ID_LIBRARIAN = "id_librarian";
     public final static String PARAM_ID_READER = "id_reader";
@@ -35,6 +36,8 @@ public class RequestParameter {
     public final static String PARAM_IMAGE = "image";
     public final static String PARAM_EMPTY_IMAGE = "";
     public final static String PARAM_OLD_IMAGE = "old_image";
+    public final static String PARAM_DEFAULT_PROFILE_PHOTO = "noAvatar.png";
+    public final static String PARAM_DEFAULT_IMAGE_BOOK = "noImage.jpg";
 
     public final static String PARAM_ID_ORDER = "id_order";
     public final static String PARAM_DATE_BORROW = "date_borrow";
@@ -48,6 +51,19 @@ public class RequestParameter {
     public final static String PARAM_AUTHOR = "author";
     public final static String PARAM_BOOK = "book";
 
+    public final static String PARAM_ADMIN_LOGIN = "adminLogin";
+    public final static String PARAM_LIBRARIAN_LOGIN = "librarianLogin";
+
     public final static String PARAM_URL = "url";
     public final static String PARAM_LOCALE = "locale";
+
+    public final static String PARAM_TITTLE_MAIL = "LIBRARY";
+    public final static String PARAM_NEW_PASSWORD_MAIL = "Your new password: ";
+
+    public final static String DEFAULT_LOCALE = "ru";
+    public final static String PARAM_USER = "user";
+    public final static String PARAM_AUTO_RECONNECT = "autoReconnect";
+    public final static String PARAM_TRUE = "true";
+    public final static String PARAM_CHARACTER_ENCODING = "characterEncoding";
+    public final static String PARAM_USE_UNICODE = "useUnicode";
 }

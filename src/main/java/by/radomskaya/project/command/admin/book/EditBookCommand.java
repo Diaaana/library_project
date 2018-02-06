@@ -1,8 +1,8 @@
 package by.radomskaya.project.command.admin.book;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.JspPage;
-import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.constant.JspPageConstants;
+import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
@@ -27,14 +27,14 @@ public class EditBookCommand implements Command {
         Map<Integer, String> mapGenres;
 
         try {
-            int idBook = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_BOOK));
+            int idBook = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_BOOK));
 
             book = bookLogic.getBookById(idBook);
             request.setAttribute("book", book);
             mapGenres = bookLogic.getAllGenres();
             request.setAttribute("genres", mapGenres);
 
-            page = JspPage.ADMIN_EDIT_BOOK_PAGE;
+            page = JspPageConstants.ADMIN_EDIT_BOOK_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }

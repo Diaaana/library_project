@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import static by.radomskaya.project.constant.JspPage.ADMIN_BOOKS_PAGE;
+import static by.radomskaya.project.constant.JspPageConstants.ADMIN_BOOKS_PAGE;
 
 public class ShowBooksCommand implements Command {
     private BookLogic bookLogic;

@@ -1,8 +1,8 @@
 package by.radomskaya.project.command.user.account;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.JspPage;
-import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.constant.JspPageConstants;
+import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
@@ -21,15 +21,15 @@ public class EditAccountCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
-        String page = null;
+        String page;
         User user;
 
         try {
-            int numberTicket = Integer.parseInt(request.getParameter(RequestParameter.PARAM_NUMBER_TICKET));
+            int numberTicket = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_NUMBER_TICKET));
             user = readerLogic.getReaderByTicket(numberTicket);
 
             request.setAttribute("reader", user);
-            page = JspPage.USER_EDIT_ACCOUNT_PAGE;
+            page = JspPageConstants.USER_EDIT_ACCOUNT_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }

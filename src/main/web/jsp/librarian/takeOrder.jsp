@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <fmt:message key="label.date" bundle="${local}" var="date"/>
 <fmt:message key="label.subscription" bundle="${local}" var="subscription"/>
@@ -23,10 +23,10 @@
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
 <div class="container">
-    <form action="/Controller" method="post" name="form" onsubmit="return checkOrder();" class="form-param">
+    <form action="${pageContext.request.contextPath}/Controller" method="post" name="form" onsubmit="return checkOrder();" class="form-param">
         <div class="form-group">
             <label class="label"><fmt:message key="label.dateBorrow" bundle="${local}"/> </label>
             <input type="text" name="date_borrow" placeholder="${date}" class="form-control">

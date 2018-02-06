@@ -1,8 +1,8 @@
 package by.radomskaya.project.command.librarian;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.JspPage;
-import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.constant.JspPageConstants;
+import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.entity.Order;
@@ -34,7 +34,7 @@ public class TakeOrderCommand implements Command {
 
         try {
             order = setOrderFromRequest(request);
-            int idOrder = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_ORDER));
+            int idOrder = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_ORDER));
 
             orderLogic.takeOrder(order);
             orderLogic.deleteOrderById(idOrder);
@@ -42,7 +42,7 @@ public class TakeOrderCommand implements Command {
 
             session.setAttribute("orders", listOrders);
             request.setAttribute("messageTakeOrder", "success");
-            page = JspPage.LIBRARIAN_ORDERS_PAGE;
+            page = JspPageConstants.LIBRARIAN_ORDERS_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }
@@ -56,13 +56,13 @@ public class TakeOrderCommand implements Command {
         Order order = new Order();
         User user = new User();
         Book book = new Book();
-        user.setId(Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_READER)));
-        book.setId(Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_BOOK)));
+        user.setId(Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_READER)));
+        book.setId(Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_BOOK)));
         order.setUser(user);
         order.setBook(book);
-        Date dateBorrow = Date.valueOf(request.getParameter(RequestParameter.PARAM_DATE_BORROW));
-        Date dateReturn = Date.valueOf(request.getParameter(RequestParameter.PARAM_DATE_RETURN));
-        String methodBorrow = request.getParameter(RequestParameter.PARAM_METHOD_BORROW);
+        Date dateBorrow = Date.valueOf(request.getParameter(ParameterConstants.PARAM_DATE_BORROW));
+        Date dateReturn = Date.valueOf(request.getParameter(ParameterConstants.PARAM_DATE_RETURN));
+        String methodBorrow = request.getParameter(ParameterConstants.PARAM_METHOD_BORROW);
 
         if (InputParamValidator.isValidateOrderData(dateBorrow, dateReturn, methodBorrow)) {
             order.setDateBorrow(dateBorrow);

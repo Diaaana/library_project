@@ -9,8 +9,8 @@ body {
 
 footer {
     position: absolute;
-    bottom: -50px;
-    width: 100%;
+    bottom: 0;
+    width: 200px;
     height: 60px;
 }
 
@@ -89,7 +89,7 @@ footer {
 
 .a-forgot-password {
     position: relative;
-    left: 300px;
+    left: 350px;
     top: -50px;
     color: #a6e5e2;
     font-size: 17px
@@ -160,7 +160,7 @@ footer {
 .button {
     background-color: #ffc3a0;
     color: #fffbec;
-    width: 170px;
+    width: 200px;
     height: 50px;
 }
 
@@ -190,10 +190,10 @@ footer {
 }
 
 .footer-button {
-    position: relative;
-    left: 1500px;
+    position: absolute;
+    left: 2030px;
     top: 20px;
-    padding-left: 50px;
+    width: 150px;
 }
 
 .button-footer {
@@ -365,4 +365,10 @@ footer {
     margin: 30px;
     left: 300px;
     font-size: 40px;
+}
+
+.place-pagination {
+    position: absolute;
+    bottom: 0;
+    left: 700px;
 }

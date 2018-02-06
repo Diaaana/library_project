@@ -5,7 +5,7 @@
 <c:set var="user" scope="session" value="${sessionScope.reader}"/>
 
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <fmt:message key="label.logIn" bundle="${local}" var="logIn"/>
 <fmt:message key="label.registration" bundle="${local}" var="registration"/>
@@ -25,26 +25,27 @@
 <body>
 <div class="container">
 
-    <form action="/Controller" method="get">
+    <form action="${pageContext.request.contextPath}/Controller" method="post">
         <input type="hidden" name="command" value="locale">
         <input type="hidden" name="url" value="${pageContext.request.requestURI}">
         <div class="form-group footer-button">
             <button class="button-footer" type="submit" name="locale" value="en">EN</button>
             <button class="button-footer" type="submit" name="locale" value="ru">RU</button>
+            <button class="button-footer" type="submit" name="locale" value="be">BY</button>
         </div>
     </form>
 
-    <form action="/Controller" method="post">
-        <c:if test="${sessionScope.role == null || sessionScope.role == 'guest'}">
+    <form action="${pageContext.request.contextPath}/Controller" method="post">
+        <c:if test="${sessionScope.role == 'guest'}">
             <ul class="menu-main">
                 <li>
-                    <a href="/Controller?command=get_books">${books}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=get_books">${books}</a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/jsp/user/registration.jsp">${registration}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=load_page&page=/jsp/user/registration.jsp">${registration}</a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/jsp/start.jsp">${logIn}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=load_page&page=/jsp/start.jsp">${logIn}</a>
                 </li>
             </ul>
         </c:if>
@@ -52,19 +53,19 @@
         <c:if test="${sessionScope.role == 'admin'}">
             <ul class="menu-main">
                 <li>
-                    <a href="/Controller?command=show_books">${books}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=show_books">${books}</a>
                 </li>
                 <li>
-                    <a href="/Controller?command=show_authors">${authors}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=show_authors">${authors}</a>
                 </li>
                 <li>
-                    <a href="/Controller?command=show_librarians">${librarians}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=show_librarians">${librarians}</a>
                 </li>
                 <li>
-                    <a href="/Controller?command=show_readers">${readers}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=show_readers">${readers}</a>
                 </li>
                 <li>
-                    <a href="/Controller?command=logout">${logout}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=logout">${logout}</a>
                 </li>
             </ul>
         </c:if>
@@ -73,16 +74,16 @@
         <c:if test="${sessionScope.role == 'reader'}">
             <ul class="menu-main">
                 <li>
-                    <a href="/Controller?command=get_books">${books}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=get_books">${books}</a>
                 </li>
                 <li>
-                    <a href="/Controller?id_reader=${user.id}&command=get_personal_orders">${orderCart}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?id_reader=${user.id}&command=get_personal_orders">${orderCart}</a>
                 </li>
                 <li>
-                    <a href="/Controller?number_ticket=${user.numberTicket}&command=account">${account}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?number_ticket=${user.numberTicket}&command=account">${account}</a>
                 </li>
                 <li>
-                    <a href="/Controller?command=logout">${logout}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=logout">${logout}</a>
                 </li>
             </ul>
         </c:if>
@@ -91,13 +92,13 @@
         <c:if test="${sessionScope.role == 'librarian'}">
             <ul class="menu-main">
                 <li>
-                    <a href="/Controller?command=get_books">${books}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=get_books">${books}</a>
                 </li>
                 <li>
-                    <a href="/Controller?command=show_orders">${orders}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=show_orders">${orders}</a>
                 </li>
                 <li>
-                    <a href="/Controller?command=logout">${logout}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=logout">${logout}</a>
                 </li>
             </ul>
         </c:if>

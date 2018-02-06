@@ -1,8 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <html>
 <head>
@@ -17,12 +17,12 @@
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 <c:set var="author" scope="request" value="${requestScope.author}"/>
 
 <div class="container">
 
-    <form role="form" action="/Controller" method="post" name="form" onsubmit="return checkAuthor();">
+    <form role="form" action="${pageContext.request.contextPath}/Controller" method="post" name="form" onsubmit="return checkAuthor();">
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterSurnameAuthor" bundle="${local}"/></label>
             <input type="text" name="surname" class="form-control" value="${author.surname}">
@@ -44,6 +44,6 @@
         <input type="submit" class="button" value="<fmt:message key="label.edit" bundle="${local}"/>"/>
      </form>
 </div>
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

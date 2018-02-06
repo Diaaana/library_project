@@ -1,8 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <fmt:message key="label.edit" bundle="${local}" var="edit"/>
 
@@ -21,10 +21,10 @@
 
 <c:set var="reader" scope="request" value="${requestScope.reader}"/>
 
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
 <div class="container">
-    <form role="form" action="/Controller" name="form" onsubmit="return checkEditAccount()" method="post"
+    <form role="form" action="${pageContext.request.contextPath}/Controller" name="form" onsubmit="return checkEditAccount()" method="post"
           enctype="multipart/form-data">
         <div class="form-group">
             <input type="text" name="surname" value="${reader.surname}" class="form-control field"><br/>
@@ -61,6 +61,6 @@
     </form>
 </div>
 
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

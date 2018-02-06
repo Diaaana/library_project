@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <html>
 <head>
@@ -17,7 +17,7 @@
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
 <c:if test="${requestScope.messageTakeOrder == 'success'}">
     <div class="alert alert-success">
@@ -49,7 +49,7 @@
             <td>${order.author.middleName}</td>
             <td><img src="/resource/images/book/${order.book.image}" alt="${order.book.tittle}" class="imageBook"></td>
             <td>
-                <a href="/Controller?id_order=${order.id}&id_reader=${order.user.id}&id_book=${order.book.id}&command=check_order" class="a-function">
+                <a href="${pageContext.request.contextPath}/Controller?id_order=${order.id}&id_reader=${order.user.id}&id_book=${order.book.id}&command=check_order" class="a-function">
                     <fmt:message key="label.takeOrder" bundle="${local}"/>
                 </a>
             </td>

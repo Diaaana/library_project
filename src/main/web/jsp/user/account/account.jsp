@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <fmt:message key="label.numberTicket" bundle="${local}" var="numberTicket"/>
 <fmt:message key="label.surname" bundle="${local}" var="surname"/>
@@ -28,7 +28,7 @@
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
 <c:if test="${sessionScope.messageChangePassword == 'success'}">
     <div id="error" class="alert alert-success">
@@ -41,12 +41,12 @@
 
 <div class="container">
 
-    <a href="${pageContext.request.contextPath}/jsp/user/account/changePassword.jsp" class="a-function"><fmt:message key="label.changePassword" bundle="${local}"/>
+    <a href="${pageContext.request.contextPath}/Controller?command=load_page&page=/jsp/user/account/changePassword.jsp" class="a-function"><fmt:message key="label.changePassword" bundle="${local}"/>
         <span class="glyphicon glyphicon-pencil"></span></a>
-    <a href="/Controller?number_ticket=${reader.numberTicket}&command=edit_account" class="a-edit-user"><fmt:message key="label.edit" bundle="${local}"/>
+    <a href="${pageContext.request.contextPath}/Controller?number_ticket=${reader.numberTicket}&command=edit_account" class="a-edit-user"><fmt:message key="label.edit" bundle="${local}"/>
         <span class="glyphicon glyphicon-pencil"></span></a>
 
-    <form action="/Controller" method="post">
+    <form action="${pageContext.request.contextPath}/Controller" method="post">
 
         <c:if test="${reader != null}">
 
@@ -69,6 +69,6 @@
     </form>
 
 </div>
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

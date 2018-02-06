@@ -1,8 +1,8 @@
 package by.radomskaya.project.command.admin.author;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.JspPage;
-import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.constant.JspPageConstants;
+import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Author;
 import by.radomskaya.project.exception.CommandException;
@@ -35,8 +35,7 @@ public class UpdateAuthorCommand implements Command {
             if (authorLogic.updateAuthor(author)) {
                 listAuthors = authorLogic.getAuthors();
                 session.setAttribute("authors", listAuthors);
-                request.setAttribute("messageEdit", "success");
-                page = JspPage.ADMIN_AUTHORS_PAGE;
+                page = JspPageConstants.ADMIN_AUTHORS_PAGE;
             }
         } catch (DAOException e) {
             throw new CommandException(e);
@@ -49,12 +48,12 @@ public class UpdateAuthorCommand implements Command {
 
     private Author setAuthorFromRequest(HttpServletRequest request) {
         Author author = new Author();
-        String surname = request.getParameter(RequestParameter.PARAM_AUTHOR_SURNAME);
-        String name = request.getParameter(RequestParameter.PARAM_AUTHOR_NAME);
-        String middleName = request.getParameter(RequestParameter.PARAM_AUTHOR_MIDDLE_NAME);
-        String country = request.getParameter(RequestParameter.PARAM_AUTHOR_COUNTRY);
-        if (middleName.equals(RequestParameter.PARAM_AUTHOR_EMPTY_MIDDLE_NAME)) {
-            middleName = RequestParameter.PARAM_AUTHOR_NO_MIDDLE_NAME;
+        String surname = request.getParameter(ParameterConstants.PARAM_AUTHOR_SURNAME);
+        String name = request.getParameter(ParameterConstants.PARAM_AUTHOR_NAME);
+        String middleName = request.getParameter(ParameterConstants.PARAM_AUTHOR_MIDDLE_NAME);
+        String country = request.getParameter(ParameterConstants.PARAM_AUTHOR_COUNTRY);
+        if (middleName.equals(ParameterConstants.PARAM_AUTHOR_EMPTY_MIDDLE_NAME)) {
+            middleName = ParameterConstants.PARAM_AUTHOR_NO_MIDDLE_NAME;
             author.setMiddleName(middleName);
         } else {
             if (InputParamValidator.isValidateMiddleName(middleName)) {

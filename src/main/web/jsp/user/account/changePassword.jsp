@@ -1,10 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="err"%>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <fmt:message key="label.edit" bundle="${local}" var="edit"/>
+<c:set var="user" scope="session" value="${sessionScope.reader}"/>
 
 <html>
 <head>
@@ -15,30 +17,19 @@
     <link rel="stylesheet" type="text/css" href = "${pageContext.request.contextPath}/resource/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href = "${pageContext.request.contextPath}/resource/css/bootstrap-theme.css">
     <script src="${pageContext.request.contextPath}/resource/js/bootstrap.js"></script>
+    <script src="${pageContext.request.contextPath}/resource/js/password/changePassword.js"></script>
     <script src="${pageContext.request.contextPath}/resource/js/jquery-3.2.1.js"></script>
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
-<c:if test="${sessionScope.messageWrongTruePassword == 'error'}">
-    <div id="error" class="alert alert-danger">
-        <a href="#" class="close" data-dismiss="alert">×</a>
-        <fmt:message key="message.wrongTruePassword" bundle="${local}"/>
-    </div>
-</c:if>
+<err:error errorMessage="${messageWrongTruePassword}"/>
 
-<c:if test="${sessionScope.messageWrongRepeatPassword == 'error'}">
-    <div id="error" class="alert alert-danger">
-        <a href="#" class="close" data-dismiss="alert">×</a>
-        <fmt:message key="message.wrongRepeatPassword" bundle="${local}"/>
-    </div>
-</c:if>
-
-<c:set var="user" scope="session" value="${sessionScope.reader}"/>
+<err:error errorMessage="${messageWrongRepeatPassword}"/>
 
 <div class="container">
-    <form role="form" action="/Controller" method="post" class="form-group">
+    <form role="form" action="${pageContext.request.contextPath}/Controller" method="post" class="form-param" name="form" onsubmit="return checkChangePassword();">
 
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterOldPassword" bundle="${local}"/> </label>
@@ -62,6 +53,6 @@
 
 </div>
 
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

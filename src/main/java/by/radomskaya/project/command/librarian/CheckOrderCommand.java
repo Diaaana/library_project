@@ -1,8 +1,8 @@
 package by.radomskaya.project.command.librarian;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.JspPage;
-import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.constant.JspPageConstants;
+import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.entity.Order;
@@ -22,9 +22,9 @@ public class CheckOrderCommand implements Command {
         Book book = new Book();
         User user = new User();
 
-        int idOrder = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_ORDER));
-        int idUser = Integer.parseInt(request.getParameter((RequestParameter.PARAM_ID_READER)));
-        int idBook = Integer.parseInt(request.getParameter((RequestParameter.PARAM_ID_BOOK)));
+        int idOrder = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_ORDER));
+        int idUser = Integer.parseInt(request.getParameter((ParameterConstants.PARAM_ID_READER)));
+        int idBook = Integer.parseInt(request.getParameter((ParameterConstants.PARAM_ID_BOOK)));
 
         book.setId(idBook);
         user.setId(idUser);
@@ -33,7 +33,7 @@ public class CheckOrderCommand implements Command {
         order.setBook(book);
 
         request.setAttribute("order", order);
-        page = JspPage.LIBRARIAN_TAKE_ORDER_PAGE;
+        page = JspPageConstants.LIBRARIAN_TAKE_ORDER_PAGE;
 
         router.setPagePath(page);
         router.setRoute(Router.RouteType.FORWARD);

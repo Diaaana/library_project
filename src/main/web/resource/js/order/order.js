@@ -1,12 +1,12 @@
 function checkOrder() {
     if (document.form.date_borrow.value == "") {
-        alert("Пожалуйста, введите международный номер книги!");
+        alert("Пожалуйста, введите дату взятия книги!");
         return false;
     } else if (document.form.date_return.value == "") {
-        alert("Пожалуйста, введите название книги!");
+        alert("Пожалуйста, введите дату возврата книги!");
         return false;
     } else if (document.form.method_borrow.value == "") {
-        alert("Пожалуйста, введите фамилию автора!");
+        alert("Пожалуйста, выберите способ взятия книги!");
         return false;
     }
 

@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.user.book;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
@@ -10,7 +10,7 @@ import by.radomskaya.project.logic.BookLogic;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static by.radomskaya.project.constant.JspPage.USER_PERSONAL_BOOK_PAGE;
+import static by.radomskaya.project.constant.JspPageConstants.USER_PERSONAL_BOOK_PAGE;
 
 public class GetPersonalBookCommand implements Command {
     private BookLogic bookLogic;
@@ -22,11 +22,11 @@ public class GetPersonalBookCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
-        String page = null;
+        String page;
         Book book;
 
         try {
-            int idBook = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_BOOK));
+            int idBook = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_BOOK));
             book = bookLogic.getBookById(idBook);
             System.out.println(book);
             request.setAttribute("personalBook", book);

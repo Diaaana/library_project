@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="suc" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 <html>
 <head>
     <title><fmt:message key="label.librarians" bundle="${local}"/></title>
@@ -17,33 +18,13 @@
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
-<c:if test="${requestScope.messageAdd == 'success'}">
-    <div class="alert alert-success">
-        <a href="#" class="close" data-dismiss="alert">×</a>
-        <fmt:message key="message.successAddLibrarian" bundle="${local}"/>
-    </div>
-</c:if>
-
-<c:if test="${requestScope.messageEdit == 'success'}">
-    <div class="alert alert-success">
-        <a href="#" class="close" data-dismiss="alert">×</a>
-        <fmt:message key="message.successEditLibrarian" bundle="${local}"/>
-    </div>
-</c:if>
-
-<c:if test="${requestScope.messageDelete == 'success'}">
-    <div class="alert alert-success">
-        <a href="#" class="close" data-dismiss="alert">×</a>
-        <fmt:message key="message.successDeleteLibrarian" bundle="${local}"/>
-    </div>
-</c:if>
+<suc:success successMessage="${messageDeleteLibrarian}"/>
 
 <div class="container">
-
-    <form action="/Controller" method="post">
-
+    <c:if test="${not empty requestScope.librarians}">
+    <form action="${pageContext.request.contextPath}/Controller" method="post">
         <table class="table table-hover">
 
             <thead>
@@ -65,19 +46,22 @@
                     <td>${librarian.login}</td>
                     <td>
                         <a class="a-function"
-                           href="/Controller?id_librarian=${librarian.id}&command=delete_librarian"><fmt:message key="label.delete" bundle="${local}"/>
+                           href="${pageContext.request.contextPath}/Controller?id_librarian=${librarian.id}&command=delete_librarian"><fmt:message
+                                key="label.delete" bundle="${local}"/>
                             <span class="glyphicon glyphicon-trash"></span></a>
                         <a class="a-function"
-                           href="/Controller?id_librarian=${librarian.id}&command=edit_librarian"><fmt:message key="label.edit" bundle="${local}"/> <span class="glyphicon glyphicon-pencil"></span></a>
+                           href="${pageContext.request.contextPath}/Controller?id_librarian=${librarian.id}&command=edit_librarian"><fmt:message
+                                key="label.edit" bundle="${local}"/> <span
+                                class="glyphicon glyphicon-pencil"></span></a>
                     </td>
                 </tr>
             </c:forEach>
             </tbody>
-
         </table>
+        </c:if>
     </form>
 
 </div>
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package by.radomskaya.project.pool;
 
+import by.radomskaya.project.constant.ParameterConstants;
+import by.radomskaya.project.constant.PropertyKeys;
 import by.radomskaya.project.exception.DAOException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -19,15 +21,15 @@ public class PoolManager {
 
     PoolManager() {
         try {
-            ResourceBundle resource = ResourceBundle.getBundle("database");
-            url = resource.getString("db.url");
-            poolSize = Integer.parseInt(resource.getString("db.poolSize"));
+            ResourceBundle resource = ResourceBundle.getBundle(PropertyKeys.DB_NAME_BUNDLE);
+            url = resource.getString(PropertyKeys.DB_URL);
+            poolSize = Integer.parseInt(resource.getString(PropertyKeys.DB_POOL_SIZE));
             properties = new Properties();
-            properties.put("user", resource.getString("db.user"));
-            properties.put("password", resource.getString("db.password"));
-            properties.put("autoReconnect", "true");
-            properties.put("characterEncoding", resource.getString("db.encoding"));
-            properties.put("useUnicode", resource.getString("db.useUnicode"));
+            properties.put(ParameterConstants.PARAM_USER, resource.getString(PropertyKeys.DB_USER));
+            properties.put(ParameterConstants.PARAM_PASSWORD, resource.getString(PropertyKeys.DB_PASSWORD));
+            properties.put(ParameterConstants.PARAM_AUTO_RECONNECT, ParameterConstants.PARAM_TRUE);
+            properties.put(ParameterConstants.PARAM_CHARACTER_ENCODING, resource.getString(PropertyKeys.DB_CHARACTER_ENCODING));
+            properties.put(ParameterConstants.PARAM_USE_UNICODE, resource.getString(PropertyKeys.DB_USE_UNICODE));
 
         } catch (MissingResourceException e) {
             LOGGER.log(Level.FATAL, "Can not find properties file " + e.getMessage());
@@ -36,7 +38,7 @@ public class PoolManager {
     }
 
     ProxyConnection getConnection() throws DAOException {
-        ProxyConnection proxyConnection = null;
+        ProxyConnection proxyConnection;
         try {
             proxyConnection = new ProxyConnection(DriverManager.getConnection(url, properties));
         } catch (SQLException e) {

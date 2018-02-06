@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.librarian;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.JspPage;
+import by.radomskaya.project.constant.JspPageConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
@@ -21,14 +21,14 @@ public class ShowLibrariansCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
-        String page = null;
+        String page;
         List<User> listLibrarians;
 
         try {
             listLibrarians = librarianLogic.getLibrarians();
 
             request.setAttribute("librarians", listLibrarians);
-            page = JspPage.ADMIN_LIBRARIANS_PAGE;
+            page = JspPageConstants.ADMIN_LIBRARIANS_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }

@@ -33,17 +33,6 @@ public class Book extends Entity {
         this.image = image;
     }
 
-    public Book(int id, String isbn, String tittle, Author author, Date dateEdition, String placeEdition, String publisher, int numberCopies) {
-        super(id);
-        this.isbn = isbn;
-        this.tittle = tittle;
-        this.author = author;
-        this.dateEdition = dateEdition;
-        this.placeEdition = placeEdition;
-        this.publisher = publisher;
-        this.numberCopies = numberCopies;
-    }
-
     public Book(String isbn, String tittle, Author author, Date dateEdition, String placeEdition, String publisher, int numberCopies, String image) {
         this.isbn = isbn;
         this.tittle = tittle;

@@ -66,9 +66,9 @@ public class ReaderDAOTest {
 
     @Test
     public void testCheckLoginAndTicket() throws DAOException {
-        String login = reader.getLogin();
+        String mail = reader.getMail();
         int numberTicket = reader.getNumberTicket();
-        Assert.assertTrue(readerDAO.checkLoginAndTicket(login, numberTicket));
+        Assert.assertTrue(readerDAO.checkMailAndTicket(mail, numberTicket));
     }
 
     @Test

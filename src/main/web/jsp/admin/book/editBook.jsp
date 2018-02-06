@@ -1,8 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <fmt:message key="label.isbn" bundle="${local}" var="ISBN"/>
 <fmt:message key="label.tittle" bundle="${local}" var="tittle"/>
@@ -26,17 +26,17 @@
     <link rel="shortcut icon" href="/resource/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="/resource/css/app-style.css">
     <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap-theme.css.css">
+    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap-theme.css">
     <script src="${pageContext.request.contextPath}/resource/js/book/editBook.js"></script>
     <script src="${pageContext.request.contextPath}/resource/js/bootstrap.js"></script>
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
 <div class="container">
 
-    <form role="form" action="/Controller" method="post" name="form" onsubmit="return checkEditBook();" enctype="multipart/form-data">
+    <form role="form" action="${pageContext.request.contextPath}/Controller" method="post" name="form" onsubmit="return checkEditBook();" enctype="multipart/form-data">
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterIsbn" bundle="${local}"/></label>
             <input type="text" name="isbn" class="form-control" value="${book.isbn}">
@@ -91,6 +91,6 @@
         <input type="submit" class="button" value="Отредактировать"/>
     </form>
 </div>
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

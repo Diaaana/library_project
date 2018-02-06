@@ -1,8 +1,8 @@
 package by.radomskaya.project.command.user.order;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.JspPage;
-import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.constant.JspPageConstants;
+import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
@@ -31,14 +31,14 @@ public class AddToCartCommand implements Command {
         List<Book> listBooks;
 
         try {
-            int idUser = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_READER));
-            int idBook = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_BOOK));
-            int idAuthor = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_AUTHOR));
+            int idUser = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_READER));
+            int idBook = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_BOOK));
+            int idAuthor = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_AUTHOR));
 
             orderLogic.addToCart(idUser, idBook, idAuthor);
             listBooks = bookLogic.getBooks();
             session.setAttribute("books", listBooks);
-            page = JspPage.USER_BOOKS_PAGE;
+            page = JspPageConstants.USER_BOOKS_PAGE;
 
         } catch (DAOException e) {
             throw new CommandException(e);

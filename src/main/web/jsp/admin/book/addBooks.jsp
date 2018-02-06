@@ -1,8 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <fmt:message key="label.isbn" bundle="${local}" var="ISBN"/>
 <fmt:message key="label.tittle" bundle="${local}" var="tittle"/>
@@ -33,11 +33,11 @@
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
 <div class="container">
 
-    <form role="form" name="form" action="/Controller" method="post" onsubmit="return checkAddBook();"
+    <form role="form" name="form" action="${pageContext.request.contextPath}/Controller" method="post" onsubmit="return checkAddBook();"
           enctype="multipart/form-data"
           class="form-param">
         <div class="form-group">
@@ -103,6 +103,6 @@
     </form>
 
 </div>
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

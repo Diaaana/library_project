@@ -67,7 +67,7 @@ public class BookDAOImpl implements BookDAO {
     private final static String GET_GENRE_BY_ID_BOOK = "SELECT name_genre FROM library.books " +
             "JOIN library.book_genre ON books.id_book = book_genre.id_book " +
             "JOIN library.genres ON book_genre.id_genre = genres.id_genre WHERE books.id_book = ?;";
-    private final static String COUNT_BOOKS = "SELECT COUNT(1) FROM library.books;";
+    private final static String COUNT_BOOKS = "SELECT COUNT(*) FROM library.books;";
 
     @Override
     public List<Book> getBooksAndAuthors() throws DAOException {

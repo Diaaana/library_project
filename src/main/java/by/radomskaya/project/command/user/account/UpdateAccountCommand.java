@@ -1,8 +1,8 @@
 package by.radomskaya.project.command.user.account;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.JspPage;
-import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.constant.JspPageConstants;
+import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
@@ -36,7 +36,7 @@ public class UpdateAccountCommand implements Command {
 
             if (readerLogic.updateUser(user)) {
                 session.setAttribute("userData", user);
-                page = JspPage.USER_ACCOUNT_PAGE;
+                page = JspPageConstants.USER_ACCOUNT_PAGE;
             }
 
         } catch (DAOException | ServletException | IOException e) {
@@ -50,24 +50,31 @@ public class UpdateAccountCommand implements Command {
 
     private User setUserFromRequest(HttpServletRequest request) throws IOException, ServletException {
         User user = new User();
-        int numberTicket = Integer.parseInt(request.getParameter(RequestParameter.PARAM_NUMBER_TICKET));
-        String surname = request.getParameter(RequestParameter.PARAM_SURNAME);
-        String name = request.getParameter(RequestParameter.PARAM_NAME);
-        String middleName = request.getParameter(RequestParameter.PARAM_MIDDLE_NAME);
-        int age = Integer.parseInt(request.getParameter(RequestParameter.PARAM_AGE));
-        String phoneNumber = request.getParameter(RequestParameter.PARAM_PHONE);
-        String mail = request.getParameter(RequestParameter.PARAM_MAIL);
-        String login = request.getParameter(RequestParameter.PARAM_LOGIN);
-        Part filePart = request.getPart(RequestParameter.PARAM_PROFILE_PHOTO);
+        int numberTicket = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_NUMBER_TICKET));
+        String surname = request.getParameter(ParameterConstants.PARAM_SURNAME);
+        String name = request.getParameter(ParameterConstants.PARAM_NAME);
+        String middleName = request.getParameter(ParameterConstants.PARAM_MIDDLE_NAME);
+        int age = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_AGE));
+        String phoneNumber = request.getParameter(ParameterConstants.PARAM_PHONE);
+        String mail = request.getParameter(ParameterConstants.PARAM_MAIL);
+        String login = request.getParameter(ParameterConstants.PARAM_LOGIN);
+        Part filePart = request.getPart(ParameterConstants.PARAM_PROFILE_PHOTO);
         String imageName = getImageName(filePart);
-        if (imageName.equals(RequestParameter.PARAM_EMPTY_PROFILE_PHOTO)) {
-            user.setProfilePhoto(request.getParameter(RequestParameter.PARAM_OLD_PROFILE_PHOTO));
+        if (imageName.equals(ParameterConstants.PARAM_EMPTY_PROFILE_PHOTO)) {
+            user.setProfilePhoto(request.getParameter(ParameterConstants.PARAM_OLD_PROFILE_PHOTO));
         } else {
             user.setProfilePhoto(imageName);
         }
 
         if (InputParamValidator.isValidateAccountData(surname, name, middleName, age, phoneNumber, mail, login)) {
-            user = new User(numberTicket, surname, name, middleName, age, phoneNumber, mail, login);
+            user.setNumberTicket(numberTicket);
+            user.setSurname(surname);
+            user.setName(name);
+            user.setMiddleName(middleName);
+            user.setAge(age);
+            user.setPhoneNumber(phoneNumber);
+            user.setMail(mail);
+            user.setLogin(login);
         }
 
         return user;

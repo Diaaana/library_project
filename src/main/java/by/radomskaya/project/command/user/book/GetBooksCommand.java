@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.user.book;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.JspPage;
+import by.radomskaya.project.constant.JspPageConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
@@ -25,12 +25,19 @@ public class GetBooksCommand implements Command {
         Router router = new Router();
         String page;
         List<Book> listBooks;
+        int bookPage = 1;
+
+        if (request.getParameter("page") != null) {
+            bookPage = Integer.parseInt(request.getParameter("page"));
+        }
 
         try {
-            listBooks = bookLogic.getBooks();
-            request.setAttribute("showBooks", "show");
+            //listBooks = bookLogic.getBooks();
+            listBooks = bookLogic.getBooksWithPages(bookPage);
+            request.setAttribute("noOfPages", bookLogic.getNoOfPages());
             session.setAttribute("books", listBooks);
-            page = JspPage.USER_BOOKS_PAGE;
+            session.setAttribute("currentPage", bookPage);
+            page = JspPageConstants.USER_BOOKS_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }

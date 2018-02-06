@@ -8,14 +8,11 @@ import by.radomskaya.project.command.admin.book.*;
 import by.radomskaya.project.command.admin.librarian.*;
 import by.radomskaya.project.command.admin.reader.DeleteReaderCommand;
 import by.radomskaya.project.command.admin.reader.ShowReadersCommand;
-import by.radomskaya.project.command.common.ChangeLocaleCommand;
-import by.radomskaya.project.command.common.ForgotPasswordCommand;
-import by.radomskaya.project.command.common.LoginCommand;
-import by.radomskaya.project.command.common.LogoutCommond;
+import by.radomskaya.project.command.common.*;
 import by.radomskaya.project.command.librarian.CheckOrderCommand;
 import by.radomskaya.project.command.librarian.ShowOrdersCommand;
 import by.radomskaya.project.command.librarian.TakeOrderCommand;
-import by.radomskaya.project.command.user.RegistrationCommand;
+import by.radomskaya.project.command.common.RegistrationCommand;
 import by.radomskaya.project.command.user.account.AccountCommand;
 import by.radomskaya.project.command.user.account.ChangePasswordCommand;
 import by.radomskaya.project.command.user.account.EditAccountCommand;
@@ -61,10 +58,11 @@ public enum CommandType {
     DELETE_ORDER(new DeleteOrderCommand(new OrderLogic())),
     ACCOUNT(new AccountCommand(new ReaderLogic())),
     CHANGE_PASSWORD(new ChangePasswordCommand(new ReaderLogic())),
-    FORGOT_PASSWORD(new ForgotPasswordCommand(new ReaderLogic())),
+    FORGET_PASSWORD(new ForgetPasswordCommand(new ReaderLogic())),
     GET_APPROVED_ORDERS(new GetApprovedOrdersCommand(new OrderLogic())),
     EDIT_ACCOUNT(new EditAccountCommand(new ReaderLogic())),
-    UPDATE_ACCOUNT(new UpdateAccountCommand(new ReaderLogic()));
+    UPDATE_ACCOUNT(new UpdateAccountCommand(new ReaderLogic())),
+    LOAD_PAGE(new LoadPageCommand());
 
     private Command command;
 

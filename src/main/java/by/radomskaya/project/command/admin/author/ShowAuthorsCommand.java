@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.author;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.JspPage;
+import by.radomskaya.project.constant.JspPageConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Author;
 import by.radomskaya.project.exception.CommandException;
@@ -27,7 +27,7 @@ public class ShowAuthorsCommand implements Command {
         try {
             listAuthors = authorLogic.getAuthors();
             request.setAttribute("authors", listAuthors);
-            page = JspPage.ADMIN_AUTHORS_PAGE;
+            page = JspPageConstants.ADMIN_AUTHORS_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }

@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="err"%>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <html>
 <head>
@@ -18,20 +19,16 @@
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
 <div class="container">
 
-    <c:if test="${requestScope.messageFindBook == 'empty'}">
-        <div id="error" class="alert alert-danger">
-            <fmt:message key="message.findBook" bundle="${local}"/>
-        </div>
-    </c:if>
+    <err:error errorMessage="${messageFindBook}"/>
 
     <c:if test="${requestScope.foundBooks != null}">
     <table class="table table-hover">
         <thead>
-        <jsp:include page="${pageContext.request.contextPath}/jsp/user/book/tableHead.jsp"></jsp:include>
+        <jsp:include page="${pageContext.request.contextPath}/jsp/user/book/tableHead.jsp"/>
         </thead>
         <tbody>
         <c:forEach var="foundBooks" items="${foundBooks}">
@@ -53,7 +50,7 @@
                 <td>
                     <c:if test="${sessionScope.role == 'reader'}">
                         <a class="a-function"
-                           href="/Controller?&number_ticket=${user.numberTicket}&id_book=${foundBooksByTittle.id}&id_author=${foundBooksByTittle.author.id}&command=add_to_cart">${addToCart}</a>
+                           href="${pageContext.request.contextPath}/Controller?&number_ticket=${user.numberTicket}&id_book=${foundBooksByTittle.id}&id_author=${foundBooksByTittle.author.id}&command=add_to_cart">${addToCart}</a>
                     </c:if>
                 </td>
             </tr>
@@ -63,6 +60,6 @@
     </table>
 </div>
 
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

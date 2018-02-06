@@ -1,10 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="err" %>
+<%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="suc" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
-<c:set var="reader" scope="session" value="${sessionScope.reader}"></c:set>
+<c:set var="reader" scope="session" value="${sessionScope.reader}"/>
 
 <html>
 <head>
@@ -20,35 +22,21 @@
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
-<c:if test="${requestScope.messageDelete == 'success'}">
-    <div id="error" class="alert alert-success">
-        <a href="#" class="close" data-dismiss="alert">×</a>
-        <fmt:message key="message.successDeleteOrder" bundle="${local}"/>
-    </div>
-</c:if>
+<suc:success successMessage="${messageDeleteOrder}"/>
 
-<c:if test="${requestScope.messageOrders == 'empty'}">
-    <div id="error" class="alert alert-danger">
-        <a href="#" class="close" data-dismiss="alert">×</a>
-        <fmt:message key="message.emptyOrders" bundle="${local}"/>
-    </div>
-</c:if>
+<err:error errorMessage="${messageOrders}"/>
 
-<c:if test="${requestScope.messageApprovedOrders == 'empty'}">
-    <div id="error" class="alert alert-danger">
-        <a href="#" class="close" data-dismiss="alert">×</a>
-        <fmt:message key="message.emptyApprovedOrders" bundle="${local}"/>
-    </div>
-</c:if>
+<err:error errorMessage="${messageApprovedOrders}"/>
 
 <div class="container">
 
-    <c:if test="${requestScope.orders != null}"/>
+    <a class="a-function"
+       href="${pageContext.request.contextPath}/Controller?id_reader=${reader.id}&command=get_approved_orders"><fmt:message
+            key="label.watchApprovedOrders" bundle="${local}"/></a>
 
-    <a class="a-function" href="/Controller?id_reader=${reader.id}&command=get_approved_orders"><fmt:message key="label.watchApprovedOrders" bundle="${local}"/></a>
-
+    <c:if test="${requestScope.orders != null}">
     <table class="table table-hover">
         <thead>
         <tr>
@@ -73,14 +61,16 @@
                 </td>
                 <td>
                     <a class="a-function"
-                       href="/Controller?id_order=${order.id}&id_reader=${order.user.id}&command=delete_order"><fmt:message key="label.delete" bundle="${local}"/>
+                       href="${pageContext.request.contextPath}/Controller?id_order=${order.id}&id_reader=${order.user.id}&command=delete_order"><fmt:message
+                            key="label.delete" bundle="${local}"/>
                         <span class="glyphicon glyphicon-trash"></span></a>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
+    </c:if>
 </div>
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

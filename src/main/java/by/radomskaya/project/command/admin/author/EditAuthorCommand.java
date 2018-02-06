@@ -1,8 +1,8 @@
 package by.radomskaya.project.command.admin.author;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.JspPage;
-import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.constant.JspPageConstants;
+import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Author;
 import by.radomskaya.project.exception.CommandException;
@@ -21,15 +21,15 @@ public class EditAuthorCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
-        String page = null;
+        String page;
         Author author;
 
         try {
-            int idAuthor = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_AUTHOR));
+            int idAuthor = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_AUTHOR));
 
             author = authorLogic.getAuthorById(idAuthor);
             request.setAttribute("author", author);
-            page = JspPage.ADMIN_EDIT_AUTHOR_PAGE;
+            page = JspPageConstants.ADMIN_EDIT_AUTHOR_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }

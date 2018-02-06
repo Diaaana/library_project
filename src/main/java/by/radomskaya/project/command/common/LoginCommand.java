@@ -1,14 +1,13 @@
 package by.radomskaya.project.command.common;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.JspPage;
-import by.radomskaya.project.constant.RequestParameter;
-import by.radomskaya.project.constant.RoleType;
+import by.radomskaya.project.constant.*;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.ReaderLogic;
+import by.radomskaya.project.manager.MessageManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,8 +24,8 @@ public class LoginCommand implements Command {
         Router router = new Router();
         String page;
         String roleType;
-        String loginValue = request.getParameter(RequestParameter.PARAM_LOGIN);
-        String passwordValue = request.getParameter(RequestParameter.PARAM_PASSWORD);
+        String loginValue = request.getParameter(ParameterConstants.PARAM_LOGIN);
+        String passwordValue = request.getParameter(ParameterConstants.PARAM_PASSWORD);
         User user;
 
         try {
@@ -44,27 +43,28 @@ public class LoginCommand implements Command {
 
     private String setRole(HttpServletRequest request, String roleType, User user) {
         HttpSession session = request.getSession();
-        String page = null;
+        String locale = request.getSession().getAttribute(ParameterConstants.PARAM_LOCALE) == null ? ParameterConstants.DEFAULT_LOCALE : request.getSession().getAttribute(ParameterConstants.PARAM_LOCALE).toString();
+        String page;
         switch (roleType) {
             case RoleType.ADMIN:
-                session.setAttribute("role", "admin");
-                request.setAttribute("adminLogin", user.getLogin());
-                page = JspPage.ADMIN_MAIN_PAGE;
+                session.setAttribute(ParameterConstants.PARAM_ROLE, RoleType.ROLE_ADMIN);
+                request.setAttribute(ParameterConstants.PARAM_ADMIN_LOGIN, user.getLogin());
+                page = JspPageConstants.ADMIN_MAIN_PAGE;
                 break;
             case RoleType.LIBRARIAN:
-                session.setAttribute("role", "librarian");
-                request.setAttribute("librarianLogin", user.getLogin());
-                page = JspPage.LIBRARIAN_MAIN_PAGE;
+                session.setAttribute(ParameterConstants.PARAM_ROLE, RoleType.ROLE_LIBRARIAN);
+                request.setAttribute(ParameterConstants.PARAM_LIBRARIAN_LOGIN, user.getLogin());
+                page = JspPageConstants.LIBRARIAN_MAIN_PAGE;
                 break;
             case RoleType.READER:
-                session.setAttribute("role", "reader");
-                session.setAttribute("reader", user);
-                page = JspPage.USER_MAIN_PAGE;
+                session.setAttribute(ParameterConstants.PARAM_ROLE, RoleType.ROLE_READER);
+                session.setAttribute(RoleType.ROLE_READER, user);
+                page = JspPageConstants.USER_MAIN_PAGE;
                 break;
             default:
-                session.setAttribute("role", null);
-                request.setAttribute("messageLogin", "error");
-                page = JspPage.START_PAGE;
+                session.setAttribute(ParameterConstants.PARAM_ROLE, RoleType.ROLE_GUEST);
+                request.setAttribute(MessageConstants.MESSAGE_ERROR_LOGIN, MessageManager.getLocale(locale).getMessage(PropertyKeys.LOGIN_ERROR_MESSAGE));
+                page = JspPageConstants.START_PAGE;
                 break;
         }
 

@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="err"%>
 <fmt:setLocale value="${sessionScope.locale}"/>
-<fmt:setBundle basename="locale" var="local"/>
+<fmt:setBundle basename="locale/locale" var="local"/>
 
 <fmt:message key="label.registration" bundle="${local}" var="registration"/>
 <fmt:message key="label.surname" bundle="${local}" var="surname"/>
@@ -30,17 +31,12 @@
 
 </head>
 <body class="body">
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 <div class="container">
 
-    <c:if test="${requestScope.messageSameLogin == 'true'}">
-        <div id="error" class="alert alert-danger">
-            <a href="#" class="close" data-dismiss="alert">×</a>
-            <fmt:message key="message.sameLogin" bundle="${local}"/>
-        </div>
-    </c:if>
+    <err:error errorMessage="${messageSameLogin}"/>
 
-    <form role="form" action="/Controller" name="form" onsubmit="return checkRegistration();" method="post"
+    <form role="form" action="${pageContext.request.contextPath}/Controller" name="form" onsubmit="return checkRegistration();" method="post"
           enctype="multipart/form-data" class="form-param">
         <div class="form-group">
             <label class="label"><fmt:message key="label.makeChoice" bundle="${local}"/> </label>
@@ -99,6 +95,6 @@
         </div>
     </form>
 </div>
-<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
+<jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

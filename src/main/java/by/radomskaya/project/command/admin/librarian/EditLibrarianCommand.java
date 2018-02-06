@@ -1,8 +1,8 @@
 package by.radomskaya.project.command.admin.librarian;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.JspPage;
-import by.radomskaya.project.constant.RequestParameter;
+import by.radomskaya.project.constant.JspPageConstants;
+import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
@@ -25,11 +25,11 @@ public class EditLibrarianCommand implements Command {
         User librarian;
 
         try {
-            int idLibrarian = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_LIBRARIAN));
+            int idLibrarian = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_LIBRARIAN));
             librarian = librarianLogic.getLibrarianById(idLibrarian);
 
             request.setAttribute("librarian", librarian);
-            page = JspPage.ADMIN_EDIT_LIBRARIAN_PAGE;
+            page = JspPageConstants.ADMIN_EDIT_LIBRARIAN_PAGE;
 
         } catch (DAOException e) {
             throw new CommandException(e);

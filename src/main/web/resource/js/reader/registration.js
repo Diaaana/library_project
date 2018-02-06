@@ -20,9 +20,6 @@ function checkRegistration() {
     } else if (document.form.mail.value == "") {
         alert("Пожалуйста, введите Вашу электронную почту!");
         return false;
-    } else if (document.form.profile_photo.value == "") {
-        alert("Пожалуйста, выберите фото профиля!");
-        return false;
     } else if (document.form.login.value == "") {
         alert("Пожалуйста, введите логин!");
         return false;
