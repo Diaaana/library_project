@@ -21,7 +21,7 @@
 <div class="container">
     <c:if test="${requestScope.approvedOrders != null}"/>
     <table class="table table-hover">
-        <thead>
+        <thead class="table-thead">
         <tr>
             <th><fmt:message key="label.tittle" bundle="${local}"/></th>
             <th><fmt:message key="label.dateBorrow" bundle="${local}"/></th>

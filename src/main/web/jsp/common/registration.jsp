@@ -39,7 +39,7 @@
     <form role="form" action="${pageContext.request.contextPath}/Controller" name="form" onsubmit="return checkRegistration();" method="post"
           enctype="multipart/form-data" class="form-param">
         <div class="form-group">
-            <label class="label"><fmt:message key="label.makeChoice" bundle="${local}"/> </label>
+            <label class="my-label"><fmt:message key="label.makeChoice" bundle="${local}"/> </label>
             <label class="radio-inline">
                 <input type="radio" name="role" value="Библиотекарь"><fmt:message key="label.librarian" bundle="${local}"/>
             </label>
@@ -48,27 +48,27 @@
             </label>
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterSurname" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterSurname" bundle="${local}"/></label>
             <input type="text" name="surname" placeholder="${surname}" class="form-control field"><br/>
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterName" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterName" bundle="${local}"/></label>
             <input type="text" name="name" placeholder="${name}" class="form-control field"><br/>
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterMiddleName" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterMiddleName" bundle="${local}"/></label>
             <input type="text" name="middle_name" placeholder="${middleName}" class="form-control field"><br/>
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterAge" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterAge" bundle="${local}"/></label>
             <input type="text" name="age" placeholder="${age}" class="form-control field"><br/>
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterPhone" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterPhone" bundle="${local}"/></label>
             <input type="text" name="phone" placeholder="${phone}" class="form-control field"><br/>
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterMail" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterMail" bundle="${local}"/></label>
             <input type="text" name="mail" placeholder="${mail}" class="form-control field"><br/>
         </div>
         <div class="form-group">
@@ -77,15 +77,15 @@
             </span>
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterLogin" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterLogin" bundle="${local}"/></label>
             <input type="text" name="login" placeholder="${login}" class="form-control field"><br/>
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterPassword" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterPassword" bundle="${local}"/></label>
             <input type="password" name="password" placeholder="${password}" class="form-control field"><br/>
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.repeatPassword" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.repeatPassword" bundle="${local}"/></label>
             <input type="password" name="password2" placeholder="${repeatPassword}" class="form-control field"><br/>
         </div>
         <div class="form-group">

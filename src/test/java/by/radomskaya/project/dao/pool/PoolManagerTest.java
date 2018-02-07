@@ -1,4 +1,4 @@
-package by.radomskaya.project.pool;
+package by.radomskaya.project.dao.pool;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;

@@ -34,12 +34,13 @@
 
 <div class="container">
 
-<c:if test="${sessionScope.role == 'reader'}">
-    <div class="col-md-4 col-md-offset-5">
-        <a class="a-function"
-           href="${pageContext.request.contextPath}/Controller?number_ticket=${user.numberTicket}&id_book=${book.id}&id_author=${book.author.id}&command=add_to_cart">${addToCart}</a>
-    </div>
-</c:if>
+
+    <c:if test="${sessionScope.role == 'reader'}">
+        <div class="col-md-4 col-md-offset-5">
+            <a class="a-function"
+               href="${pageContext.request.contextPath}/Controller?id_reader=${user.id}&id_book=${book.id}&id_author=${book.author.id}&command=add_to_cart">${addToCart}</a>
+        </div>
+    </c:if>
 
     <form action="${pageContext.request.contextPath}/Controller" method="post">
         <c:if test="${book != null}">
@@ -53,13 +54,18 @@
             <div class="author">${book.author.surname} ${book.author.name} ${book.author.middleName}</div>
 
             <div class="col-md-4">
-                <p class="parameter">${ISBN}: </p><h2 class="h-parameter">${book.isbn}</h2>
-                <p class="parameter">${dateEdition}: </p><h2 class="h-parameter">${book.dateEdition}</h2>
-                <p class="parameter">${placeEdition}: </p><h2 class="h-parameter">${book.placeEdition}</h2>
+                <p class="parameter">${ISBN}: </p>
+                <h2 class="h-parameter">${book.isbn}</h2>
+                <p class="parameter">${dateEdition}: </p>
+                <h2 class="h-parameter">${book.dateEdition}</h2>
+                <p class="parameter">${placeEdition}: </p>
+                <h2 class="h-parameter">${book.placeEdition}</h2>
             </div>
             <div class="col-md-4 col-md-offset-4">
-                <p class="parameter">${publisher}: </p><h2 class="h-parameter">${book.publisher}</h2>
-                <p class="parameter">${numberCopies}: </p><h2 class="h-parameter">${book.numberCopies}</h2>
+                <p class="parameter">${publisher}: </p>
+                <h2 class="h-parameter">${book.publisher}</h2>
+                <p class="parameter">${numberCopies}: </p>
+                <h2 class="h-parameter">${book.numberCopies}</h2>
             </div>
         </c:if>
     </form>

@@ -2,8 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="suc" %>
+<%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="err" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="locale/locale" var="local"/>
+
+<fmt:message key="message.emptyData" bundle="${local}" var="empyData"/>
 
 <html>
 <head>
@@ -32,53 +35,60 @@
                 class="glyphicon glyphicon-plus"></span></a>
 </form>
 
+<c:choose>
+<c:when test="${not empty requestScope.books}">
 <form action="${pageContext.request.contextPath}/Controller" method="post">
-    <c:if test="${not empty requestScope.books}">
-        <table class="table table-hover table-condensed">
-            <thead>
+    <table class="table table-hover table-condensed">
+        <thead class="table-thead">
+        <tr>
+            <th><fmt:message key="label.image" bundle="${local}"/></th>
+            <th><fmt:message key="label.isbn" bundle="${local}"/></th>
+            <th><fmt:message key="label.tittle" bundle="${local}"/></th>
+            <th><fmt:message key="label.genre" bundle="${local}"/></th>
+            <th><fmt:message key="label.surnameAuthor" bundle="${local}"/></th>
+            <th><fmt:message key="label.nameAuthor" bundle="${local}"/></th>
+            <th><fmt:message key="label.middleNameAuthor" bundle="${local}"/></th>
+            <th><fmt:message key="label.dateEdition" bundle="${local}"/></th>
+            <th><fmt:message key="label.placeEdition" bundle="${local}"/></th>
+            <th><fmt:message key="label.publisher" bundle="${local}"/></th>
+            <th><fmt:message key="label.numberCopies" bundle="${local}"/></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="book" items="${books}">
             <tr>
-                <th><fmt:message key="label.image" bundle="${local}"/></th>
-                <th><fmt:message key="label.isbn" bundle="${local}"/></th>
-                <th><fmt:message key="label.tittle" bundle="${local}"/></th>
-                <th><fmt:message key="label.genre" bundle="${local}"/></th>
-                <th><fmt:message key="label.surnameAuthor" bundle="${local}"/></th>
-                <th><fmt:message key="label.nameAuthor" bundle="${local}"/></th>
-                <th><fmt:message key="label.middleNameAuthor" bundle="${local}"/></th>
-                <th><fmt:message key="label.dateEdition" bundle="${local}"/></th>
-                <th><fmt:message key="label.placeEdition" bundle="${local}"/></th>
-                <th><fmt:message key="label.publisher" bundle="${local}"/></th>
-                <th><fmt:message key="label.numberCopies" bundle="${local}"/></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="book" items="${books}">
-                <tr>
-                    <td><img src="/resource/images/book/${book.image}" alt="${book.tittle}" class="imageBook"></td>
-                    <td>${book.isbn}</td>
-                    <td>${book.tittle}</td>
-                    <td>${book.genres}</td>
-                    <td>${book.author.surname}</td>
-                    <td>${book.author.name}</td>
-                    <td>${book.author.middleName}</td>
-                    <td>${book.dateEdition}</td>
-                    <td>${book.placeEdition}</td>
-                    <td>${book.publisher}</td>
-                    <td>${book.numberCopies}</td>
-                    <td>
+                <td><img src="/resource/images/book/${book.image}" alt="${book.tittle}" class="imageBook"></td>
+                <td>${book.isbn}</td>
+                <td>${book.tittle}</td>
+                <td>${book.genres}</td>
+                <td>${book.author.surname}</td>
+                <td>${book.author.name}</td>
+                <td>${book.author.middleName}</td>
+                <td>${book.dateEdition}</td>
+                <td>${book.placeEdition}</td>
+                <td>${book.publisher}</td>
+                <td>${book.numberCopies}</td>
+                <td>
+                    <div class="function-book">
                         <a class="a-function"
                            href="${pageContext.request.contextPath}/Controller?id_book=${book.id}&command=delete_book"><fmt:message
                                 key="label.delete" bundle="${local}"/>
                             <span class="glyphicon glyphicon-trash"></span></a>
                         <a class="a-function"
                            href="${pageContext.request.contextPath}/Controller?id_book=${book.id}&command=edit_book"><fmt:message
-                                key="label.edit" bundle="${local}"/></a>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </c:if>
+                                key="label.edit" bundle="${local}"/><span class="glyphicon glyphicon-pencil"></span></a>
+                    </div>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    </c:when>
+    <c:otherwise>
+        <err:error errorMessage="${empyData}"/>
+    </c:otherwise>
+    </c:choose>
 </form>
 
 <ul class="pagination place-pagination">

@@ -1,4 +1,4 @@
-package by.radomskaya.project.pool;
+package by.radomskaya.project.dao.pool;
 
 import java.sql.*;
 import java.util.Map;

@@ -30,21 +30,14 @@
 <body class="body">
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
-<c:if test="${sessionScope.messageChangePassword == 'success'}">
-    <div id="error" class="alert alert-success">
-        <a href="#" class="close" data-dismiss="alert">×</a>
-        <fmt:message key="message.successChangePassword" bundle="${local}"/>
-    </div>
-</c:if>
-
 <c:set var="reader" scope="session" value="${sessionScope.userData}"/>
 
 <div class="container">
 
     <a href="${pageContext.request.contextPath}/Controller?command=load_page&page=/jsp/user/account/changePassword.jsp" class="a-function"><fmt:message key="label.changePassword" bundle="${local}"/>
         <span class="glyphicon glyphicon-pencil"></span></a>
-    <a href="${pageContext.request.contextPath}/Controller?number_ticket=${reader.numberTicket}&command=edit_account" class="a-edit-user"><fmt:message key="label.edit" bundle="${local}"/>
-        <span class="glyphicon glyphicon-pencil"></span></a>
+    <a href="${pageContext.request.contextPath}/Controller?number_ticket=${reader.numberTicket}&command=edit_account" class="a-edit-user"><fmt:message key="label.editProfile" bundle="${local}"/>
+        <span class="glyphicon glyphicon-wrench"></span></a>
 
     <form action="${pageContext.request.contextPath}/Controller" method="post">
 
@@ -58,12 +51,12 @@
 
             <div class="col-md-4">
                 <p class="parameter">${numberTicket}: </p><h2 class="h-parameter">${reader.numberTicket}</h2>
-                <p class="parameter">${age}: </p><h2 class="h-parameter">${reader.age}</h2>
+                <p class="parameter">${login}: </p><h2 class="h-parameter">${reader.login}</h2>
+                <p class="parameter">${mail}: </p><h2 class="h-parameter">${reader.mail}</h2>
             </div>
             <div class="col-md-4 col-md-offset-4">
                 <p class="parameter">${phone}: </p><h2 class="h-parameter">${reader.phoneNumber}</h2>
-                <p class="parameter">${mail}: </p><h2 class="h-parameter">${reader.mail}</h2>
-                <p class="parameter">${login}: </p><h2 class="h-parameter">${reader.login}</h2>
+                <p class="parameter">${age}: </p><h2 class="h-parameter">${reader.age}</h2>
             </div>
         </c:if>
     </form>

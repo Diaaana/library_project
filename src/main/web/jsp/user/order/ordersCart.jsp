@@ -32,13 +32,14 @@
 
 <div class="container">
 
-    <a class="a-function"
+    <a class="a-function-orders"
        href="${pageContext.request.contextPath}/Controller?id_reader=${reader.id}&command=get_approved_orders"><fmt:message
-            key="label.watchApprovedOrders" bundle="${local}"/></a>
+            key="label.watchApprovedOrders" bundle="${local}"/>
+        <span class="glyphicon glyphicon-ok"></span></a>
 
     <c:if test="${requestScope.orders != null}">
     <table class="table table-hover">
-        <thead>
+        <thead class="table-thead">
         <tr>
             <th><fmt:message key="label.numberTicket" bundle="${local}"/></th>
             <th><fmt:message key="label.tittle" bundle="${local}"/></th>

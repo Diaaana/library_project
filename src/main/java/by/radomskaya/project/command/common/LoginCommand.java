@@ -64,7 +64,7 @@ public class LoginCommand implements Command {
             default:
                 session.setAttribute(ParameterConstants.PARAM_ROLE, RoleType.ROLE_GUEST);
                 request.setAttribute(MessageConstants.MESSAGE_ERROR_LOGIN, MessageManager.getLocale(locale).getMessage(PropertyKeys.LOGIN_ERROR_MESSAGE));
-                page = JspPageConstants.START_PAGE;
+                page = JspPageConstants.LOGIN_PAGE;
                 break;
         }
 

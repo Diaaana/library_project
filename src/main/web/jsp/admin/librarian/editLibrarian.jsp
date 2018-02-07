@@ -26,19 +26,19 @@
 
     <form role="form" action="${pageContext.request.contextPath}/Controller" method="post" name="form" onsubmit="return checkLibrarians();">
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterSurname" bundle="${local}"/> </label>
+            <label class="my-label"><fmt:message key="label.enterSurname" bundle="${local}"/> </label>
             <input type="text" name="surname" class="form-control" value="${librarian.surname}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterName" bundle="${local}"/> </label>
+            <label class="my-label"><fmt:message key="label.enterName" bundle="${local}"/> </label>
             <input type="text" name="name" class="form-control" value="${librarian.name}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterMiddleName" bundle="${local}"/> </label>
+            <label class="my-label"><fmt:message key="label.enterMiddleName" bundle="${local}"/> </label>
             <input type="text" name="middle_name" class="form-control" value="${librarian.middleName}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterLogin" bundle="${local}"/> </label>
+            <label class="my-label"><fmt:message key="label.enterLogin" bundle="${local}"/> </label>
             <input type="text" name="login" class="form-control" value="${librarian.login}">
         </div>
         <div class="form-group">

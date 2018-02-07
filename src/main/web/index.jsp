@@ -6,6 +6,6 @@
       <link rel="stylesheet" type="text/css" href = "${pageContext.request.contextPath}/resource/css/app-style.css">
   </head>
   <body>
-  <jsp:forward page="${pageContext.request.contextPath}/jsp/start.jsp"/>
+  <jsp:forward page="${pageContext.request.contextPath}/jsp/common/start.jsp"/>
   </body>
 </html>

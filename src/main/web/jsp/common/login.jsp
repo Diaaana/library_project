@@ -30,12 +30,12 @@
 
     <form role="form" action="/Controller" method="post" class="form-login">
         <div class="form-group">
-            <label class="label"><fmt:message key="label.login" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.login" bundle="${local}"/></label>
             <input type="text" name="login" class="form-control" placeholder="${login}"/><br/>
         </div>
 
         <div class="form-group">
-            <label class="label"><fmt:message key="label.password" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.password" bundle="${local}"/></label>
             <input type="password" name="password" class="form-control" placeholder="${password}"/><br/>
         </div>
 

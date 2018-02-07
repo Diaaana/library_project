@@ -2,8 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="suc" %>
+<%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="err" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="locale/locale" var="local"/>
+
+<fmt:message key="message.emptyData" bundle="${local}" var="empyData"/>
 
 <html>
 <head>
@@ -25,11 +28,12 @@
 
 <div class="container">
 
-    <form action="${pageContext.request.contextPath}/Controller" method="post">
-        <c:if test="${not empty requestScope.readers}">
+    <c:choose>
+        <c:when test="${not empty requestScope.readers}">
+            <form action="${pageContext.request.contextPath}/Controller" method="post">
             <table class="table table-hover">
 
-                <thead>
+                <thead class="table-thead">
                 <tr>
                     <th><fmt:message key="label.profilePhoto" bundle="${local}"/></th>
                     <th><fmt:message key="label.loginValue" bundle="${local}"/></th>
@@ -67,8 +71,12 @@
                 </c:forEach>
                 </tbody>
             </table>
-        </c:if>
-    </form>
+        </c:when>
+        <c:otherwise>
+            <err:error errorMessage="${empyData}"/>
+        </c:otherwise>
+        </form>
+    </c:choose>
 </div>
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>

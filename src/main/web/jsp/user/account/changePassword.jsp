@@ -32,17 +32,17 @@
     <form role="form" action="${pageContext.request.contextPath}/Controller" method="post" class="form-param" name="form" onsubmit="return checkChangePassword();">
 
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterOldPassword" bundle="${local}"/> </label>
+            <label class="my-label"><fmt:message key="label.enterOldPassword" bundle="${local}"/> </label>
             <input type="text" name="old_password" class="form-control"/><br/>
         </div>
 
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterNewPassword" bundle="${local}"/> </label>
+            <label class="my-label"><fmt:message key="label.enterNewPassword" bundle="${local}"/> </label>
             <input type="password" name="new_password" class="form-control"/><br/>
         </div>
 
         <div class="form-group">
-            <label class="label"><fmt:message key="label.repeatNewPassword" bundle="${local}"/> </label>
+            <label class="my-label"><fmt:message key="label.repeatNewPassword" bundle="${local}"/> </label>
             <input type="password" name="repeat_new_password" class="form-control"/><br/>
         </div>
 

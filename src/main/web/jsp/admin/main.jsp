@@ -23,7 +23,7 @@
 <c:set var="admin" scope="request" value="${requestScope.adminLogin}"/>
 
 <div class="container">
-    <h1 class="welcome"><fmt:message key="label.welcome" bundle="${local}"/> ${admin} !</h1>
+    <h1 class="admin-welcome"><fmt:message key="label.welcome" bundle="${local}"/> ${admin} !</h1>
 </div>
 
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="/WEB-INF/tld/taglib.tld" prefix="err" %>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="locale/locale" var="local"/>
 
@@ -12,6 +13,7 @@
 <fmt:message key="label.searchAuthor" bundle="${local}" var="searchAuthor"/>
 <fmt:message key="label.addToCart" bundle="${local}" var="addToCart"/>
 <fmt:message key="label.moreInfo" bundle="${local}" var="moreInfo"/>
+<fmt:message key="message.emptyData" bundle="${local}" var="empyData"/>
 
 <c:set var="user" scope="session" value="${sessionScope.user}"/>
 <c:set var="currentPage" scope="session" value="${sessionScope.currentPage}"/>
@@ -32,13 +34,6 @@
 </head>
 <body class="body">
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
-
-<c:if test="${requestScope.messageAdd == 'success'}">
-    <div id="error" class="alert alert-success">
-        <a href="#" class="close" data-dismiss="alert">×</a>
-        <fmt:message key="message.successAddToCart" bundle="${local}"/>
-    </div>
-</c:if>
 
 <div class="form-inline found-div">
     <div class="one-found-div">
@@ -68,50 +63,58 @@
     </div>
 </div>
 
-<form action="${pageContext.request.contextPath}/Controller" method="post">
-    <c:if test="${sessionScope.books != null}">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th><fmt:message key="label.image" bundle="${local}"/></th>
-                <th><fmt:message key="label.tittle" bundle="${local}"/></th>
-                <th><fmt:message key="label.genre" bundle="${local}"/></th>
-                <th><fmt:message key="label.surname" bundle="${local}"/></th>
-                <th><fmt:message key="label.name" bundle="${local}"/></th>
-                <th><fmt:message key="label.middleName" bundle="${local}"/></th>
-            </tr>
-            </thead>
-            <tbody>
+<c:choose>
+    <c:when test="${sessionScope.books != null}">
+        <form action="${pageContext.request.contextPath}/Controller" method="post">
+            <table class="table table-hover">
+                <thead class="table-thead">
+                <tr>
+                    <th><fmt:message key="label.image" bundle="${local}"/></th>
+                    <th><fmt:message key="label.tittle" bundle="${local}"/></th>
+                    <th><fmt:message key="label.genre" bundle="${local}"/></th>
+                    <th><fmt:message key="label.surname" bundle="${local}"/></th>
+                    <th><fmt:message key="label.name" bundle="${local}"/></th>
+                    <th><fmt:message key="label.middleName" bundle="${local}"/></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
 
-            <c:forEach var="book" items="${books}">
-            <tr>
-                <td><img src="/resource/images/book/${book.image}" alt="${book.tittle}" class="imageBook"></td>
-                <td>${book.tittle}</td>
-                <td>${book.genres}</td>
-                <td>${book.author.surname}</td>
-                <td>${book.author.name}</td>
-                <td>${book.author.middleName}</td>
-                <td>
-                    <div class="form-group">
-                        <c:if test="${sessionScope.role == 'reader'}">
+                <c:forEach var="book" items="${books}">
+                <tr>
+                    <td><img src="/resource/images/book/${book.image}" alt="${book.tittle}" class="imageBook"></td>
+                    <td>${book.tittle}</td>
+                    <td>${book.genres}</td>
+                    <td>${book.author.surname}</td>
+                    <td>${book.author.name}</td>
+                    <td>${book.author.middleName}</td>
+                    <td>
+                        <div class="function-book">
+                            <c:if test="${sessionScope.role == 'reader'}">
+                                <a class="a-function"
+                                   href="${pageContext.request.contextPath}/Controller?&id_reader=${user.id}&id_book=${book.id}&id_author=${book.author.id}&command=add_to_cart">${addToCart}
+                                    <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                            </c:if>
                             <a class="a-function"
-                               href="${pageContext.request.contextPath}/Controller?&id_reader=${user.id}&id_book=${book.id}&id_author=${book.author.id}&command=add_to_cart">${addToCart}</a>
-                        </c:if>
-                        <a class="a-function"
-                           href="${pageContext.request.contextPath}/Controller?id_book=${book.id}&command=get_personal_book">${moreInfo}</a>
-                    </div>
-                </td>
-                </c:forEach>
-            </tr>
-            </tbody>
-        </table>
-    </c:if>
-</form>
+                               href="${pageContext.request.contextPath}/Controller?id_book=${book.id}&command=get_personal_book">${moreInfo}</a>
+                        </div>
+                    </td>
+                    </c:forEach>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </c:when>
+    <c:otherwise>
+        <err:error errorMessage="${empyData}"/>
+    </c:otherwise>
+</c:choose>
 
 <ul class="pagination place-pagination">
     <c:if test="${currentPage gt 1}">
         <li>
-            <a class="page-link" href="${pageContext.request.contextPath}/Controller?command=get_books&page=${currentPage - 1}"> ←</a>
+            <a class="page-link"
+               href="${pageContext.request.contextPath}/Controller?command=get_books&page=${currentPage - 1}"> ←</a>
         </li>
     </c:if>
     <c:forEach begin="1" end="${noOfPages}" var="i">
@@ -123,14 +126,16 @@
             </c:when>
             <c:otherwise>
                 <li>
-                    <a class="page-link" href="${pageContext.request.contextPath}/Controller?command=get_books&page=${i}">${i}</a>
+                    <a class="page-link"
+                       href="${pageContext.request.contextPath}/Controller?command=get_books&page=${i}">${i}</a>
                 </li>
             </c:otherwise>
         </c:choose>
     </c:forEach>
     <c:if test="${currentPage lt noOfPages}">
         <li>
-            <a class="page-link" href="${pageContext.request.contextPath}/Controller?command=get_books&page=${currentPage + 1}"> →</a>
+            <a class="page-link"
+               href="${pageContext.request.contextPath}/Controller?command=get_books&page=${currentPage + 1}"> →</a>
         </li>
     </c:if>
 </ul>

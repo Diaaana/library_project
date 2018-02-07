@@ -28,15 +28,15 @@
 <div class="container">
     <form action="${pageContext.request.contextPath}/Controller" method="post" name="form" onsubmit="return checkOrder();" class="form-param">
         <div class="form-group">
-            <label class="label"><fmt:message key="label.dateBorrow" bundle="${local}"/> </label>
+            <label class="my-label"><fmt:message key="label.dateBorrow" bundle="${local}"/> </label>
             <input type="text" name="date_borrow" placeholder="${date}" class="form-control">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.dateReturn" bundle="${local}"/> </label>
+            <label class="my-label"><fmt:message key="label.dateReturn" bundle="${local}"/> </label>
             <input type="text" name="date_return" placeholder="${date}" class="form-control">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.methodBorrow" bundle="${local}"/> </label><br/>
+            <label class="my-label"><fmt:message key="label.methodBorrow" bundle="${local}"/> </label><br/>
             <label class="radio-inline">
                 <input type="radio" name="method_borrow" value="Абонемент">${subscription}
             </label>
@@ -48,7 +48,9 @@
             <input type="hidden" name="command" value="take_order"/>
             <input type="hidden" name="id_order" value="${order.id}"/>
             <input type="hidden" name="id_reader" value="${order.user.id}"/>
+            <input type="hidden" name="mail" value="${order.user.mail}"/>
             <input type="hidden" name="id_book" value="${order.book.id}"/>
+            <input type="hidden" name="tittle" value="${order.book.tittle}"/>
             <input type="submit" value="${takeOrder}" class="button"/><br/>
             <button type="reset" value="clear" onclick="clearForm()" class="button"><fmt:message key="label.clear" bundle="${local}"/></button>
         </div>

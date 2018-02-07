@@ -36,48 +36,49 @@
 
 <div class="container">
 
-    <form role="form" action="${pageContext.request.contextPath}/Controller" method="post" name="form" onsubmit="return checkEditBook();" enctype="multipart/form-data">
+    <form role="form" action="${pageContext.request.contextPath}/Controller" method="post" name="form"
+          onsubmit="return checkEditBook();" enctype="multipart/form-data">
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterIsbn" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterIsbn" bundle="${local}"/></label>
             <input type="text" name="isbn" class="form-control" value="${book.isbn}">
             <p class="help-block">13 знаков</p>
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterTittle" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterTittle" bundle="${local}"/></label>
             <input type="text" name="tittle" class="form-control" value="${book.tittle}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterSurnameAuthor" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterSurnameAuthor" bundle="${local}"/></label>
             <input type="text" name="surname" class="form-control" value="${book.author.surname}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterNameAuthor" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterNameAuthor" bundle="${local}"/></label>
             <input type="text" name="name" class="form-control" value="${book.author.name}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterMiddleNameAuthor" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterMiddleNameAuthor" bundle="${local}"/></label>
             <input type="text" name="middle_name" class="form-control" value="${book.author.middleName}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterGenre" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterGenre" bundle="${local}"/></label>
             <c:forEach var="genre" items="${genres}">
                 <br/><input type="checkbox" name="genre" value="${genre.value}"> ${genre.value}
             </c:forEach>
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterDateEdition" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterDateEdition" bundle="${local}"/></label>
             <input type="text" name="date_edition" class="form-control" value="${book.dateEdition}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterPlaceEdition" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterPlaceEdition" bundle="${local}"/></label>
             <input type="text" name="place_edition" class="form-control" value="${book.placeEdition}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterPublisher" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterPublisher" bundle="${local}"/></label>
             <input type="text" name="publisher" class="form-control" value="${book.publisher}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterNumberCopies" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterNumberCopies" bundle="${local}"/></label>
             <input type="text" name="number_copies" class="form-control" value="${book.numberCopies}">
         </div>
         <div class="form-group">

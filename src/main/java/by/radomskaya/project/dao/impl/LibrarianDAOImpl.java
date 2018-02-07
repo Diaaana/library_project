@@ -3,8 +3,8 @@ package by.radomskaya.project.dao.impl;
 import by.radomskaya.project.dao.LibrarianDAO;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.DAOException;
-import by.radomskaya.project.pool.ConnectionPool;
-import by.radomskaya.project.pool.ProxyConnection;
+import by.radomskaya.project.dao.pool.ConnectionPool;
+import by.radomskaya.project.dao.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

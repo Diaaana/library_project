@@ -7,7 +7,7 @@
 
 <html>
 <head>
-    <title><fmt:message key="label.reader" bundle="${local}"/></title>
+    <title><fmt:message key="label.library" bundle="${local}"/></title>
 
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/resource/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/app-style.css">
@@ -20,10 +20,8 @@
 <body class="body">
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
-<c:set var="reader" scope="session" value="${sessionScope.user}"/>
-
 <div class="container">
-    <h1 class="welcome"><fmt:message key="label.welcome" bundle="${local}"/> ${reader.login} !</h1>
+    <h1 class="main-welcome"><fmt:message key="label.mainCaption" bundle="${local}"/></h1>
 </div>
 
 <div class="my-carousel">

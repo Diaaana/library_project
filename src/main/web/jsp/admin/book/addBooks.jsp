@@ -37,54 +37,55 @@
 
 <div class="container">
 
-    <form role="form" name="form" action="${pageContext.request.contextPath}/Controller" method="post" onsubmit="return checkAddBook();"
+    <form role="form" name="form" action="${pageContext.request.contextPath}/Controller" method="post"
+          onsubmit="return checkAddBook();"
           enctype="multipart/form-data"
           class="form-param">
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterIsbn" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterIsbn" bundle="${local}"/></label>
             <input type="text" name="isbn" class="form-control" placeholder="${ISBN}">
             <p class="help-block">13 знаков</p>
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterTittle" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterTittle" bundle="${local}"/></label>
             <input type="text" name="tittle" class="form-control" placeholder="${tittle}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterSurnameAuthor" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterSurnameAuthor" bundle="${local}"/></label>
             <input type="text" name="surname" class="form-control" placeholder="${surname}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterNameAuthor" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterNameAuthor" bundle="${local}"/></label>
             <input type="text" name="name" class="form-control" placeholder="${name}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterMiddleNameAuthor" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterMiddleNameAuthor" bundle="${local}"/></label>
             <input type="text" name="middle_name" class="form-control" placeholder="${middleName}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterCountryAuthor" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterCountryAuthor" bundle="${local}"/></label>
             <input type="text" name="country" class="form-control" placeholder="${country}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.genres" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.genres" bundle="${local}"/></label>
             <c:forEach var="genre" items="${genres}">
                 <br/><input type="checkbox" name="genre" value="${genre.value}"> ${genre.value}
             </c:forEach>
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterDateEdition" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterDateEdition" bundle="${local}"/></label>
             <input type="text" name="date_edition" placeholder="${date}" class="form-control">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterPlaceEdition" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterPlaceEdition" bundle="${local}"/></label>
             <input type="text" name="place_edition" class="form-control" placeholder="${placeEdition}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterPublisher" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterPublisher" bundle="${local}"/></label>
             <input type="text" name="publisher" class="form-control" placeholder="${publisher}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterNumberCopies" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterNumberCopies" bundle="${local}"/></label>
             <input type="text" name="number_copies" class="form-control" placeholder="${numberCopies}">
         </div>
         <div class="form-group">

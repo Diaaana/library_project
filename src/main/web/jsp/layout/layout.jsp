@@ -39,13 +39,16 @@
         <c:if test="${sessionScope.role == 'guest'}">
             <ul class="menu-main">
                 <li>
+                    <a href="${pageContext.request.contextPath}/Controller?command=load_page&page=/jsp/common/start.jsp">${main}</a>
+                </li>
+                <li>
                     <a href="${pageContext.request.contextPath}/Controller?command=get_books">${books}</a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/Controller?command=load_page&page=/jsp/user/registration.jsp">${registration}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=load_page&page=/jsp/common/registration.jsp">${registration}</a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/Controller?command=load_page&page=/jsp/start.jsp">${logIn}</a>
+                    <a href="${pageContext.request.contextPath}/Controller?command=load_page&page=/jsp/common/login.jsp">${logIn}</a>
                 </li>
             </ul>
         </c:if>

@@ -4,8 +4,8 @@ import by.radomskaya.project.dao.BorrowBookDAO;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.entity.Order;
 import by.radomskaya.project.exception.DAOException;
-import by.radomskaya.project.pool.ConnectionPool;
-import by.radomskaya.project.pool.ProxyConnection;
+import by.radomskaya.project.dao.pool.ConnectionPool;
+import by.radomskaya.project.dao.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -22,12 +22,16 @@ public class CheckOrderCommand implements Command {
         Book book = new Book();
         User user = new User();
 
+        String tittle = request.getParameter(ParameterConstants.PARAM_TITTLE);
+        String mail = request.getParameter(ParameterConstants.PARAM_MAIL);
         int idOrder = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_ORDER));
         int idUser = Integer.parseInt(request.getParameter((ParameterConstants.PARAM_ID_READER)));
         int idBook = Integer.parseInt(request.getParameter((ParameterConstants.PARAM_ID_BOOK)));
 
         book.setId(idBook);
+        book.setTittle(tittle);
         user.setId(idUser);
+        user.setMail(mail);
         order.setId(idOrder);
         order.setUser(user);
         order.setBook(book);

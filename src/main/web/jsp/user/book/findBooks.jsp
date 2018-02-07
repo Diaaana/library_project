@@ -27,7 +27,7 @@
 
     <c:if test="${requestScope.foundBooks != null}">
     <table class="table table-hover">
-        <thead>
+        <thead class="table-thead">
         <jsp:include page="${pageContext.request.contextPath}/jsp/user/book/tableHead.jsp"/>
         </thead>
         <tbody>

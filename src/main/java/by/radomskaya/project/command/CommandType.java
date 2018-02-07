@@ -27,7 +27,7 @@ import by.radomskaya.project.logic.*;
 public enum CommandType {
     LOCALE(new ChangeLocaleCommand()),
     LOGIN(new LoginCommand(new ReaderLogic())),
-    LOGOUT(new LogoutCommond()),
+    LOGOUT(new LogoutCommand()),
     REGISTRATION(new RegistrationCommand(new ReaderLogic(), new LibrarianLogic())),
     ADD_BOOK(new AddBookCommand(new BookLogic(), new AuthorLogic())),
     EDIT_BOOK(new EditBookCommand(new BookLogic())),

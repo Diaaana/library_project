@@ -22,27 +22,28 @@
 
 <div class="container">
 
-    <form role="form" action="${pageContext.request.contextPath}/Controller" method="post" name="form" onsubmit="return checkAuthor();">
+    <form role="form" action="${pageContext.request.contextPath}/Controller" method="post" name="form"
+          onsubmit="return checkAuthor();">
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterSurnameAuthor" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterSurnameAuthor" bundle="${local}"/></label>
             <input type="text" name="surname" class="form-control" value="${author.surname}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterNameAuthor" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterNameAuthor" bundle="${local}"/></label>
             <input type="text" name="name" class="form-control" value="${author.name}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterMiddleNameAuthor" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterMiddleNameAuthor" bundle="${local}"/></label>
             <input type="text" name="middle_name" class="form-control" value="${author.middleName}">
         </div>
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterCountryAuthor" bundle="${local}"/></label>
+            <label class="my-label"><fmt:message key="label.enterCountryAuthor" bundle="${local}"/></label>
             <input type="text" name="country" class="form-control" value="${author.countryBirth}">
         </div>
         <input type="hidden" name="command" value="update_author"/>
         <input type="hidden" name="id_author" value="${author.id}"/>
         <input type="submit" class="button" value="<fmt:message key="label.edit" bundle="${local}"/>"/>
-     </form>
+    </form>
 </div>
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>

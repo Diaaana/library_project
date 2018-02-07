@@ -65,12 +65,24 @@ footer {
 }
 
 .a-function {
-    color: #a6e5e2;
-    font-size: 30px;
-    margin: 20px;
-}
+     color: #a6e5e2;
+     font-size: 30px;
+     margin: 20px;
+ }
 
 .a-function:hover, .a-function:focus {
+    color: #ffc3a0;
+    text-decoration: none;
+}
+
+.a-function-orders {
+    position: relative;
+    top:-50px;
+    color: #a6e5e2;
+    font-size: 30px;
+}
+
+.a-function-orders:hover, .a-function-orders:focus {
     color: #ffc3a0;
     text-decoration: none;
 }
@@ -129,6 +141,13 @@ footer {
     padding: 30px;
 }
 
+.image-librarian {
+    position: absolute;
+    top: 250px;
+    left: 890px;
+    height: 700px;
+}
+
 .profile-photo {
     position: relative;
     left: 300px;
@@ -146,15 +165,31 @@ footer {
 }
 
 .welcome {
+     position: relative;
+     left: 350px;
+     font-size: 35px;
+}
+
+.admin-welcome {
     position: relative;
+    left: 320px;
     top: 300px;
-    left: 100px;
-    font-size: 85px;
+    font-size: 60px;
+}
+
+.main-welcome {
+    position: relative;
+    left: 230px;
+    font-size: 35px;
 }
 
 .imageBook {
     width: 150px;
     height: 200px;
+}
+
+.table-thead {
+    background-color: #d2bba7;
 }
 
 .button {
@@ -184,7 +219,7 @@ footer {
     box-shadow: 0 0 10px 10px #802e36;
 }
 
-.label {
+.my-label {
     font-size: 200%;
     color: #5a5050;
 }
@@ -371,4 +406,31 @@ footer {
     position: absolute;
     bottom: 0;
     left: 700px;
+}
+
+.my-carousel {
+    position: absolute;
+    top: 230px;
+    left: 420px;
+    width: 1500px;
+}
+
+.image-carousel {
+    width: 100%;
+}
+
+.p-carousel {
+    font-size: 40px;
+    font-weight: bolder;
+    font-family: cursive;
+    color: #dcc2b0;
+}
+
+.my-caption {
+    top: 20px;
+}
+
+.function-book {
+    position: relative;
+    top: 50px;
 }

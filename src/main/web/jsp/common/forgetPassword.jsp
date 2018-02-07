@@ -29,12 +29,12 @@
     <form role="form" action="${pageContext.request.contextPath}/Controller" method="post" class="form-param" name="form" onsubmit="return checkForgetPassword();">
 
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterNumberTicket" bundle="${local}"/> </label>
+            <label class="my-label"><fmt:message key="label.enterNumberTicket" bundle="${local}"/> </label>
             <input type="text" name="number_ticket" class="form-control"/><br/>
         </div>
 
         <div class="form-group">
-            <label class="label"><fmt:message key="label.enterMail" bundle="${local}"/> </label>
+            <label class="my-label"><fmt:message key="label.enterMail" bundle="${local}"/> </label>
             <input type="text" name="mail" class="form-control"/><br/>
         </div>
 

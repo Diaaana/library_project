@@ -59,6 +59,7 @@ public class ParameterConstants {
 
     public final static String PARAM_TITTLE_MAIL = "LIBRARY";
     public final static String PARAM_NEW_PASSWORD_MAIL = "Your new password: ";
+    public final static String PARAM_BOOK_MAIL = "Ваш заказ одобрен. Книга: ";
 
     public final static String DEFAULT_LOCALE = "ru";
     public final static String PARAM_USER = "user";

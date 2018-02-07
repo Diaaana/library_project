@@ -10,6 +10,7 @@ import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.OrderLogic;
+import by.radomskaya.project.mail.sender.MailSender;
 import by.radomskaya.project.validation.InputParamValidator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,13 +36,17 @@ public class TakeOrderCommand implements Command {
         try {
             order = setOrderFromRequest(request);
             int idOrder = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_ORDER));
+            String mail = request.getParameter(ParameterConstants.PARAM_MAIL);
+            String tittle = request.getParameter(ParameterConstants.PARAM_TITTLE);
 
             orderLogic.takeOrder(order);
             orderLogic.deleteOrderById(idOrder);
+
+            MailSender.sendMail(ParameterConstants.PARAM_TITTLE_MAIL, ParameterConstants.PARAM_BOOK_MAIL + tittle, mail);
+
             listOrders = orderLogic.getAllOrders();
 
             session.setAttribute("orders", listOrders);
-            request.setAttribute("messageTakeOrder", "success");
             page = JspPageConstants.LIBRARIAN_ORDERS_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);

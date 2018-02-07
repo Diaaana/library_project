@@ -1,4 +1,4 @@
-package by.radomskaya.project.pool;
+package by.radomskaya.project.dao.pool;
 
 import by.radomskaya.project.exception.DAOException;
 import org.apache.logging.log4j.Level;

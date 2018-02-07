@@ -26,6 +26,8 @@
     <h1 class="welcome"><fmt:message key="label.welcome" bundle="${local}"/> ${librarian} !</h1>
 </div>
 
+<img src="${pageContext.request.contextPath}/resource/images/librarian.jpg" class="image-librarian">
+
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>
 </body>
 </html>

@@ -17,7 +17,6 @@ public class ErrorMessageTag extends TagSupport {
             StringBuffer buffer = new StringBuffer();
             if(errorMessage !=null && !errorMessage.isEmpty()) {
                 buffer.append("<div class=\"alert-danger alert\">");
-                buffer.append("<a href=\"#\" class=\"close\" data-dismiss=\"alert\">×</a>");
                 buffer.append(this.errorMessage);
                 buffer.append("</div>");
             }else {

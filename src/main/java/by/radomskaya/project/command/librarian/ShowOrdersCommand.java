@@ -28,7 +28,7 @@ public class ShowOrdersCommand implements Command {
 
         try {
             listOrders = orderLogic.getAllOrders();
-            session.setAttribute("orders", listOrders);
+            request.setAttribute("orders", listOrders);
             page = JspPageConstants.LIBRARIAN_ORDERS_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);

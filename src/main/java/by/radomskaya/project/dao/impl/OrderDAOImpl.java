@@ -6,8 +6,8 @@ import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.entity.Order;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.DAOException;
-import by.radomskaya.project.pool.ConnectionPool;
-import by.radomskaya.project.pool.ProxyConnection;
+import by.radomskaya.project.dao.pool.ConnectionPool;
+import by.radomskaya.project.dao.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,12 +20,12 @@ import java.util.List;
 
 public class OrderDAOImpl implements OrderDAO {
     private final static Logger LOGGER = LogManager.getLogger(OrderDAOImpl.class);
-    private final static String SELECT_ALL_ORDERS = "SELECT id_order, users.id_user, number_ticket, books.id_book, tittle, authors.surname, authors.name, authors.middle_name, image_book " +
+    private final static String SELECT_ALL_ORDERS = "SELECT id_order, users.id_user, mail, number_ticket, books.id_book, tittle, authors.surname, authors.name, authors.middle_name, image_book " +
             "FROM library.orders " +
             "JOIN library.users ON users.id_user = orders.id_user " +
             "JOIN library.books ON books.id_book = orders.id_book " +
             "JOIN library.authors ON authors.id_author = orders.id_author;";
-    private final static String SELECT_PERSONAL_ORDERS = "SELECT id_order, books.id_book, users.id_user, number_ticket, tittle, authors.surname, authors.name, authors.middle_name, image_book " +
+    private final static String SELECT_PERSONAL_ORDERS = "SELECT id_order, books.id_book, users.id_user, mail, number_ticket, tittle, authors.surname, authors.name, authors.middle_name, image_book " +
             "FROM library.orders " +
             "JOIN library.users ON users.id_user = orders.id_user " +
             "JOIN library.books ON orders.id_book = books.id_book " +
@@ -212,6 +212,7 @@ public class OrderDAOImpl implements OrderDAO {
         order.setId(resultSet.getInt("id_order"));
         user.setId(resultSet.getInt("id_user"));
         user.setNumberTicket(resultSet.getInt("number_ticket"));
+        user.setMail(resultSet.getString("mail"));
         order.setUser(user);
         book.setId(resultSet.getInt("id_book"));
         book.setTittle(resultSet.getString("tittle"));
