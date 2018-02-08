@@ -7,10 +7,12 @@ import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Author;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
-import by.radomskaya.project.exception.DAOException;
+import by.radomskaya.project.exception.LogicException;
 import by.radomskaya.project.logic.AuthorLogic;
 import by.radomskaya.project.logic.BookLogic;
 import by.radomskaya.project.validation.InputParamValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,7 @@ import java.sql.Date;
 import java.util.List;
 
 public class AddBookCommand implements Command {
+    private final static Logger LOGGER = LogManager.getLogger(AddBookCommand.class);
     private BookLogic bookLogic;
     private AuthorLogic authorLogic;
 
@@ -34,10 +37,15 @@ public class AddBookCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         HttpSession session = request.getSession();
-        String page;
+        String page = null;
         Book book;
         Author author;
         List<Book> listBooks;
+        int bookPage = 1;
+
+        if (request.getParameter(ParameterConstants.PARAM_PAGE) != null) {
+            bookPage = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_PAGE));
+        }
 
         try {
             book = setBookFromRequest(request);
@@ -46,14 +54,15 @@ public class AddBookCommand implements Command {
 
             if (authorLogic.addAuthor(author) && bookLogic.addBook(book)) {
                 bookLogic.addBookAndGenre(genres);
-                listBooks = bookLogic.getBooks();
-                session.setAttribute("books", listBooks);
+                listBooks = bookLogic.getBooksWithPages(bookPage);
+                session.setAttribute(ParameterConstants.PARAM_NUMBER_OF_PAGES, bookLogic.getNoOfPages());
+                session.setAttribute(ParameterConstants.PARAM_BOOKS, listBooks);
                 page = JspPageConstants.ADMIN_BOOKS_PAGE;
             } else {
                 page = JspPageConstants.ADMIN_ADD_BOOKS_PAGE;
             }
-        } catch (ServletException | DAOException | IOException e) {
-            throw new CommandException(e);
+        } catch (ServletException | LogicException | IOException e) {
+            LOGGER.error(e);
         }
 
         router.setPagePath(page);

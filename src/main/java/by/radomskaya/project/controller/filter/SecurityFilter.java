@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.radomskaya.project.constant.JspPageConstants.START_PAGE;
 
-@WebFilter( urlPatterns = { "/*" },initParams = { @WebInitParam(name = "START_PATH", value = JspPageConstants.START_PAGE) })
+@WebFilter(urlPatterns = {"/*"}, initParams = {@WebInitParam(name = "START_PATH", value = JspPageConstants.INDEX_PAGE)})
 public class SecurityFilter implements Filter {
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -28,13 +28,16 @@ public class SecurityFilter implements Filter {
         HttpSession session = request.getSession();
 
         String type = (String) session.getAttribute(ParameterConstants.PARAM_ROLE);
+
         if (type == null) {
             session.setAttribute(ParameterConstants.PARAM_ROLE, RoleType.ROLE_GUEST);
-            RequestDispatcher dispatcher = request.getRequestDispatcher(START_PAGE);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(JspPageConstants.INDEX_PAGE);
             dispatcher.forward(request, response);
             return;
         }
+
         filterChain.doFilter(request, response);
+
     }
 
     @Override

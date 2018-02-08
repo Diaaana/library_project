@@ -20,7 +20,7 @@
 <body class="body">
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
-<c:set var="librarian" scope="request" value="${requestScope.librarianLogin}"/>
+<c:set var="librarian" scope="session" value="${sessionScope.librarianLogin}"/>
 
 <div class="container">
     <h1 class="welcome"><fmt:message key="label.welcome" bundle="${local}"/> ${librarian} !</h1>

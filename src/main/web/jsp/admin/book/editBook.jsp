@@ -60,6 +60,10 @@
             <input type="text" name="middle_name" class="form-control" value="${book.author.middleName}">
         </div>
         <div class="form-group">
+            <label class="my-label"><fmt:message key="label.enterCountryAuthor" bundle="${local}"/></label>
+            <input type="text" name="country" class="form-control" value="${book.author.countryBirth}">
+        </div>
+        <div class="form-group">
             <label class="my-label"><fmt:message key="label.enterGenre" bundle="${local}"/></label>
             <c:forEach var="genre" items="${genres}">
                 <br/><input type="checkbox" name="genre" value="${genre.value}"> ${genre.value}

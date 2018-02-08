@@ -77,6 +77,9 @@
         <c:if test="${sessionScope.role == 'reader'}">
             <ul class="menu-main">
                 <li>
+                    <a href="${pageContext.request.contextPath}/Controller?command=load_page&page=/jsp/user/main.jsp">${main}</a>
+                </li>
+                <li>
                     <a href="${pageContext.request.contextPath}/Controller?command=get_books">${books}</a>
                 </li>
                 <li>

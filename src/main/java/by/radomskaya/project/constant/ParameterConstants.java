@@ -2,6 +2,8 @@ package by.radomskaya.project.constant;
 
 public class ParameterConstants {
     public final static String PARAM_PAGE = "page";
+    public final static String PARAM_CURRENT_PAGE = "currentPage";
+    public final static String PARAM_NUMBER_OF_PAGES = "numberOfPages";
     public final static String PARAM_ROLE = "role";
     public final static String PARAM_ID_LIBRARIAN = "id_librarian";
     public final static String PARAM_ID_READER = "id_reader";
@@ -48,8 +50,21 @@ public class ParameterConstants {
     public final static String PARAM_NEW_PASSWORD = "new_password";
     public final static String PARAM_REPEAT_NEW_PASSWORD = "repeat_new_password";
 
+    public final static String PARAM_READER = "reader";
+    public final static String PARAM_READERS = "readers";
+    public final static String PARAM_USER_DATA = "userData";
+    public final static String PARAM_LIBRARIAN = "librarian";
+    public final static String PARAM_LIBRARIANS = "librarians";
+    public final static String PARAM_AUTHORS = "authors";
     public final static String PARAM_AUTHOR = "author";
+    public final static String PARAM_BOOKS = "books";
     public final static String PARAM_BOOK = "book";
+    public final static String PARAM_FOUND_BOOKS = "foundBooks";
+    public final static String PARAM_PERSONAL_BOOK = "personalBook";
+    public final static String PARAM_GENRES = "genres";
+    public final static String PARAM_ORDER = "order";
+    public final static String PARAM_ORDERS = "orders";
+    public final static String PARAM_APPROVED_ORDERS = "approvedOrders";
 
     public final static String PARAM_ADMIN_LOGIN = "adminLogin";
     public final static String PARAM_LIBRARIAN_LOGIN = "librarianLogin";
@@ -59,8 +74,9 @@ public class ParameterConstants {
 
     public final static String PARAM_TITTLE_MAIL = "LIBRARY";
     public final static String PARAM_NEW_PASSWORD_MAIL = "Your new password: ";
-    public final static String PARAM_BOOK_MAIL = "Ваш заказ одобрен. Книга: ";
+    public final static String PARAM_BOOK_MAIL = "Your order is approved. Book: ";
 
+    public final static String PARAM_COMMAND = "command";
     public final static String DEFAULT_LOCALE = "ru";
     public final static String PARAM_USER = "user";
     public final static String PARAM_AUTO_RECONNECT = "autoReconnect";

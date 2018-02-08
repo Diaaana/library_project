@@ -45,7 +45,7 @@
     <form action="${pageContext.request.contextPath}/Controller" method="post">
         <c:if test="${book != null}">
 
-            <div class="tittle">${book.tittle}</div>
+            <p class="tittle">${book.tittle}</p>
 
             <div class="image">
                 <img src="/resource/images/book/${book.image}" alt="${book.tittle}" class="persImageBook">

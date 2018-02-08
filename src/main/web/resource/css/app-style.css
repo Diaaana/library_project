@@ -9,7 +9,7 @@ body {
 
 footer {
     position: absolute;
-    bottom: 0;
+    bottom: -50px;
     width: 200px;
     height: 60px;
 }
@@ -65,10 +65,10 @@ footer {
 }
 
 .a-function {
-     color: #a6e5e2;
-     font-size: 30px;
-     margin: 20px;
- }
+    color: #a6e5e2;
+    font-size: 30px;
+    margin: 20px;
+}
 
 .a-function:hover, .a-function:focus {
     color: #ffc3a0;
@@ -77,7 +77,7 @@ footer {
 
 .a-function-orders {
     position: relative;
-    top:-50px;
+    top: -50px;
     color: #a6e5e2;
     font-size: 30px;
 }
@@ -165,21 +165,24 @@ footer {
 }
 
 .welcome {
-     position: relative;
-     left: 350px;
-     font-size: 35px;
+    position: relative;
+    left: 350px;
+    color: #40280f;
+    font-size: 35px;
 }
 
 .admin-welcome {
     position: relative;
-    left: 320px;
+    left: 180px;
     top: 300px;
-    font-size: 60px;
+    color: #40280f;
+    font-size: 70px;
 }
 
 .main-welcome {
     position: relative;
     left: 230px;
+    color: #40280f;
     font-size: 35px;
 }
 
@@ -352,6 +355,7 @@ footer {
     position: relative;
     overflow: hidden;
 }
+
 .btn-file input[type=file] {
     position: absolute;
     top: 0;
@@ -389,9 +393,10 @@ footer {
 .tittle {
     position: relative;
     color: #4f2b0d;
+    left: 450px;
+    width: 500px;
     margin: 30px;
-    left: 400px;
-    font-size: 40px;
+    font-size: 30px;
 }
 
 .author {

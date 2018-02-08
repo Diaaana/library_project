@@ -29,7 +29,7 @@
 <div class="container">
 
     <c:choose>
-    <c:when test="${not empty requestScope.authors}">
+    <c:when test="${not empty sessionScope.authors}">
     <form action="Controller" method="post">
         <table class="table table-hover table-condensed">
 

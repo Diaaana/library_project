@@ -11,5 +11,4 @@ public interface OrderDAO {
     List<Order> getPersonalOrders(int idUser) throws DAOException;
     boolean makeOrder(int idUser, int idBook, int idAuthor) throws DAOException;
     void deleteOrderById(int id) throws DAOException;
-    void deleteOrderByNumberTicket(int numberTicket) throws DAOException;
 }

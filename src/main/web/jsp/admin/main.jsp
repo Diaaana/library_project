@@ -20,7 +20,7 @@
 <body class="body">
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
-<c:set var="admin" scope="request" value="${requestScope.adminLogin}"/>
+<c:set var="admin" scope="session" value="${sessionScope.adminLogin}"/>
 
 <div class="container">
     <h1 class="admin-welcome"><fmt:message key="label.welcome" bundle="${local}"/> ${admin} !</h1>

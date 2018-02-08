@@ -3,7 +3,10 @@ package by.radomskaya.project.controller;
 import by.radomskaya.project.command.ActionFactory;
 import by.radomskaya.project.command.Command;
 import by.radomskaya.project.command.common.EmptyCommand;
+import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.exception.CommandException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,6 +23,8 @@ import static by.radomskaya.project.constant.JspPageConstants.START_PAGE;
 @MultipartConfig
 @WebServlet("/Controller")
 public class Controller extends HttpServlet {
+    private final static Logger LOGGER = LogManager.getLogger(Controller.class);
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
@@ -32,7 +37,7 @@ public class Controller extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Optional<Command> commandOptional = ActionFactory.defineCommand(request.getParameter("command"));
+        Optional<Command> commandOptional = ActionFactory.defineCommand(request.getParameter(ParameterConstants.PARAM_COMMAND));
         Command command = commandOptional.orElse(new EmptyCommand());
         try {
             Router router = command.execute(request);
@@ -49,7 +54,7 @@ public class Controller extends HttpServlet {
                 response.sendRedirect(START_PAGE);
             }
         } catch (CommandException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
         }
     }
 }

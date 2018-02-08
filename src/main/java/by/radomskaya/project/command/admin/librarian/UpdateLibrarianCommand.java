@@ -6,15 +6,18 @@ import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
-import by.radomskaya.project.exception.DAOException;
+import by.radomskaya.project.exception.LogicException;
 import by.radomskaya.project.logic.LibrarianLogic;
 import by.radomskaya.project.validation.InputParamValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class UpdateLibrarianCommand implements Command {
+    private final static Logger LOGGER = LogManager.getLogger(UpdateLibrarianCommand.class);
     private LibrarianLogic librarianLogic;
 
     public UpdateLibrarianCommand(LibrarianLogic librarianLogic) {
@@ -34,12 +37,12 @@ public class UpdateLibrarianCommand implements Command {
 
             if (librarianLogic.updateLibrarian(librarian)) {
                 listLibrarians = librarianLogic.getLibrarians();
-                session.setAttribute("librarians", listLibrarians);
+                session.setAttribute(ParameterConstants.PARAM_LIBRARIANS, listLibrarians);
                 page = JspPageConstants.ADMIN_LIBRARIANS_PAGE;
             }
 
-        } catch (DAOException e) {
-            throw new CommandException(e);
+        } catch (LogicException e) {
+            LOGGER.error(e);
         }
 
         router.setPagePath(page);

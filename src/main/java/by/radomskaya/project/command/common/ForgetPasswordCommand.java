@@ -7,15 +7,18 @@ import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.constant.PropertyKeys;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.exception.CommandException;
-import by.radomskaya.project.exception.DAOException;
-import by.radomskaya.project.mail.generator.PasswordGenerator;
+import by.radomskaya.project.exception.LogicException;
 import by.radomskaya.project.logic.ReaderLogic;
+import by.radomskaya.project.mail.generator.PasswordGenerator;
 import by.radomskaya.project.mail.sender.MailSender;
 import by.radomskaya.project.manager.MessageManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class ForgetPasswordCommand implements Command {
+    private final static Logger LOGGER = LogManager.getLogger(ForgetPasswordCommand.class);
     private ReaderLogic readerLogic;
 
     public ForgetPasswordCommand(ReaderLogic readerLogic) {
@@ -26,7 +29,7 @@ public class ForgetPasswordCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         String locale = request.getSession().getAttribute(ParameterConstants.PARAM_LOCALE) == null ? ParameterConstants.DEFAULT_LOCALE : request.getSession().getAttribute(ParameterConstants.PARAM_LOCALE).toString();
-        String page;
+        String page = null;
 
         try {
             int numberTicket = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_NUMBER_TICKET));
@@ -44,8 +47,8 @@ public class ForgetPasswordCommand implements Command {
                 router.setRoute(Router.RouteType.FORWARD);
                 page = JspPageConstants.FORGOT_PASSWORD_PAGE;
             }
-        } catch (DAOException e) {
-            throw new CommandException(e);
+        } catch (LogicException e) {
+            LOGGER.error(e);
         }
 
 

@@ -38,7 +38,6 @@ public class OrderDAOImpl implements OrderDAO {
             "WHERE id_user = ?;";
     private final static String INSERT_ORDER = "INSERT INTO library.orders(id_user, id_book, id_author) VALUES(?,?,?)";
     private final static String DELETE_ORDER_BY_ID = "DELETE FROM library.orders WHERE id_order = ?";
-    private final static String DELETE_ORDER_BY_NUMBER_TICKET = "DELETE FROM library.orders WHERE number_ticket = ?";
 
     @Override
     public List<Order> getAllOrders() throws DAOException {
@@ -166,30 +165,6 @@ public class OrderDAOImpl implements OrderDAO {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException("Error delete an order by id" + e);
-        } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
-            }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
-            }
-        }
-    }
-
-    @Override
-    public void deleteOrderByNumberTicket(int numberTicket) throws DAOException {
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement statement = null;
-        try {
-            statement = connection.prepareStatement(DELETE_ORDER_BY_NUMBER_TICKET);
-            statement.setInt(1, numberTicket);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            throw new DAOException("Error delete an order by number ticket" + e);
         } finally {
             try {
                 statement.close();

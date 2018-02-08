@@ -8,8 +8,8 @@ public class RegularExpressions {
     public final static String MAIL_PATTERN = "[\\w-\\.]+@[\\w-]+\\.[a-z]{2,3}";
     public final static String LOGIN_PATTERN = "[A-Za-z][A-Za-z0-9_]+";
     public final static String PASSWORD_PATTERN = "(?=.*[a-z])(?=.*[A-Z]).{4,}";
-    public final static String PLACE_PATTERN = "[A-ZА-Я][a-zа-я]+('[a-zа-я]+|-|\\s[A-ZА-Я][a-zа-я]+)?";
-    public final static String TITTLE_PATTERN = "[A-ZА-Я0-9][a-zа-я0-9\\-\\№\\(\\)\\s]+";
+    public final static String PLACE_PATTERN = "[A-ZА-Я][А-ЯA-Za-zа-я]+('[a-zа-я]+|-[A-ZА-Я][a-zа-я]+)?";
+    public final static String TITTLE_PATTERN = "[A-ZА-Я\\d\\W][a-zа-я\\W\\d\\s]+";
     public final static String DATE_PATTERN = "(\\d{4})\\-(0\\d|1[012])\\-([0-2]\\d|3[01])";
 
 }

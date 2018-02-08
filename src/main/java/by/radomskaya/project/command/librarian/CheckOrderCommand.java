@@ -36,7 +36,7 @@ public class CheckOrderCommand implements Command {
         order.setUser(user);
         order.setBook(book);
 
-        request.setAttribute("order", order);
+        request.setAttribute(ParameterConstants.PARAM_ORDER, order);
         page = JspPageConstants.LIBRARIAN_TAKE_ORDER_PAGE;
 
         router.setPagePath(page);

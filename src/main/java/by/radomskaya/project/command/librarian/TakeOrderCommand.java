@@ -8,10 +8,12 @@ import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.entity.Order;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
-import by.radomskaya.project.exception.DAOException;
+import by.radomskaya.project.exception.LogicException;
 import by.radomskaya.project.logic.OrderLogic;
 import by.radomskaya.project.mail.sender.MailSender;
 import by.radomskaya.project.validation.InputParamValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,6 +21,7 @@ import java.sql.Date;
 import java.util.List;
 
 public class TakeOrderCommand implements Command {
+    private final static Logger LOGGER = LogManager.getLogger(TakeOrderCommand.class);
     private OrderLogic orderLogic;
 
     public TakeOrderCommand(OrderLogic orderLogic) {
@@ -29,7 +32,7 @@ public class TakeOrderCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         HttpSession session = request.getSession();
-        String page;
+        String page = null;
         Order order;
         List<Order> listOrders;
 
@@ -46,10 +49,10 @@ public class TakeOrderCommand implements Command {
 
             listOrders = orderLogic.getAllOrders();
 
-            session.setAttribute("orders", listOrders);
+            session.setAttribute(ParameterConstants.PARAM_ORDERS, listOrders);
             page = JspPageConstants.LIBRARIAN_ORDERS_PAGE;
-        } catch (DAOException e) {
-            throw new CommandException(e);
+        } catch (LogicException e) {
+            LOGGER.error(e);
         }
 
         router.setPagePath(page);

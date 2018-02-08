@@ -8,14 +8,17 @@ import by.radomskaya.project.constant.PropertyKeys;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
-import by.radomskaya.project.exception.DAOException;
+import by.radomskaya.project.exception.LogicException;
 import by.radomskaya.project.logic.BookLogic;
 import by.radomskaya.project.manager.MessageManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class FindBookByTittleCommand implements Command {
+    private final static Logger LOGGER = LogManager.getLogger(FindBookByTittleCommand.class);
     private BookLogic bookLogic;
 
     public FindBookByTittleCommand(BookLogic bookLogic) {
@@ -26,7 +29,7 @@ public class FindBookByTittleCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         String locale = request.getSession().getAttribute(ParameterConstants.PARAM_LOCALE) == null ? ParameterConstants.DEFAULT_LOCALE : request.getSession().getAttribute(ParameterConstants.PARAM_LOCALE).toString();
-        String page;
+        String page = null;
         List<Book> listFoundBooksByTittle;
 
         try {
@@ -37,12 +40,14 @@ public class FindBookByTittleCommand implements Command {
                 request.setAttribute(MessageConstants.MESSAGE_FIND_BOOK, MessageManager.getLocale(locale).getMessage(PropertyKeys.FIND_BOOKS_MESSAGE));
                 page = JspPageConstants.USER_FIND_BOOKS_PAGE;
             } else {
-                request.setAttribute("foundBooks", listFoundBooksByTittle);
+                request.setAttribute(ParameterConstants.PARAM_FOUND_BOOKS, listFoundBooksByTittle);
                 page = JspPageConstants.USER_FIND_BOOKS_PAGE;
             }
-        } catch (DAOException e) {
-            throw new CommandException(e);
+
+        } catch (LogicException e) {
+            LOGGER.error(e);
         }
+
         router.setPagePath(page);
         router.setRoute(Router.RouteType.FORWARD);
         return router;

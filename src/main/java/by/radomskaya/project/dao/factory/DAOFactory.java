@@ -6,11 +6,9 @@ import by.radomskaya.project.dao.impl.*;
 public class DAOFactory {
     private final static DAOFactory instance = new DAOFactory();
 
-    private final AdminDAO adminDAO = new AdminDAOImpl();
     private final AuthorDAO authorDAO = new AuthorDAOImpl();
     private final BookDAO bookDAO = new BookDAOImpl();
     private final BorrowBookDAO borrowBookDAO = new BorrowBookDAOImpl();
-    private final GenreDAO genreDAO = new GenreDAOImpl();
     private final ReaderDAO readerDAO = new ReaderDAOImpl();
     private final LibrarianDAO librarianDAO = new LibrarianDAOImpl();
     private final OrderDAO orderDAO = new OrderDAOImpl();
@@ -20,8 +18,6 @@ public class DAOFactory {
     public static DAOFactory getInstance() {
         return instance;
     }
-
-    public AdminDAO getAdminDAO() { return adminDAO; }
 
     public AuthorDAO getAuthorDAO() {
         return authorDAO;
@@ -33,10 +29,6 @@ public class DAOFactory {
 
     public BorrowBookDAO getBorrowBookDAO() {
         return borrowBookDAO;
-    }
-
-    public GenreDAO getGenreDAO() {
-        return genreDAO;
     }
 
     public ReaderDAO getReaderDAO() {

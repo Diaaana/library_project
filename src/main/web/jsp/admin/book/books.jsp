@@ -25,7 +25,7 @@
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"/>
 
 <c:set var="currentPage" scope="session" value="${sessionScope.currentPage}"/>
-<c:set var="noOfPages" scope="request" value="${requestScope.noOfPages}"/>
+<c:set var="numberOfPages" scope="request" value="${sessionScope.numberOfPages}"/>
 
 <suc:success successMessage="${messageDeleteBook}"/>
 
@@ -36,7 +36,7 @@
 </form>
 
 <c:choose>
-<c:when test="${not empty requestScope.books}">
+<c:when test="${not empty sessionScope.books}">
 <form action="${pageContext.request.contextPath}/Controller" method="post">
     <table class="table table-hover table-condensed">
         <thead class="table-thead">
@@ -48,6 +48,7 @@
             <th><fmt:message key="label.surnameAuthor" bundle="${local}"/></th>
             <th><fmt:message key="label.nameAuthor" bundle="${local}"/></th>
             <th><fmt:message key="label.middleNameAuthor" bundle="${local}"/></th>
+            <th><fmt:message key="label.country" bundle="${local}"/></th>
             <th><fmt:message key="label.dateEdition" bundle="${local}"/></th>
             <th><fmt:message key="label.placeEdition" bundle="${local}"/></th>
             <th><fmt:message key="label.publisher" bundle="${local}"/></th>
@@ -65,6 +66,7 @@
                 <td>${book.author.surname}</td>
                 <td>${book.author.name}</td>
                 <td>${book.author.middleName}</td>
+                <td>${book.author.countryBirth}</td>
                 <td>${book.dateEdition}</td>
                 <td>${book.placeEdition}</td>
                 <td>${book.publisher}</td>
@@ -98,7 +100,7 @@
                href="${pageContext.request.contextPath}/Controller?command=show_books&page=${currentPage - 1}"> ←</a>
         </li>
     </c:if>
-    <c:forEach begin="1" end="${noOfPages}" var="i">
+    <c:forEach begin="1" end="${numberOfPages}" var="i">
         <c:choose>
             <c:when test="${currentPage eq i}">
                 <li>
@@ -113,7 +115,7 @@
             </c:otherwise>
         </c:choose>
     </c:forEach>
-    <c:if test="${currentPage lt noOfPages}">
+    <c:if test="${currentPage lt numberOfPages}">
         <li>
             <a class="page-link"
                href="${pageContext.request.contextPath}/Controller?command=show_books&page=${currentPage + 1}"> →</a>

@@ -8,14 +8,17 @@ import by.radomskaya.project.constant.PropertyKeys;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
-import by.radomskaya.project.exception.DAOException;
+import by.radomskaya.project.exception.LogicException;
 import by.radomskaya.project.logic.LibrarianLogic;
 import by.radomskaya.project.manager.MessageManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class DeleteLibrarianCommand implements Command {
+    private final static Logger LOGGER = LogManager.getLogger(DeleteLibrarianCommand.class);
     private LibrarianLogic librarianLogic;
 
     public DeleteLibrarianCommand(LibrarianLogic librarianLogic) {
@@ -34,12 +37,12 @@ public class DeleteLibrarianCommand implements Command {
 
             if (librarianLogic.deleteLibrarian(id)) {
                 listLibrarians = librarianLogic.getLibrarians();
-                request.setAttribute("librarians", listLibrarians);
+                request.setAttribute(ParameterConstants.PARAM_LIBRARIANS, listLibrarians);
                 request.setAttribute(MessageConstants.MESSAGE_DELETE_LIBRARIAN, MessageManager.getLocale(locale).getMessage(PropertyKeys.DELETE_LIBRARIAN_MESSAGE));
                 page = JspPageConstants.ADMIN_LIBRARIANS_PAGE;
             }
-        } catch (DAOException e) {
-            throw new CommandException(e);
+        } catch (LogicException e) {
+            LOGGER.error(e);
         }
 
         router.setPagePath(page);

@@ -5,6 +5,7 @@ import by.radomskaya.project.dao.OrderDAO;
 import by.radomskaya.project.dao.factory.DAOFactory;
 import by.radomskaya.project.entity.Order;
 import by.radomskaya.project.exception.DAOException;
+import by.radomskaya.project.exception.LogicException;
 
 import java.util.List;
 
@@ -12,35 +13,59 @@ public class OrderLogic {
     private OrderDAO orderDAO = DAOFactory.getInstance().getOrderDAO();
     private BorrowBookDAO borrowBookDAO = DAOFactory.getInstance().getBorrowBookDAO();
 
-    public List<Order> getAllOrders() throws DAOException {
-        return orderDAO.getAllOrders();
+    public List<Order> getAllOrders() throws LogicException {
+        try {
+            return orderDAO.getAllOrders();
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
     }
 
-    public boolean addToCart(int idUser, int idBook, int idAuthor) throws DAOException {
-        return orderDAO.makeOrder(idUser, idBook, idAuthor);
+    public boolean addToCart(int idUser, int idBook, int idAuthor) throws LogicException {
+        try {
+            return orderDAO.makeOrder(idUser, idBook, idAuthor);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
     }
 
-    public void deleteOrderById(int id) throws DAOException {
-        orderDAO.deleteOrderById(id);
+    public void deleteOrderById(int id) throws LogicException {
+        try {
+            orderDAO.deleteOrderById(id);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
     }
 
-    public void deleteOrderByNumberTicket(int numberTicket) throws DAOException {
-        orderDAO.deleteOrderByNumberTicket(numberTicket);
+    public boolean checkPersonalOrders(int idUser) throws LogicException {
+        try {
+            return orderDAO.checkPersonalOrders(idUser);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
     }
 
-    public boolean checkPersonalOrders(int idUser) throws DAOException {
-        return orderDAO.checkPersonalOrders(idUser);
+    public List<Order> getPersonalOrders(int idUser) throws LogicException {
+        try {
+            return orderDAO.getPersonalOrders(idUser);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
     }
 
-    public List<Order> getPersonalOrders(int idUser) throws DAOException {
-        return orderDAO.getPersonalOrders(idUser);
+    public void takeOrder(Order order) throws LogicException {
+        try {
+            borrowBookDAO.addOrder(order);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
     }
 
-    public void takeOrder(Order order) throws DAOException {
-        borrowBookDAO.addOrder(order);
-    }
-
-    public List<Order> getApprovedOrders(int idUser) throws DAOException {
-        return borrowBookDAO.getApprovedOrders(idUser);
+    public List<Order> getApprovedOrders(int idUser) throws LogicException {
+        try {
+            return borrowBookDAO.getApprovedOrders(idUser);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
     }
 }

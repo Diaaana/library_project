@@ -28,7 +28,7 @@
 
 <div class="container">
     <c:choose>
-        <c:when test="${not empty requestScope.librarians}">
+        <c:when test="${not empty sessionScope.librarians}">
             <form action="${pageContext.request.contextPath}/Controller" method="post">
                 <table class="table table-hover">
 

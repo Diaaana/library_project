@@ -5,11 +5,13 @@ import by.radomskaya.project.constant.*;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
-import by.radomskaya.project.exception.DAOException;
+import by.radomskaya.project.exception.LogicException;
 import by.radomskaya.project.logic.LibrarianLogic;
 import by.radomskaya.project.logic.ReaderLogic;
 import by.radomskaya.project.manager.MessageManager;
 import by.radomskaya.project.validation.InputParamValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,9 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 public class RegistrationCommand implements Command {
+    private final static Logger LOGGER = LogManager.getLogger(RegistrationCommand.class);
+    private final int INITIAL_VALUE_OF_TICKET = 1000;
+    private final int FINAL_VALUE_OF_TICKET = 10000;
     private ReaderLogic readerLogic;
     private LibrarianLogic librarianLogic;
 
@@ -34,11 +39,9 @@ public class RegistrationCommand implements Command {
         User user;
         String login = request.getParameter(ParameterConstants.PARAM_LOGIN);
         String roleUser = request.getParameter(ParameterConstants.PARAM_ROLE);
-        System.out.println(roleUser);
 
         try {
             user = setUserFromRequest(request);
-            System.out.println(user);
             if (!readerLogic.checkLogin(login)) {
                 switch (roleUser) {
                     case RoleType.LIBRARIAN:
@@ -58,8 +61,8 @@ public class RegistrationCommand implements Command {
                 page = JspPageConstants.REGISTRATION_PAGE;
             }
 
-        } catch (ServletException | DAOException | IOException e) {
-            throw new CommandException(e);
+        } catch (ServletException | LogicException | IOException e) {
+            LOGGER.error(e);
         }
 
         router.setPagePath(page);
@@ -107,7 +110,7 @@ public class RegistrationCommand implements Command {
     }
 
     private int generateNumberTicket() {
-        int numberTicket = 1000 + (int)(Math.random() * 10000);
+        int numberTicket = INITIAL_VALUE_OF_TICKET + (int)(Math.random() * FINAL_VALUE_OF_TICKET);
         return numberTicket;
     }
 }

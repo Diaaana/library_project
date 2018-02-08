@@ -6,9 +6,11 @@ import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
-import by.radomskaya.project.exception.DAOException;
+import by.radomskaya.project.exception.LogicException;
 import by.radomskaya.project.logic.ReaderLogic;
 import by.radomskaya.project.validation.InputParamValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 public class UpdateAccountCommand implements Command {
+    private final static Logger LOGGER = LogManager.getLogger(UpdateAccountCommand.class);
     private ReaderLogic readerLogic;
 
     public UpdateAccountCommand(ReaderLogic readerLogic) {
@@ -35,12 +38,12 @@ public class UpdateAccountCommand implements Command {
             user = setUserFromRequest(request);
 
             if (readerLogic.updateUser(user)) {
-                session.setAttribute("userData", user);
+                session.setAttribute(ParameterConstants.PARAM_USER_DATA, user);
                 page = JspPageConstants.USER_ACCOUNT_PAGE;
             }
 
-        } catch (DAOException | ServletException | IOException e) {
-            throw new CommandException(e);
+        } catch (LogicException | ServletException | IOException e) {
+            LOGGER.error(e);
         }
 
         router.setPagePath(page);

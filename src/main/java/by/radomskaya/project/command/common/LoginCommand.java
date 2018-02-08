@@ -5,14 +5,17 @@ import by.radomskaya.project.constant.*;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
-import by.radomskaya.project.exception.DAOException;
+import by.radomskaya.project.exception.LogicException;
 import by.radomskaya.project.logic.ReaderLogic;
 import by.radomskaya.project.manager.MessageManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class LoginCommand implements Command {
+    private final static Logger LOGGER = LogManager.getLogger(LoginCommand.class);
     private ReaderLogic readerLogic;
 
     public LoginCommand(ReaderLogic readerLogic) {
@@ -22,22 +25,23 @@ public class LoginCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
-        String page;
+        String page = null;
         String roleType;
-        String loginValue = request.getParameter(ParameterConstants.PARAM_LOGIN);
-        String passwordValue = request.getParameter(ParameterConstants.PARAM_PASSWORD);
         User user;
 
         try {
+            String loginValue = request.getParameter(ParameterConstants.PARAM_LOGIN);
+            String passwordValue = request.getParameter(ParameterConstants.PARAM_PASSWORD);
+
             roleType = readerLogic.checkLoginPassword(loginValue, passwordValue);
             user = readerLogic.getUserByLoginPassword(loginValue, passwordValue);
             page = setRole(request, roleType, user);
-        } catch (DAOException e) {
-            throw new CommandException(e);
+        } catch (LogicException e) {
+            LOGGER.error(e);
         }
 
         router.setPagePath(page);
-        router.setRoute(Router.RouteType.FORWARD);
+        router.setRoute(Router.RouteType.REDIRECT);
         return router;
     }
 
@@ -48,12 +52,12 @@ public class LoginCommand implements Command {
         switch (roleType) {
             case RoleType.ADMIN:
                 session.setAttribute(ParameterConstants.PARAM_ROLE, RoleType.ROLE_ADMIN);
-                request.setAttribute(ParameterConstants.PARAM_ADMIN_LOGIN, user.getLogin());
+                session.setAttribute(ParameterConstants.PARAM_ADMIN_LOGIN, user.getLogin());
                 page = JspPageConstants.ADMIN_MAIN_PAGE;
                 break;
             case RoleType.LIBRARIAN:
                 session.setAttribute(ParameterConstants.PARAM_ROLE, RoleType.ROLE_LIBRARIAN);
-                request.setAttribute(ParameterConstants.PARAM_LIBRARIAN_LOGIN, user.getLogin());
+                session.setAttribute(ParameterConstants.PARAM_LIBRARIAN_LOGIN, user.getLogin());
                 page = JspPageConstants.LIBRARIAN_MAIN_PAGE;
                 break;
             case RoleType.READER:

@@ -17,7 +17,7 @@
 
 <c:set var="user" scope="session" value="${sessionScope.user}"/>
 <c:set var="currentPage" scope="session" value="${sessionScope.currentPage}"/>
-<c:set var="noOfPages" scope="request" value="${requestScope.noOfPages}"/>
+<c:set var="numberOfPages" scope="request" value="${requestScope.numberOfPages}"/>
 
 <html>
 <head>
@@ -117,7 +117,7 @@
                href="${pageContext.request.contextPath}/Controller?command=get_books&page=${currentPage - 1}"> ←</a>
         </li>
     </c:if>
-    <c:forEach begin="1" end="${noOfPages}" var="i">
+    <c:forEach begin="1" end="${numberOfPages}" var="i">
         <c:choose>
             <c:when test="${currentPage eq i}">
                 <li>
@@ -132,7 +132,7 @@
             </c:otherwise>
         </c:choose>
     </c:forEach>
-    <c:if test="${currentPage lt noOfPages}">
+    <c:if test="${currentPage lt numberOfPages}">
         <li>
             <a class="page-link"
                href="${pageContext.request.contextPath}/Controller?command=get_books&page=${currentPage + 1}"> →</a>

@@ -8,14 +8,17 @@ import by.radomskaya.project.constant.PropertyKeys;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
-import by.radomskaya.project.exception.DAOException;
+import by.radomskaya.project.exception.LogicException;
 import by.radomskaya.project.logic.ReaderLogic;
 import by.radomskaya.project.manager.MessageManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class DeleteReaderCommand implements Command {
+    private final static Logger LOGGER = LogManager.getLogger(DeleteReaderCommand.class);
     private ReaderLogic readerLogic;
 
     public DeleteReaderCommand(ReaderLogic readerLogic) {
@@ -34,12 +37,12 @@ public class DeleteReaderCommand implements Command {
 
             if (readerLogic.deleteReader(idUser)) {
                 listUsers = readerLogic.getReaders();
-                request.setAttribute("readers", listUsers);
+                request.setAttribute(ParameterConstants.PARAM_READERS, listUsers);
                 request.setAttribute(MessageConstants.MESSAGE_DELETE_READER, MessageManager.getLocale(locale).getMessage(PropertyKeys.DELETE_READER_MESSAGE));
                 page = JspPageConstants.ADMIN_READERS_PAGE;
             }
-        } catch (DAOException e) {
-            throw new CommandException(e);
+        } catch (LogicException e) {
+            LOGGER.error(e);
         }
 
         router.setPagePath(page);

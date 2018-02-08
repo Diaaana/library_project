@@ -31,51 +31,51 @@
     <c:choose>
         <c:when test="${not empty requestScope.readers}">
             <form action="${pageContext.request.contextPath}/Controller" method="post">
-            <table class="table table-hover">
+                <table class="table table-hover">
 
-                <thead class="table-thead">
-                <tr>
-                    <th><fmt:message key="label.profilePhoto" bundle="${local}"/></th>
-                    <th><fmt:message key="label.loginValue" bundle="${local}"/></th>
-                    <th><fmt:message key="label.numberTicket" bundle="${local}"/></th>
-                    <th><fmt:message key="label.surname" bundle="${local}"/></th>
-                    <th><fmt:message key="label.name" bundle="${local}"/></th>
-                    <th><fmt:message key="label.middleName" bundle="${local}"/></th>
-                    <th><fmt:message key="label.age" bundle="${local}"/></th>
-                    <th><fmt:message key="label.phone" bundle="${local}"/></th>
-                    <th><fmt:message key="label.mail" bundle="${local}"/></th>
-                    <th></th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <c:forEach var="user" items="${readers}">
+                    <thead class="table-thead">
                     <tr>
-                        <td><img src="/resource/images/reader/${user.profilePhoto}" alt="${user.login}"
-                                 class="imageBook">
-                        </td>
-                        <td>${user.login}</td>
-                        <td>${user.numberTicket}</td>
-                        <td>${user.surname}</td>
-                        <td>${user.name}</td>
-                        <td>${user.middleName}</td>
-                        <td>${user.age}</td>
-                        <td>${user.phoneNumber}</td>
-                        <td>${user.mail}</td>
-                        <td>
-                            <a class="a-function"
-                               href="${pageContext.request.contextPath}/Controller?id_reader=${user.id}&command=delete_reader"><fmt:message
-                                    key="label.delete" bundle="${local}"/> </a>
-                        </td>
+                        <th><fmt:message key="label.profilePhoto" bundle="${local}"/></th>
+                        <th><fmt:message key="label.loginValue" bundle="${local}"/></th>
+                        <th><fmt:message key="label.numberTicket" bundle="${local}"/></th>
+                        <th><fmt:message key="label.surname" bundle="${local}"/></th>
+                        <th><fmt:message key="label.name" bundle="${local}"/></th>
+                        <th><fmt:message key="label.middleName" bundle="${local}"/></th>
+                        <th><fmt:message key="label.age" bundle="${local}"/></th>
+                        <th><fmt:message key="label.phone" bundle="${local}"/></th>
+                        <th><fmt:message key="label.mail" bundle="${local}"/></th>
+                        <th></th>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody>
+                    <c:forEach var="user" items="${readers}">
+                        <tr>
+                            <td><img src="/resource/images/reader/${user.profilePhoto}" alt="${user.login}"
+                                     class="imageBook">
+                            </td>
+                            <td>${user.login}</td>
+                            <td>${user.numberTicket}</td>
+                            <td>${user.surname}</td>
+                            <td>${user.name}</td>
+                            <td>${user.middleName}</td>
+                            <td>${user.age}</td>
+                            <td>${user.phoneNumber}</td>
+                            <td>${user.mail}</td>
+                            <td>
+                                <a class="a-function"
+                                   href="${pageContext.request.contextPath}/Controller?id_reader=${user.id}&command=delete_reader"><fmt:message
+                                        key="label.delete" bundle="${local}"/> </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </form>
         </c:when>
         <c:otherwise>
             <err:error errorMessage="${empyData}"/>
         </c:otherwise>
-        </form>
     </c:choose>
 </div>
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"/>

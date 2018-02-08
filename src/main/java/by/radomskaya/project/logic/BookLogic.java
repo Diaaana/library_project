@@ -1,10 +1,10 @@
 package by.radomskaya.project.logic;
 
 import by.radomskaya.project.dao.BookDAO;
-import by.radomskaya.project.dao.GenreDAO;
 import by.radomskaya.project.dao.factory.DAOFactory;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.DAOException;
+import by.radomskaya.project.exception.LogicException;
 
 import java.util.List;
 import java.util.Map;
@@ -12,79 +12,127 @@ import java.util.Map;
 public class BookLogic {
     private final static int QUANTITY_DATA_ON_PAGE = 5;
     private BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
-    private GenreDAO genreDAO = DAOFactory.getInstance().getGenreDAO();
 
-    public List<Book> getBooks() throws DAOException {
-        return bookDAO.getBooksAndAuthors();
+    public List<Book> getBooks() throws LogicException {
+        try {
+            return bookDAO.getBooksAndAuthors();
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
     }
 
-    public List<Book> getBooksWithPages(int noPage) throws DAOException {
-        List<Book> listBooks = getBooks();
-        int step = (noPage - 1) * QUANTITY_DATA_ON_PAGE;
-        System.out.println(step);
-        System.out.println(listBooks.size());
-        if (step + QUANTITY_DATA_ON_PAGE >= listBooks.size()) {
-            System.out.println(8);
-            listBooks = listBooks.subList(step, listBooks.size());
-        } else {
-            System.out.println(9);
-            listBooks = listBooks.subList(step, step + QUANTITY_DATA_ON_PAGE);
+    public List<Book> getBooksWithPages(int noPage) throws LogicException {
+        List<Book> listBooks;
+
+        try {
+            listBooks = getBooks();
+            int step = (noPage - 1) * QUANTITY_DATA_ON_PAGE;
+            if (step + QUANTITY_DATA_ON_PAGE >= listBooks.size()) {
+                listBooks = listBooks.subList(step, listBooks.size());
+            } else {
+                listBooks = listBooks.subList(step, step + QUANTITY_DATA_ON_PAGE);
+            }
+
+        } catch (LogicException e) {
+            throw new LogicException(e);
         }
 
         return listBooks;
     }
 
-    public int getNoOfPages() throws DAOException {
-        int noOfPages;
-        noOfPages = bookDAO.countBooks();
-        return (int) Math.ceil(noOfPages * 1.0 / QUANTITY_DATA_ON_PAGE);
+    public int getNoOfPages() throws LogicException {
+        int numberOfPages;
+        try {
+            numberOfPages = bookDAO.countBooks();
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
+        return (int) Math.ceil(numberOfPages * 1.0 / QUANTITY_DATA_ON_PAGE);
 
     }
 
-    public Book getBookById(int id) throws DAOException {
-        return bookDAO.getBookById(id);
-    }
-
-    public List<Book> findBooksByGenre(String genre) throws DAOException {
-        return bookDAO.getFoundBooksByGenre(genre);
-    }
-
-    public boolean addBook(Book book) throws DAOException {
-        return bookDAO.addBook(book);
-    }
-
-    public boolean updateBook(Book book) throws DAOException {
-        return bookDAO.updateBook(book);
-    }
-
-    public boolean deleteBook(int id) throws DAOException {
-        return bookDAO.deleteBook(id);
-    }
-
-    public List<Book> getFoundBooksByTittle(String tittle) throws DAOException {
-        return bookDAO.getFoundBooksByTittle(tittle);
-    }
-
-    public List<Book> getFoundBooksByAuthor(String author) throws DAOException {
-        return bookDAO.getFoundBooksByAuthor(author);
-    }
-
-    public Map<Integer, String> getAllGenres() throws DAOException {
-        return genreDAO.getAllGenres();
-    }
-
-    public void addBookAndGenre(String[] genres) throws DAOException {
-        for (int i = 0; i < genres.length; i++) {
-            bookDAO.addBookAndGenre(genres[i]);
+    public Book getBookById(int id) throws LogicException {
+        try {
+            return bookDAO.getBookById(id);
+        } catch (DAOException e) {
+            throw new LogicException(e);
         }
     }
 
-    public void updateBookAndGenre(String[] genres, int idBook) throws DAOException {
-        for (int i = 0; i < genres.length; i++) {
-            bookDAO.updateBookAndGenre(genres[i], idBook);
+    public List<Book> findBooksByGenre(String genre) throws LogicException {
+        try {
+            return bookDAO.getFoundBooksByGenre(genre);
+        } catch (DAOException e) {
+            throw new LogicException(e);
         }
     }
 
+    public boolean addBook(Book book) throws LogicException {
+        try {
+            return bookDAO.addBook(book);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
+    }
 
+    public boolean updateBook(Book book) throws LogicException {
+        try {
+            return bookDAO.updateBook(book);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
+    }
+
+    public boolean deleteBook(int id) throws LogicException {
+        try {
+            return bookDAO.deleteBook(id);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
+    }
+
+    public List<Book> getFoundBooksByTittle(String tittle) throws LogicException {
+        try {
+            return bookDAO.getFoundBooksByTittle(tittle);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
+    }
+
+    public List<Book> getFoundBooksByAuthor(String author) throws LogicException {
+        try {
+            return bookDAO.getFoundBooksByAuthor(author);
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
+    }
+
+    public Map<Integer, String> getAllGenres() throws LogicException {
+        try {
+            return bookDAO.getAllGenres();
+        } catch (DAOException e) {
+            throw new LogicException(e);
+        }
+    }
+
+    public void addBookAndGenre(String[] genres) throws LogicException {
+        for (int i = 0; i < genres.length; i++) {
+            try {
+                bookDAO.addBookAndGenre(genres[i]);
+            } catch (DAOException e) {
+                throw new LogicException(e);
+            }
+        }
+    }
+
+    public void updateBookAndGenre(String[] genres, int idBook) throws LogicException {
+        for (int i = 0; i < genres.length; i++) {
+            try {
+                bookDAO.updateBookAndGenre(genres[i], idBook);
+            } catch (DAOException e) {
+                throw new LogicException(e);
+            }
+        }
+    }
 
 }

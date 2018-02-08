@@ -7,9 +7,11 @@ import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Author;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
-import by.radomskaya.project.exception.DAOException;
+import by.radomskaya.project.exception.LogicException;
 import by.radomskaya.project.logic.BookLogic;
 import by.radomskaya.project.validation.InputParamValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,7 @@ import java.sql.Date;
 import java.util.List;
 
 public class UpdateBookCommand implements Command {
+    private final static Logger LOGGER = LogManager.getLogger(UpdateBookCommand.class);
     private BookLogic bookLogic;
 
     public UpdateBookCommand(BookLogic bookLogic) {
@@ -31,9 +34,14 @@ public class UpdateBookCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         HttpSession session = request.getSession();
-        String page = null;
+        String page;
         Book book;
         List<Book> listBooks;
+        int bookPage = 1;
+
+        if (request.getParameter(ParameterConstants.PARAM_PAGE) != null) {
+            bookPage = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_PAGE));
+        }
 
         try {
             int idBook = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_BOOK));
@@ -43,16 +51,17 @@ public class UpdateBookCommand implements Command {
 
             if (bookLogic.updateBook(book)) {
                 bookLogic.updateBookAndGenre(genres, idBook);
-                listBooks = bookLogic.getBooks();
-                session.setAttribute("books", listBooks);
+                listBooks = bookLogic.getBooksWithPages(bookPage);
+                session.setAttribute(ParameterConstants.PARAM_NUMBER_OF_PAGES, bookLogic.getNoOfPages());
+                session.setAttribute(ParameterConstants.PARAM_BOOKS, listBooks);
                 page = JspPageConstants.ADMIN_BOOKS_PAGE;
+                router.setPagePath(page);
             }
 
-        } catch (DAOException | ServletException | IOException e) {
-            throw new CommandException(e);
+        } catch (LogicException | ServletException | IOException e) {
+            LOGGER.error(e);
         }
 
-        router.setPagePath(page);
         router.setRoute(Router.RouteType.REDIRECT);
         return router;
     }
@@ -60,7 +69,7 @@ public class UpdateBookCommand implements Command {
     private Book setBookFromRequest(HttpServletRequest request) throws IOException, ServletException {
         Book book = new Book();
         Author author;
-        int id = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_BOOK));
+        int idBook = Integer.parseInt(request.getParameter(ParameterConstants.PARAM_ID_BOOK));
         String isbn = request.getParameter(ParameterConstants.PARAM_ISBN);
         String tittle = request.getParameter(ParameterConstants.PARAM_TITTLE);
         author = setAuthorFromRequest(request);
@@ -77,6 +86,7 @@ public class UpdateBookCommand implements Command {
         }
 
         if (InputParamValidator.isValidateBookData(isbn, tittle, dateEdition, placeEdition, publisher, numberCopies)) {
+            book.setId(idBook);
             book.setIsbn(isbn);
             book.setTittle(tittle);
             book.setAuthor(author);
@@ -96,12 +106,11 @@ public class UpdateBookCommand implements Command {
         String middleName = request.getParameter(ParameterConstants.PARAM_AUTHOR_MIDDLE_NAME);
         String country = request.getParameter(ParameterConstants.PARAM_AUTHOR_COUNTRY);
         if (middleName.equals(ParameterConstants.PARAM_AUTHOR_EMPTY_MIDDLE_NAME)) {
-            middleName = ParameterConstants.PARAM_AUTHOR_NO_MIDDLE_NAME;
+            author.setMiddleName(ParameterConstants.PARAM_AUTHOR_NO_MIDDLE_NAME);
+        } else if (middleName.equals(ParameterConstants.PARAM_AUTHOR_NO_MIDDLE_NAME)) {
+            author.setMiddleName(ParameterConstants.PARAM_AUTHOR_NO_MIDDLE_NAME);
+        } else if (InputParamValidator.isValidateMiddleName(middleName)) {
             author.setMiddleName(middleName);
-        } else {
-            if (InputParamValidator.isValidateMiddleName(middleName)) {
-                author.setMiddleName(middleName);
-            }
         }
 
         if (InputParamValidator.isValidateAuthorData(surname, name, country)) {

@@ -4,10 +4,12 @@ import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.DAOException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BookDAO {
     List<Book> getBooksAndAuthors() throws DAOException;
     Book getBookById(int id) throws DAOException;
+    Map<Integer, String> getAllGenres() throws DAOException;
     boolean addBook(Book book) throws DAOException;
     void addBookAndGenre(String genre) throws DAOException;
     void updateBookAndGenre(String genre, int idBook) throws DAOException;
