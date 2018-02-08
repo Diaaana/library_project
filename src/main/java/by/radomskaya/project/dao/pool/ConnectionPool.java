@@ -1,7 +1,6 @@
 package by.radomskaya.project.dao.pool;
 
 import by.radomskaya.project.exception.DAOException;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,7 +25,7 @@ public class ConnectionPool {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             init();
         } catch (SQLException e) {
-            LOGGER.log(Level.FATAL, e + " DriverManager wasn't found.");
+            LOGGER.fatal( e + " DriverManager wasn't found.");
         }
     }
 
@@ -37,7 +36,7 @@ public class ConnectionPool {
             connections.add(manager.getConnection());
         }
         if (connections.isEmpty()) {
-            LOGGER.log(Level.FATAL, "Can not create database connection pool");
+            LOGGER.fatal( "Can not create database connection pool");
         }
 
         int sizeDiff = manager.poolSize - connections.size();
@@ -48,9 +47,9 @@ public class ConnectionPool {
         }
         sizeDiff = manager.poolSize - connections.size();
         if (sizeDiff > 0 && sizeDiff < manager.poolSize / 2) {
-           LOGGER.log(Level.WARN, "Connection pool size is smaller than required; Attempt to continue working...");
+           LOGGER.warn( "Connection pool size is smaller than required; Attempt to continue working...");
         } else if (sizeDiff > manager.poolSize / 2) {
-           LOGGER.log(Level.FATAL, "Connection pool size is too small: size - " + connections.size());
+           LOGGER.fatal( "Connection pool size is too small: size - " + connections.size());
         }
     }
 
@@ -76,7 +75,7 @@ public class ConnectionPool {
         try {
             connection = connections.take();
         } catch (InterruptedException e) {
-            LOGGER.log(Level.ERROR, "Can not take connection from pool: " + e);
+            LOGGER.error( "Can not take connection from pool: " + e);
         }
         return connection;
     }
@@ -85,4 +84,18 @@ public class ConnectionPool {
         connections.offer(connection);
     }
 
+    @Override
+    protected void finalize() throws Throwable {
+        closePool();
+    }
+
+    public void closePool() throws DAOException {
+        for (ProxyConnection connection : connections) {
+            try {
+                connection.closeConnection();
+            } catch (SQLException e) {
+                LOGGER.error( "Can not close pool: " + e);
+            }
+        }
+    }
 }
