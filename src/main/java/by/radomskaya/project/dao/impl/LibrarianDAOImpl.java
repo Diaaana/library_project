@@ -48,15 +48,19 @@ public class LibrarianDAOImpl implements LibrarianDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get all librarians" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -78,15 +82,19 @@ public class LibrarianDAOImpl implements LibrarianDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get an librarian by id" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -107,15 +115,19 @@ public class LibrarianDAOImpl implements LibrarianDAO {
         } catch (SQLException e) {
             throw new DAOException("Error add librarian" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -132,15 +144,19 @@ public class LibrarianDAOImpl implements LibrarianDAO {
         } catch (SQLException e) {
             throw new DAOException("Error delete the librarian" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -161,15 +177,19 @@ public class LibrarianDAOImpl implements LibrarianDAO {
         } catch (SQLException e) {
             throw new DAOException("Error update a librarian" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -187,15 +207,19 @@ public class LibrarianDAOImpl implements LibrarianDAO {
         } catch (SQLException e) {
             throw new DAOException("Error check librarian by login and password" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }

@@ -39,9 +39,10 @@ public class ReaderDAOImpl implements ReaderDAO {
     public List<User> getAllReaders() throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         Statement statement = null;
+        ResultSet resultSet;
         try {
             statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(SELECT_READERS);
+            resultSet = statement.executeQuery(SELECT_READERS);
             User user;
             List<User> listUsers = new ArrayList<>();
             while (resultSet.next()) {
@@ -52,15 +53,19 @@ public class ReaderDAOImpl implements ReaderDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get all readers" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -83,15 +88,19 @@ public class ReaderDAOImpl implements ReaderDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get user by login amd password" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -113,15 +122,19 @@ public class ReaderDAOImpl implements ReaderDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get user's id" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
         return idUser;
@@ -144,15 +157,19 @@ public class ReaderDAOImpl implements ReaderDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get user's number ticket" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
         return numberTicket;
@@ -179,15 +196,19 @@ public class ReaderDAOImpl implements ReaderDAO {
         } catch (SQLException e) {
             throw new DAOException("Error add user" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -204,15 +225,19 @@ public class ReaderDAOImpl implements ReaderDAO {
         } catch (SQLException e) {
             throw new DAOException("Error delete a reader" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -222,7 +247,7 @@ public class ReaderDAOImpl implements ReaderDAO {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
-        String roleType = new String();
+        String roleType = null;
         try {
             statement = connection.prepareStatement(CHECK_LOGIN_PASSWORD);
             statement.setString(1, login);
@@ -235,15 +260,19 @@ public class ReaderDAOImpl implements ReaderDAO {
         } catch (SQLException e) {
             throw new DAOException("Error check reader by login and password" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -265,15 +294,19 @@ public class ReaderDAOImpl implements ReaderDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get an user by number ticket" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -291,15 +324,19 @@ public class ReaderDAOImpl implements ReaderDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get an user by number ticket" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -309,7 +346,7 @@ public class ReaderDAOImpl implements ReaderDAO {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
-        String password = new String();
+        String password = null;
         try {
             statement = connection.prepareStatement(GET_PASSWORD_BY_TICKET);
             statement.setInt(1, numberTicket);
@@ -321,15 +358,19 @@ public class ReaderDAOImpl implements ReaderDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get an user by number ticket" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -346,15 +387,19 @@ public class ReaderDAOImpl implements ReaderDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get an user by number ticket" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -379,15 +424,19 @@ public class ReaderDAOImpl implements ReaderDAO {
         } catch (SQLException e) {
             throw new DAOException("Error update an user" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -405,15 +454,19 @@ public class ReaderDAOImpl implements ReaderDAO {
         } catch (SQLException e) {
             throw new DAOException("Error check reader by login" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -432,15 +485,19 @@ public class ReaderDAOImpl implements ReaderDAO {
         } catch (SQLException e) {
             throw new DAOException("Error check reader by mail and number ticket" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }

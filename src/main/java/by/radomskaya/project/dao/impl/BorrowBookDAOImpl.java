@@ -35,15 +35,19 @@ public class BorrowBookDAOImpl implements BorrowBookDAO {
         } catch (SQLException e) {
             throw new DAOException("Error add borrowed book" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -72,15 +76,19 @@ public class BorrowBookDAOImpl implements BorrowBookDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get approved orders" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }

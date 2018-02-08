@@ -59,7 +59,7 @@ public class BookDAOImpl implements BookDAO {
             "JOIN library.authors ON book_author.id_author = authors.id_author " +
             "JOIN library.book_genre ON books.id_book = book_genre.id_book " +
             "JOIN library.genres ON book_genre.id_genre = genres.id_genre " +
-            "SET isbn = ?, tittle = ?, surname = ?, name = ?, middle_name = ?, date_edition = ?, place_edition = ?, publisher = ?, number_copies = ? " +
+            "SET isbn = ?, tittle = ?, surname = ?, name = ?, middle_name = ?, date_edition = ?, place_edition = ?, publisher = ?, number_copies = ?, image_book = ? " +
             "WHERE books.id_book = ?;";
     private final static String UPDATE_BOOK_AND_GENRE = "UPDATE library.book_genre SET id_genre = ? WHERE id_book = ?;";
     private final static String GET_LAST_ID = "(SELECT id_book FROM library.books ORDER BY id_book desc limit 1) " +
@@ -90,15 +90,19 @@ public class BookDAOImpl implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get all book" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -120,15 +124,19 @@ public class BookDAOImpl implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get found book by id" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -153,15 +161,19 @@ public class BookDAOImpl implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get all genres" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -185,15 +197,19 @@ public class BookDAOImpl implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException("Error found book by genre" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -230,15 +246,19 @@ public class BookDAOImpl implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException("Error add book " + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -270,15 +290,19 @@ public class BookDAOImpl implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException("Error add book " + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -304,15 +328,19 @@ public class BookDAOImpl implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException("Error update genre" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -337,15 +365,19 @@ public class BookDAOImpl implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException("Error found book by tittle" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -369,15 +401,19 @@ public class BookDAOImpl implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException("Error found book by author" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -398,15 +434,19 @@ public class BookDAOImpl implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException("Error to count books" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -423,15 +463,19 @@ public class BookDAOImpl implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException("Error delete the book" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -451,22 +495,26 @@ public class BookDAOImpl implements BookDAO {
             statement.setString(7, book.getPlaceEdition());
             statement.setString(8, book.getPublisher());
             statement.setInt(9, book.getNumberCopies());
-            //statement.setString(10, book.getImage());
-            statement.setInt(10, book.getId());
+            statement.setString(10, book.getImage());
+            statement.setInt(11, book.getId());
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
             throw new DAOException("Error update book" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -512,15 +560,19 @@ public class BookDAOImpl implements BookDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get genres by id book" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }

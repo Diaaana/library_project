@@ -1,10 +1,10 @@
 package by.radomskaya.project.dao.impl;
 
 import by.radomskaya.project.dao.AuthorDAO;
-import by.radomskaya.project.entity.Author;
-import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.dao.pool.ConnectionPool;
 import by.radomskaya.project.dao.pool.ProxyConnection;
+import by.radomskaya.project.entity.Author;
+import by.radomskaya.project.exception.DAOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -42,15 +42,20 @@ public class AuthorDAOImpl implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get all authors" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -72,15 +77,19 @@ public class AuthorDAOImpl implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException("Error get an author by id" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -100,15 +109,19 @@ public class AuthorDAOImpl implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException("Error add author" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -125,15 +138,19 @@ public class AuthorDAOImpl implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException("Error delete an author" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }
@@ -154,15 +171,19 @@ public class AuthorDAOImpl implements AuthorDAO {
         } catch (SQLException e) {
             throw new DAOException("Error update an author" + e);
         } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing statement", e);
+                }
             }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    LOGGER.error("Error closing connection", e);
+                }
             }
         }
     }

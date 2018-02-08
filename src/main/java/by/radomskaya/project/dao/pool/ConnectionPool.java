@@ -54,7 +54,6 @@ public class ConnectionPool {
         }
     }
 
-
     public static ConnectionPool getInstance() {
         if (!flag.get()) {
             lock.lock();
@@ -86,9 +85,4 @@ public class ConnectionPool {
         connections.offer(connection);
     }
 
-    public void closePool() throws SQLException {
-        for (ProxyConnection connection : connections) {
-            connection.closeConnection();
-        }
-    }
 }

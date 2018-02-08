@@ -62,7 +62,7 @@ public class Author extends Entity {
 
         if (!surname.equals(author.surname)) return false;
         if (!name.equals(author.name)) return false;
-        if (!middleName.equals(author.middleName)) return false;
+        if (middleName != null ? !middleName.equals(author.middleName) : author.middleName != null) return false;
         return countryBirth.equals(author.countryBirth);
     }
 
@@ -71,7 +71,7 @@ public class Author extends Entity {
         int result = super.hashCode();
         result = 31 * result + surname.hashCode();
         result = 31 * result + name.hashCode();
-        result = 31 * result + middleName.hashCode();
+        result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
         result = 31 * result + countryBirth.hashCode();
         return result;
     }
