@@ -34,7 +34,7 @@ public class UpdateBookCommand implements Command {
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
         HttpSession session = request.getSession();
-        String page;
+        String page = null;
         Book book;
         List<Book> listBooks;
         int bookPage = 1;
@@ -54,15 +54,18 @@ public class UpdateBookCommand implements Command {
                 listBooks = bookLogic.getBooksWithPages(bookPage);
                 session.setAttribute(ParameterConstants.PARAM_NUMBER_OF_PAGES, bookLogic.getNoOfPages());
                 session.setAttribute(ParameterConstants.PARAM_BOOKS, listBooks);
+                router.setRoute(Router.RouteType.REDIRECT);
                 page = JspPageConstants.ADMIN_BOOKS_PAGE;
-                router.setPagePath(page);
+            } else {
+                router.setRoute(Router.RouteType.FORWARD);
+                page = JspPageConstants.ADMIN_EDIT_BOOK_PAGE;
             }
 
         } catch (LogicException | ServletException | IOException e) {
             LOGGER.error(e);
         }
 
-        router.setRoute(Router.RouteType.REDIRECT);
+        router.setPagePath(page);
         return router;
     }
 

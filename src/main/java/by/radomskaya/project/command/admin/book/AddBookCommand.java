@@ -57,8 +57,10 @@ public class AddBookCommand implements Command {
                 listBooks = bookLogic.getBooksWithPages(bookPage);
                 session.setAttribute(ParameterConstants.PARAM_NUMBER_OF_PAGES, bookLogic.getNoOfPages());
                 session.setAttribute(ParameterConstants.PARAM_BOOKS, listBooks);
+                router.setRoute(Router.RouteType.REDIRECT);
                 page = JspPageConstants.ADMIN_BOOKS_PAGE;
             } else {
+                router.setRoute(Router.RouteType.FORWARD);
                 page = JspPageConstants.ADMIN_ADD_BOOKS_PAGE;
             }
         } catch (ServletException | LogicException | IOException e) {
@@ -66,7 +68,6 @@ public class AddBookCommand implements Command {
         }
 
         router.setPagePath(page);
-        router.setRoute(Router.RouteType.REDIRECT);
         return router;
     }
 

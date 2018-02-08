@@ -40,6 +40,8 @@ public class DeleteAuthorCommand implements Command {
                 request.setAttribute(ParameterConstants.PARAM_AUTHORS, listAuthors);
                 request.setAttribute(MessageConstants.MESSAGE_DELETE_AUTHOR, MessageManager.getLocale(locale).getMessage(PropertyKeys.DELETE_AUTHOR_MESSAGE));
                 page = JspPageConstants.ADMIN_AUTHORS_PAGE;
+            } else {
+                page = JspPageConstants.ADMIN_AUTHORS_PAGE;
             }
 
         } catch (LogicException e) {

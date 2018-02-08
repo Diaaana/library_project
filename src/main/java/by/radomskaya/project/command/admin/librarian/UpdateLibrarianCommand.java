@@ -38,7 +38,11 @@ public class UpdateLibrarianCommand implements Command {
             if (librarianLogic.updateLibrarian(librarian)) {
                 listLibrarians = librarianLogic.getLibrarians();
                 session.setAttribute(ParameterConstants.PARAM_LIBRARIANS, listLibrarians);
+                router.setRoute(Router.RouteType.REDIRECT);
                 page = JspPageConstants.ADMIN_LIBRARIANS_PAGE;
+            } else {
+                router.setRoute(Router.RouteType.FORWARD);
+                page = JspPageConstants.ADMIN_EDIT_LIBRARIAN_PAGE;
             }
 
         } catch (LogicException e) {
@@ -46,7 +50,6 @@ public class UpdateLibrarianCommand implements Command {
         }
 
         router.setPagePath(page);
-        router.setRoute(Router.RouteType.REDIRECT);
         return router;
     }
 

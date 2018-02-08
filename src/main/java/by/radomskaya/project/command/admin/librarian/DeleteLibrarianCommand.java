@@ -40,6 +40,8 @@ public class DeleteLibrarianCommand implements Command {
                 request.setAttribute(ParameterConstants.PARAM_LIBRARIANS, listLibrarians);
                 request.setAttribute(MessageConstants.MESSAGE_DELETE_LIBRARIAN, MessageManager.getLocale(locale).getMessage(PropertyKeys.DELETE_LIBRARIAN_MESSAGE));
                 page = JspPageConstants.ADMIN_LIBRARIANS_PAGE;
+            } else {
+                page = JspPageConstants.ADMIN_LIBRARIANS_PAGE;
             }
         } catch (LogicException e) {
             LOGGER.error(e);

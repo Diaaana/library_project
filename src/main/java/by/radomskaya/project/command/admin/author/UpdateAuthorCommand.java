@@ -38,14 +38,17 @@ public class UpdateAuthorCommand implements Command {
             if (authorLogic.updateAuthor(author)) {
                 listAuthors = authorLogic.getAuthors();
                 session.setAttribute(ParameterConstants.PARAM_AUTHORS, listAuthors);
+                router.setRoute(Router.RouteType.REDIRECT);
                 page = JspPageConstants.ADMIN_AUTHORS_PAGE;
+            } else {
+                router.setRoute(Router.RouteType.FORWARD);
+                page = JspPageConstants.ADMIN_EDIT_AUTHOR_PAGE;
             }
         } catch (LogicException e) {
             LOGGER.error(e);
         }
 
         router.setPagePath(page);
-        router.setRoute(Router.RouteType.REDIRECT);
         return router;
     }
 
@@ -69,9 +72,8 @@ public class UpdateAuthorCommand implements Command {
             author.setSurname(surname);
             author.setName(name);
             author.setCountryBirth(country);
-        } else {
-            System.out.println(7);
         }
+
         return author;
     }
 }

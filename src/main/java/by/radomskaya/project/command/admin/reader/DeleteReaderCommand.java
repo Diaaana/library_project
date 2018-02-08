@@ -40,6 +40,8 @@ public class DeleteReaderCommand implements Command {
                 request.setAttribute(ParameterConstants.PARAM_READERS, listUsers);
                 request.setAttribute(MessageConstants.MESSAGE_DELETE_READER, MessageManager.getLocale(locale).getMessage(PropertyKeys.DELETE_READER_MESSAGE));
                 page = JspPageConstants.ADMIN_READERS_PAGE;
+            } else {
+                page = JspPageConstants.ADMIN_READERS_PAGE;
             }
         } catch (LogicException e) {
             LOGGER.error(e);

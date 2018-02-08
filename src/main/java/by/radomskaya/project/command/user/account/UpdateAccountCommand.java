@@ -39,7 +39,11 @@ public class UpdateAccountCommand implements Command {
 
             if (readerLogic.updateUser(user)) {
                 session.setAttribute(ParameterConstants.PARAM_USER_DATA, user);
+                router.setRoute(Router.RouteType.REDIRECT);
                 page = JspPageConstants.USER_ACCOUNT_PAGE;
+            } else {
+                router.setRoute(Router.RouteType.FORWARD);
+                page = JspPageConstants.USER_EDIT_ACCOUNT_PAGE;
             }
 
         } catch (LogicException | ServletException | IOException e) {
@@ -47,7 +51,6 @@ public class UpdateAccountCommand implements Command {
         }
 
         router.setPagePath(page);
-        router.setRoute(Router.RouteType.REDIRECT);
         return router;
     }
 

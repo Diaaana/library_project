@@ -48,6 +48,8 @@ public class DeleteBookCommand implements Command {
                 session.setAttribute(ParameterConstants.PARAM_NUMBER_OF_PAGES, bookLogic.getNoOfPages());
                 request.setAttribute(MessageConstants.MESSAGE_DELETE_BOOK, MessageManager.getLocale(locale).getMessage(PropertyKeys.DELETE_BOOK_MESSAGE));
                 page = JspPageConstants.ADMIN_BOOKS_PAGE;
+            } else {
+                page = JspPageConstants.ADMIN_BOOKS_PAGE;
             }
         } catch (LogicException e) {
             LOGGER.error(e);
