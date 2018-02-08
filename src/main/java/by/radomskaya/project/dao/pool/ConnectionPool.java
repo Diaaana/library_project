@@ -25,33 +25,26 @@ public class ConnectionPool {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             init();
         } catch (SQLException e) {
-            LOGGER.fatal( e + " DriverManager wasn't found.");
+            LOGGER.fatal(e + " DriverManager wasn't found.");
         }
     }
 
     private void init() throws DAOException {
         manager = new PoolManager();
         connections = new ArrayBlockingQueue<>(manager.poolSize);
-        for (int i = 0; i < manager.poolSize; i++) {
-            connections.add(manager.getConnection());
-        }
-        if (connections.isEmpty()) {
-            LOGGER.fatal( "Can not create database connection pool");
-        }
 
-        int sizeDiff = manager.poolSize - connections.size();
-        if (sizeDiff > 0) {
-            for (int i = 0; i < sizeDiff; i++) {
-                connections.add(manager.getConnection());
+        try {
+            for (int i = 0; i < manager.poolSize; i++) {
+                connections.put(manager.getConnection());
             }
-        }
-        sizeDiff = manager.poolSize - connections.size();
-        if (sizeDiff > 0 && sizeDiff < manager.poolSize / 2) {
-           LOGGER.warn( "Connection pool size is smaller than required; Attempt to continue working...");
-        } else if (sizeDiff > manager.poolSize / 2) {
-           LOGGER.fatal( "Connection pool size is too small: size - " + connections.size());
+            if (connections.isEmpty()) {
+                LOGGER.fatal("Can not create database connection pool");
+            }
+        } catch (InterruptedException e) {
+            LOGGER.error(e);
         }
     }
+
 
     public static ConnectionPool getInstance() {
         if (!flag.get()) {
@@ -75,7 +68,7 @@ public class ConnectionPool {
         try {
             connection = connections.take();
         } catch (InterruptedException e) {
-            LOGGER.error( "Can not take connection from pool: " + e);
+            LOGGER.error("Can not take connection from pool: " + e);
         }
         return connection;
     }
@@ -94,7 +87,7 @@ public class ConnectionPool {
             try {
                 connection.closeConnection();
             } catch (SQLException e) {
-                LOGGER.error( "Can not close pool: " + e);
+                LOGGER.error("Can not close pool: " + e);
             }
         }
     }

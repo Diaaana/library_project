@@ -3,7 +3,6 @@ package by.radomskaya.project.dao.pool;
 import by.radomskaya.project.constant.ParameterConstants;
 import by.radomskaya.project.constant.PropertyKeys;
 import by.radomskaya.project.exception.DAOException;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,7 +31,7 @@ public class PoolManager {
             properties.put(ParameterConstants.PARAM_USE_UNICODE, resource.getString(PropertyKeys.DB_USE_UNICODE));
 
         } catch (MissingResourceException e) {
-            LOGGER.log(Level.FATAL, "Can not find properties file " + e.getMessage());
+            LOGGER.fatal( "Can not find properties file " + e.getMessage());
             throw new RuntimeException("Can not find properties file " + e.getMessage());
         }
     }
