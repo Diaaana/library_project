@@ -25,6 +25,7 @@ public class LoginCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) throws CommandException {
         Router router = new Router();
+        String locale = request.getSession().getAttribute(ParameterConstants.PARAM_LOCALE) == null ? ParameterConstants.DEFAULT_LOCALE : request.getSession().getAttribute(ParameterConstants.PARAM_LOCALE).toString();
         String page = null;
         String roleType;
         User user;
@@ -34,21 +35,26 @@ public class LoginCommand implements Command {
             String passwordValue = request.getParameter(ParameterConstants.PARAM_PASSWORD);
 
             roleType = readerLogic.checkLoginPassword(loginValue, passwordValue);
-            user = readerLogic.getUserByLoginPassword(loginValue, passwordValue);
-            page = setRole(request, roleType, user);
+            if (roleType != null) {
+                user = readerLogic.getUserByLoginPassword(loginValue, passwordValue);
+                router.setRoute(Router.RouteType.REDIRECT);
+                page = setRole(request, roleType, user);
+            } else {
+                request.setAttribute(MessageConstants.MESSAGE_ERROR_LOGIN, MessageManager.getLocale(locale).getMessage(PropertyKeys.LOGIN_ERROR_MESSAGE));
+                router.setRoute(Router.RouteType.FORWARD);
+                page = JspPageConstants.LOGIN_PAGE;
+            }
         } catch (LogicException e) {
             LOGGER.error(e);
         }
 
         router.setPagePath(page);
-        router.setRoute(Router.RouteType.REDIRECT);
         return router;
     }
 
     private String setRole(HttpServletRequest request, String roleType, User user) {
         HttpSession session = request.getSession();
-        String locale = request.getSession().getAttribute(ParameterConstants.PARAM_LOCALE) == null ? ParameterConstants.DEFAULT_LOCALE : request.getSession().getAttribute(ParameterConstants.PARAM_LOCALE).toString();
-        String page;
+        String page = null;
         switch (roleType) {
             case RoleType.ADMIN:
                 session.setAttribute(ParameterConstants.PARAM_ROLE, RoleType.ROLE_ADMIN);
@@ -64,11 +70,6 @@ public class LoginCommand implements Command {
                 session.setAttribute(ParameterConstants.PARAM_ROLE, RoleType.ROLE_READER);
                 session.setAttribute(RoleType.ROLE_READER, user);
                 page = JspPageConstants.USER_MAIN_PAGE;
-                break;
-            default:
-                session.setAttribute(ParameterConstants.PARAM_ROLE, RoleType.ROLE_GUEST);
-                request.setAttribute(MessageConstants.MESSAGE_ERROR_LOGIN, MessageManager.getLocale(locale).getMessage(PropertyKeys.LOGIN_ERROR_MESSAGE));
-                page = JspPageConstants.LOGIN_PAGE;
                 break;
         }
 
