@@ -9,7 +9,7 @@ import by.radomskaya.project.logic.BookLogic;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-import static by.radomskaya.project.constant.PageConstant.ADMIN_ADD_BOOKS_PAGE;
+import static by.radomskaya.project.constant.JspPage.ADMIN_ADD_BOOKS_PAGE;
 
 public class GetGenresCommand implements Command {
     private BookLogic bookLogic;

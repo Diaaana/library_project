@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.reader;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
@@ -32,7 +32,7 @@ public class DeleteReaderCommand implements Command {
                 listUsers = readerLogic.getReaders();
                 request.setAttribute("readers", listUsers);
                 request.setAttribute("messageDelete", "success");
-                page = PageConstant.ADMIN_READERS_PAGE;
+                page = JspPage.ADMIN_READERS_PAGE;
             }
         } catch (DAOException e) {
             throw new CommandException(e);

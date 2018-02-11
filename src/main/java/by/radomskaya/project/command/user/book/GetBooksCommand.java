@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.user.book;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
@@ -30,7 +30,7 @@ public class GetBooksCommand implements Command {
             listBooks = bookLogic.getBooks();
             request.setAttribute("showBooks", "show");
             session.setAttribute("books", listBooks);
-            page = PageConstant.USER_BOOKS_PAGE;
+            page = JspPage.USER_BOOKS_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }

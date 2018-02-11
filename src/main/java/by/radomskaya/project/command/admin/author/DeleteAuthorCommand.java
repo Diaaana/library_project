@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.author;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Author;
@@ -32,7 +32,7 @@ public class DeleteAuthorCommand implements Command {
                 listAuthors = authorLogic.getAuthors();
                 request.setAttribute("authors", listAuthors);
                 request.setAttribute("messageDelete", "success");
-                page = PageConstant.ADMIN_AUTHORS_PAGE;
+                page = JspPage.ADMIN_AUTHORS_PAGE;
             }
 
         } catch (DAOException e) {

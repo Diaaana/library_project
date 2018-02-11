@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.user;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.constant.RoleType;
 import by.radomskaya.project.controller.Router;
@@ -10,6 +10,7 @@ import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.LibrarianLogic;
 import by.radomskaya.project.logic.ReaderLogic;
+import by.radomskaya.project.validation.InputParamValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -43,17 +44,17 @@ public class RegistrationCommand implements Command {
                     case RoleType.LIBRARIAN:
                         librarianLogic.addLibrarian(user);
                         request.setAttribute("messageRegLibrarian", "success");
-                        page = PageConstant.START_PAGE;
+                        page = JspPage.START_PAGE;
                         break;
                     case RoleType.READER:
                         readerLogic.registrationReader(user);
                         request.setAttribute("messageRegUser", "success");
-                        page = PageConstant.START_PAGE;
+                        page = JspPage.START_PAGE;
                         break;
                 }
             } else {
                 request.setAttribute("messageSameLogin", "true");
-                page = PageConstant.REGISTRATION_PAGE;
+                page = JspPage.REGISTRATION_PAGE;
             }
 
         } catch (ServletException | DAOException | IOException e) {
@@ -68,18 +69,21 @@ public class RegistrationCommand implements Command {
 
     private User setUserFromRequest(HttpServletRequest request) throws IOException, ServletException {
         User user = new User();
-        user.setNumberTicket(generateNumberTicket());
-        user.setSurname(request.getParameter(RequestParameter.PARAM_SURNAME));
-        user.setName(request.getParameter(RequestParameter.PARAM_NAME));
-        user.setMiddleName(request.getParameter(RequestParameter.PARAM_MIDDLE_NAME));
-        user.setAge(Integer.parseInt(request.getParameter(RequestParameter.PARAM_AGE)));
-        user.setPhoneNumber(request.getParameter(RequestParameter.PARAM_PHONE));
-        user.setMail(request.getParameter(RequestParameter.PARAM_MAIL));
-        user.setLogin(request.getParameter(RequestParameter.PARAM_LOGIN));
-        user.setPassword(request.getParameter(RequestParameter.PARAM_PASSWORD));
+        int numberTicket = generateNumberTicket();
+        String surname = request.getParameter(RequestParameter.PARAM_SURNAME);
+        String name = request.getParameter(RequestParameter.PARAM_NAME);
+        String middleName = request.getParameter(RequestParameter.PARAM_MIDDLE_NAME);
+        int age = Integer.parseInt(request.getParameter(RequestParameter.PARAM_AGE));
+        String phoneNumber = request.getParameter(RequestParameter.PARAM_PHONE);
+        String mail = request.getParameter(RequestParameter.PARAM_MAIL);
+        String login = request.getParameter(RequestParameter.PARAM_LOGIN);
+        String password = request.getParameter(RequestParameter.PARAM_PASSWORD);
         Part filePart = request.getPart(RequestParameter.PARAM_PROFILE_PHOTO);
         String imageName = getImageName(filePart);
-        user.setProfilePhoto(imageName);
+
+        if (InputParamValidator.isValidateUserData(surname, name, middleName, age, phoneNumber, mail, login, password)) {
+            user = new User(numberTicket, surname, name, middleName, age, phoneNumber, mail, login, password, imageName);
+        }
         return user;
     }
 

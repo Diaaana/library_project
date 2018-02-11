@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.user.account;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
@@ -31,7 +31,7 @@ public class AccountCommand implements Command {
             user = readerLogic.getReaderByTicket(numberTicket);
 
             session.setAttribute("userData", user);
-            page = PageConstant.USER_ACCOUNT_PAGE;
+            page = JspPage.USER_ACCOUNT_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }

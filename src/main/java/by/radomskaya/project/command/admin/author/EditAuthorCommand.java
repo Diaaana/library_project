@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.author;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Author;
@@ -29,7 +29,7 @@ public class EditAuthorCommand implements Command {
 
             author = authorLogic.getAuthorById(idAuthor);
             request.setAttribute("author", author);
-            page = PageConstant.ADMIN_EDIT_AUTHOR_PAGE;
+            page = JspPage.ADMIN_EDIT_AUTHOR_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }

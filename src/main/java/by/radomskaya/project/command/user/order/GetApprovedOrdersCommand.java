@@ -11,8 +11,8 @@ import by.radomskaya.project.logic.OrderLogic;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static by.radomskaya.project.constant.PageConstant.USER_APPROVED_ORDERS;
-import static by.radomskaya.project.constant.PageConstant.USER_ORDERS_CART_PAGE;
+import static by.radomskaya.project.constant.JspPage.USER_APPROVED_ORDERS;
+import static by.radomskaya.project.constant.JspPage.USER_ORDERS_CART_PAGE;
 
 public class GetApprovedOrdersCommand implements Command {
     private OrderLogic orderLogic;

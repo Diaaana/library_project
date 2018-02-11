@@ -10,7 +10,7 @@ import by.radomskaya.project.logic.BookLogic;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static by.radomskaya.project.constant.PageConstant.USER_PERSONAL_BOOK_PAGE;
+import static by.radomskaya.project.constant.JspPage.USER_PERSONAL_BOOK_PAGE;
 
 public class GetPersonalBookCommand implements Command {
     private BookLogic bookLogic;

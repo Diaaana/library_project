@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.user.order;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
@@ -38,7 +38,7 @@ public class AddToCartCommand implements Command {
             orderLogic.addToCart(idUser, idBook, idAuthor);
             listBooks = bookLogic.getBooks();
             session.setAttribute("books", listBooks);
-            page = PageConstant.USER_BOOKS_PAGE;
+            page = JspPage.USER_BOOKS_PAGE;
 
         } catch (DAOException e) {
             throw new CommandException(e);

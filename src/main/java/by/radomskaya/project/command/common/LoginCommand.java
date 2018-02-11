@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.common;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.constant.RoleType;
 import by.radomskaya.project.controller.Router;
@@ -49,22 +49,22 @@ public class LoginCommand implements Command {
             case RoleType.ADMIN:
                 session.setAttribute("role", "admin");
                 request.setAttribute("adminLogin", user.getLogin());
-                page = PageConstant.ADMIN_MAIN_PAGE;
+                page = JspPage.ADMIN_MAIN_PAGE;
                 break;
             case RoleType.LIBRARIAN:
                 session.setAttribute("role", "librarian");
                 request.setAttribute("librarianLogin", user.getLogin());
-                page = PageConstant.LIBRARIAN_MAIN_PAGE;
+                page = JspPage.LIBRARIAN_MAIN_PAGE;
                 break;
             case RoleType.READER:
                 session.setAttribute("role", "reader");
                 session.setAttribute("reader", user);
-                page = PageConstant.USER_MAIN_PAGE;
+                page = JspPage.USER_MAIN_PAGE;
                 break;
             default:
                 session.setAttribute("role", null);
                 request.setAttribute("messageLogin", "error");
-                page = PageConstant.START_PAGE;
+                page = JspPage.START_PAGE;
                 break;
         }
 

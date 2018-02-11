@@ -20,6 +20,9 @@
 <body class="body">
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
 
+<c:set var="currentPage" scope="session" value="${sessionScope.currentPage}"/>
+<c:set var="noOfPages" scope="request" value="${requestScope.noOfPages}"/>
+
 <c:if test="${sessionScope.messageAdd == 'success'}">
     <div class="alert alert-success">
         <a href="#" class="close" data-dismiss="alert">×</a>
@@ -91,6 +94,34 @@
             </tbody>
         </table>
     </form>
+
+        <ul class="pagination">
+            <c:if test="${currentPage gt 1}">
+                <li>
+                    <a class="page-link" href="/Controller?command=show_books&page=${currentPage - 1}"> ←</a>
+                </li>
+            </c:if>
+            <c:forEach begin="1" end="${noOfPages}" var="i">
+                <c:choose>
+                    <c:when test="${currentPage eq i}">
+                        <li>
+                            <a class="page-link">${i}</a>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <li>
+                            <a class="page-link" href="/Controller?command=show_books&page=${i}">${i}</a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+            <c:if test="${currentPage lt noOfPages}">
+                <li>
+                    <a class="page-link" href="/Controller?command=show_books&page=${currentPage + 1}"> →</a>
+                </li>
+            </c:if>
+        </ul>
+
 </div>
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 </body>

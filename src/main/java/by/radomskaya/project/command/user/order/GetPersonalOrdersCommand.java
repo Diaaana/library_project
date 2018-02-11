@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.user.order;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Order;
@@ -31,10 +31,10 @@ public class GetPersonalOrdersCommand implements Command {
             if (orderLogic.checkPersonalOrders(idUser)) {
                 listOrders = orderLogic.getPersonalOrders(idUser);
                 request.setAttribute("orders", listOrders);
-                page = PageConstant.USER_ORDERS_CART_PAGE;
+                page = JspPage.USER_ORDERS_CART_PAGE;
             } else {
                 request.setAttribute("messageOrders", "empty");
-                page = PageConstant.USER_ORDERS_CART_PAGE;
+                page = JspPage.USER_ORDERS_CART_PAGE;
             }
         } catch (DAOException e) {
             throw new CommandException(e);

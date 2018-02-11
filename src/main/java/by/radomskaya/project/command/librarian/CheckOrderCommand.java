@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.librarian;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
@@ -33,7 +33,7 @@ public class CheckOrderCommand implements Command {
         order.setBook(book);
 
         request.setAttribute("order", order);
-        page = PageConstant.LIBRARIAN_TAKE_ORDER_PAGE;
+        page = JspPage.LIBRARIAN_TAKE_ORDER_PAGE;
 
         router.setPagePath(page);
         router.setRoute(Router.RouteType.FORWARD);

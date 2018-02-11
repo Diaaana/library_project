@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.book;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
@@ -32,7 +32,7 @@ public class DeleteBookCommand implements Command {
                 listBooks = bookLogic.getBooks();
                 request.setAttribute("books", listBooks);
                 request.setAttribute("messageDelete", "success");
-                page = PageConstant.ADMIN_BOOKS_PAGE;
+                page = JspPage.ADMIN_BOOKS_PAGE;
             }
         } catch (DAOException e) {
             throw new CommandException(e);

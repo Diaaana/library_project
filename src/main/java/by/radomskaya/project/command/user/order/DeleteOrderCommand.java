@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.user.order;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Order;
@@ -34,7 +34,7 @@ public class DeleteOrderCommand implements Command {
 
             request.setAttribute("orders", listOrders);
             request.setAttribute("messageDelete", "success");
-            page = PageConstant.USER_ORDERS_CART_PAGE;
+            page = JspPage.USER_ORDERS_CART_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }

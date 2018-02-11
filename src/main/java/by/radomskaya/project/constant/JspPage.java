@@ -1,6 +1,6 @@
 package by.radomskaya.project.constant;
 
-public class PageConstant {
+public class JspPage {
     public final static String INDEX_PAGE = "/index.jsp";
     public final static String START_PAGE = "/jsp/start.jsp";
     public final static String FORGOT_PASSWORD_PAGE = "/jsp/forgotPassword.jsp";

@@ -7,7 +7,7 @@
 <head>
 </head>
 <body class="body">
-<footer>
+<footer class="footer">
     <p><fmt:message key="label.footer" bundle="${local}"/></p>
 </footer>
 </body>

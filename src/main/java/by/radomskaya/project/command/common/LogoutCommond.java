@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.common;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.exception.CommandException;
 
@@ -16,7 +16,7 @@ public class LogoutCommond implements Command {
         Router router = new Router();
         HttpSession session = request.getSession(true);
         session.setAttribute("role", null);
-        page = PageConstant.START_PAGE;
+        page = JspPage.START_PAGE;
         router.setPagePath(page);
         router.setRoute(Router.RouteType.FORWARD);
         return router;

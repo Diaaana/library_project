@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.user.book;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
@@ -31,10 +31,10 @@ public class FindBookByTittleCommand implements Command {
 
             if (listFoundBooksByTittle.isEmpty()) {
                 request.setAttribute("messageFindBook", "empty");
-                page = PageConstant.USER_FIND_BOOKS_PAGE;
+                page = JspPage.USER_FIND_BOOKS_PAGE;
             } else {
                 request.setAttribute("foundBooks", listFoundBooksByTittle);
-                page = PageConstant.USER_FIND_BOOKS_PAGE;
+                page = JspPage.USER_FIND_BOOKS_PAGE;
             }
         } catch (DAOException e) {
             throw new CommandException(e);

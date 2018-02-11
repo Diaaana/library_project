@@ -1,6 +1,6 @@
 package by.radomskaya.project.controller;
 
-import static by.radomskaya.project.constant.PageConstant.START_PAGE;
+import static by.radomskaya.project.constant.JspPage.START_PAGE;
 
 public class Router {
 

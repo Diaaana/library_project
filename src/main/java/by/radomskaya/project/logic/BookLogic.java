@@ -10,11 +10,29 @@ import java.util.List;
 import java.util.Map;
 
 public class BookLogic {
+    private final static int QUANTITY_DATA_ON_PAGE = 5;
     private BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
     private GenreDAO genreDAO = DAOFactory.getInstance().getGenreDAO();
 
     public List<Book> getBooks() throws DAOException {
         return bookDAO.getBooksAndAuthors();
+    }
+
+    public List<Book> getBooksWithPages(int noPage) throws DAOException {
+        List<Book> listBooks = getBooks();
+        int step = (noPage - 1) * QUANTITY_DATA_ON_PAGE;
+        if (step + QUANTITY_DATA_ON_PAGE >= listBooks.size()) {
+            listBooks = listBooks.subList(step, listBooks.size());
+        } else {
+            listBooks = listBooks.subList(step, step + QUANTITY_DATA_ON_PAGE);
+        }
+        return listBooks;
+    }
+
+    public int getNoOfPages() throws DAOException {
+        int noOfPages;
+        noOfPages = bookDAO.countBooks();
+        return (int) Math.ceil(noOfPages * 1.0 / QUANTITY_DATA_ON_PAGE);
     }
 
     public Book getBookById(int id) throws DAOException {
@@ -60,5 +78,7 @@ public class BookLogic {
             bookDAO.updateBookAndGenre(genres[i], idBook);
         }
     }
+
+
 
 }

@@ -1,13 +1,14 @@
 package by.radomskaya.project.command.admin.author;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Author;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.AuthorLogic;
+import by.radomskaya.project.validation.InputParamValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -35,7 +36,7 @@ public class UpdateAuthorCommand implements Command {
                 listAuthors = authorLogic.getAuthors();
                 session.setAttribute("authors", listAuthors);
                 request.setAttribute("messageEdit", "success");
-                page = PageConstant.ADMIN_AUTHORS_PAGE;
+                page = JspPage.ADMIN_AUTHORS_PAGE;
             }
         } catch (DAOException e) {
             throw new CommandException(e);
@@ -48,16 +49,24 @@ public class UpdateAuthorCommand implements Command {
 
     private Author setAuthorFromRequest(HttpServletRequest request) {
         Author author = new Author();
-        author.setId(Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_AUTHOR)));
-        author.setSurname(request.getParameter(RequestParameter.PARAM_AUTHOR_SURNAME));
-        author.setName(request.getParameter(RequestParameter.PARAM_AUTHOR_NAME));
+        String surname = request.getParameter(RequestParameter.PARAM_AUTHOR_SURNAME);
+        String name = request.getParameter(RequestParameter.PARAM_AUTHOR_NAME);
         String middleName = request.getParameter(RequestParameter.PARAM_AUTHOR_MIDDLE_NAME);
+        String country = request.getParameter(RequestParameter.PARAM_AUTHOR_COUNTRY);
         if (middleName.equals(RequestParameter.PARAM_AUTHOR_EMPTY_MIDDLE_NAME)) {
-            author.setMiddleName(RequestParameter.PARAM_AUTHOR_NO_MIDDLE_NAME);
-        } else {
+            middleName = RequestParameter.PARAM_AUTHOR_NO_MIDDLE_NAME;
             author.setMiddleName(middleName);
+        } else {
+            if (InputParamValidator.isValidateMiddleName(middleName)) {
+                author.setMiddleName(middleName);
+            }
         }
-        author.setCountryBirth(request.getParameter(RequestParameter.PARAM_AUTHOR_COUNTRY));
+
+        if (InputParamValidator.isValidateAuthorData(surname, name, country)) {
+            author.setSurname(surname);
+            author.setName(name);
+            author.setCountryBirth(country);
+        }
         return author;
     }
 }

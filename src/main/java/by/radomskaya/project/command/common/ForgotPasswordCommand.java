@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.common;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.exception.CommandException;
@@ -31,14 +31,14 @@ public class ForgotPasswordCommand implements Command {
                 if (readerLogic.checkLoginAndTicket(login, numberTicket)) {
                     readerLogic.forgotPassword(numberTicket, login, newPassword);
                     request.setAttribute("messageChangePassword", "success");
-                    page = PageConstant.START_PAGE;
+                    page = JspPage.START_PAGE;
                 } else {
                     request.setAttribute("messageChangePassword", "error");
-                    page = PageConstant.FORGOT_PASSWORD_PAGE;
+                    page = JspPage.FORGOT_PASSWORD_PAGE;
                 }
             } else {
                 request.setAttribute("messageRepeatPassword", "error");
-                page = PageConstant.FORGOT_PASSWORD_PAGE;
+                page = JspPage.FORGOT_PASSWORD_PAGE;
             }
         } catch (DAOException e) {
             throw new CommandException(e);

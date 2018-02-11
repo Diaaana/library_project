@@ -91,6 +91,18 @@ footer {
     text-decoration: none;
 }
 
+.a-edit-user {
+    position: relative;
+    left: 550px;
+    color: #a6e5e2;
+    font-size: 30px;
+}
+
+.a-edit-user:hover, .a-edit-user:focus {
+    color: #ffc3a0;
+    text-decoration: none;
+}
+
 .a-forgot-password {
     position: relative;
     left: 300px;
@@ -195,10 +207,7 @@ footer {
 
 .footer {
     position: absolute;
-    top: 1000px;
-    padding-top: 19px;
-    font-size: 30px;
-    color: #5a5050;
+    bottom: -50px;
 }
 
 .footer-button {
@@ -343,4 +352,11 @@ footer {
     background: white;
     cursor: inherit;
     display: block;
+}
+
+.data-reader {
+    position: relative;
+    top: 15px;
+    left: 330px;
+    font-size: 50px;
 }

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static by.radomskaya.project.constant.PageConstant.START_PAGE;
+import static by.radomskaya.project.constant.JspPage.START_PAGE;
 
 @WebFilter( urlPatterns = { "/jsp/user/main.jsp" },initParams = { @WebInitParam(name = "START_PATH", value = "/jsp/start.jsp") })
 public class SecurityFilter implements Filter {

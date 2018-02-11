@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.librarian;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
@@ -32,7 +32,7 @@ public class DeleteLibrarianCommand implements Command {
                 listLibrarians = librarianLogic.getLibrarians();
                 request.setAttribute("librarians", listLibrarians);
                 request.setAttribute("messageDelete", "success");
-                page = PageConstant.ADMIN_LIBRARIANS_PAGE;
+                page = JspPage.ADMIN_LIBRARIANS_PAGE;
             }
         } catch (DAOException e) {
             throw new CommandException(e);

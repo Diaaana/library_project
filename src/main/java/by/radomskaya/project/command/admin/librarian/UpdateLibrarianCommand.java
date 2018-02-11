@@ -1,13 +1,14 @@
 package by.radomskaya.project.command.admin.librarian;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.LibrarianLogic;
+import by.radomskaya.project.validation.InputParamValidator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -35,7 +36,7 @@ public class UpdateLibrarianCommand implements Command {
                 listLibrarians = librarianLogic.getLibrarians();
                 session.setAttribute("librarians", listLibrarians);
                 request.setAttribute("messageUpdate", "success");
-                page = PageConstant.ADMIN_LIBRARIANS_PAGE;
+                page = JspPage.ADMIN_LIBRARIANS_PAGE;
             }
 
         } catch (DAOException e) {
@@ -49,11 +50,16 @@ public class UpdateLibrarianCommand implements Command {
 
     private User setLibrarianFromRequest(HttpServletRequest request) {
         User librarian = new User();
-        librarian.setNumberTicket(Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_LIBRARIAN)));
-        librarian.setSurname(request.getParameter(RequestParameter.PARAM_SURNAME));
-        librarian.setName(request.getParameter(RequestParameter.PARAM_NAME));
-        librarian.setMiddleName(request.getParameter(RequestParameter.PARAM_MIDDLE_NAME));
-        librarian.setLogin(request.getParameter(RequestParameter.PARAM_LOGIN));
+        int id = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_LIBRARIAN));
+        String surname = request.getParameter(RequestParameter.PARAM_SURNAME);
+        String name = request.getParameter(RequestParameter.PARAM_NAME);
+        String middleName = request.getParameter(RequestParameter.PARAM_MIDDLE_NAME);
+        String login = request.getParameter(RequestParameter.PARAM_LOGIN);
+
+        if (InputParamValidator.isValidateLibrarianData(surname, name, middleName, login)) {
+            librarian = new User(id, surname, name, middleName, login);
+        }
+
         return librarian;
     }
 }

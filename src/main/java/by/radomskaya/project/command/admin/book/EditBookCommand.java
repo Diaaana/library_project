@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.book;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Book;
@@ -34,7 +34,7 @@ public class EditBookCommand implements Command {
             mapGenres = bookLogic.getAllGenres();
             request.setAttribute("genres", mapGenres);
 
-            page = PageConstant.ADMIN_EDIT_BOOK_PAGE;
+            page = JspPage.ADMIN_EDIT_BOOK_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }

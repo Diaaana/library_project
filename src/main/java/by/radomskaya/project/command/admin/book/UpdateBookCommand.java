@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.book;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.constant.RequestParameter;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.Author;
@@ -9,6 +9,7 @@ import by.radomskaya.project.entity.Book;
 import by.radomskaya.project.exception.CommandException;
 import by.radomskaya.project.exception.DAOException;
 import by.radomskaya.project.logic.BookLogic;
+import by.radomskaya.project.validation.InputParamValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +45,7 @@ public class UpdateBookCommand implements Command {
                 bookLogic.updateBookAndGenre(genres, idBook);
                 listBooks = bookLogic.getBooks();
                 session.setAttribute("books", listBooks);
-                page = PageConstant.ADMIN_BOOKS_PAGE;
+                page = JspPage.ADMIN_BOOKS_PAGE;
             }
 
         } catch (DAOException | ServletException | IOException e) {
@@ -58,14 +59,15 @@ public class UpdateBookCommand implements Command {
 
     private Book setBookFromRequest(HttpServletRequest request) throws IOException, ServletException {
         Book book = new Book();
-        book.setId(Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_BOOK)));
-        book.setIsbn(request.getParameter(RequestParameter.PARAM_ISBN));
-        book.setTittle(request.getParameter(RequestParameter.PARAM_TITTLE));
-        book.setAuthor(setAuthorFromRequest(request));
-        book.setDateEdition(Date.valueOf(request.getParameter(RequestParameter.PARAM_DATA_EDITION)));
-        book.setPlaceEdition(request.getParameter(RequestParameter.PARAM_PLACE_EDITION));
-        book.setPublisher(request.getParameter(RequestParameter.PARAM_PUBLISHER));
-        book.setNumberCopies(Integer.parseInt(request.getParameter(RequestParameter.PARAM_NUMBER_COPIES)));
+        Author author;
+        int id = Integer.parseInt(request.getParameter(RequestParameter.PARAM_ID_BOOK));
+        String isbn = request.getParameter(RequestParameter.PARAM_ISBN);
+        String tittle = request.getParameter(RequestParameter.PARAM_TITTLE);
+        author = setAuthorFromRequest(request);
+        Date dateEdition = Date.valueOf(request.getParameter(RequestParameter.PARAM_DATA_EDITION));
+        String placeEdition = request.getParameter(RequestParameter.PARAM_PLACE_EDITION);
+        String publisher = request.getParameter(RequestParameter.PARAM_PUBLISHER);
+        int numberCopies = Integer.parseInt(request.getParameter(RequestParameter.PARAM_NUMBER_COPIES));
         Part filePart = request.getPart(RequestParameter.PARAM_IMAGE);
         String imageName = getImageName(filePart);
         if (imageName.equals(RequestParameter.PARAM_EMPTY_IMAGE)) {
@@ -73,20 +75,34 @@ public class UpdateBookCommand implements Command {
         } else {
             book.setImage(imageName);
         }
+
+        if (InputParamValidator.isValidateBookData(isbn, tittle, dateEdition, placeEdition, publisher, numberCopies)) {
+            book = new Book(id, isbn, tittle, author, dateEdition, placeEdition, publisher, numberCopies);
+        }
+
         return book;
     }
 
     private Author setAuthorFromRequest(HttpServletRequest request) {
         Author author = new Author();
-        author.setSurname(request.getParameter(RequestParameter.PARAM_AUTHOR_SURNAME));
-        author.setName(request.getParameter(RequestParameter.PARAM_AUTHOR_NAME));
+        String surname = request.getParameter(RequestParameter.PARAM_AUTHOR_SURNAME);
+        String name = request.getParameter(RequestParameter.PARAM_AUTHOR_NAME);
         String middleName = request.getParameter(RequestParameter.PARAM_AUTHOR_MIDDLE_NAME);
+        String country = request.getParameter(RequestParameter.PARAM_AUTHOR_COUNTRY);
         if (middleName.equals(RequestParameter.PARAM_AUTHOR_EMPTY_MIDDLE_NAME)) {
-            author.setMiddleName(RequestParameter.PARAM_AUTHOR_NO_MIDDLE_NAME);
-        } else {
+            middleName = RequestParameter.PARAM_AUTHOR_NO_MIDDLE_NAME;
             author.setMiddleName(middleName);
+        } else {
+            if (InputParamValidator.isValidateMiddleName(middleName)) {
+                author.setMiddleName(middleName);
+            }
         }
-        author.setCountryBirth(request.getParameter(RequestParameter.PARAM_AUTHOR_COUNTRY));
+
+        if (InputParamValidator.isValidateAuthorData(surname, name, country)) {
+            author.setSurname(surname);
+            author.setName(name);
+            author.setCountryBirth(country);
+        }
         return author;
     }
 

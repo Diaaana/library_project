@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.reader;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
@@ -28,7 +28,7 @@ public class ShowReadersCommand implements Command {
             listUser = readerLogic.getReaders();
 
             request.setAttribute("readers", listUser);
-            page = PageConstant.ADMIN_READERS_PAGE;
+            page = JspPage.ADMIN_READERS_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }

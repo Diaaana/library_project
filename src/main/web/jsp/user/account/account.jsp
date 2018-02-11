@@ -43,7 +43,7 @@
 
     <a href="${pageContext.request.contextPath}/jsp/user/account/changePassword.jsp" class="a-function"><fmt:message key="label.changePassword" bundle="${local}"/>
         <span class="glyphicon glyphicon-pencil"></span></a>
-    <a href="/Controller?number_ticket=${reader.numberTicket}&command=edit_account" class="a-function"><fmt:message key="label.edit" bundle="${local}"/>
+    <a href="/Controller?number_ticket=${reader.numberTicket}&command=edit_account" class="a-edit-user"><fmt:message key="label.edit" bundle="${local}"/>
         <span class="glyphicon glyphicon-pencil"></span></a>
 
     <form action="/Controller" method="post">
@@ -54,18 +54,16 @@
                 <img src="/resource/images/reader/${reader.profilePhoto}" alt="${reader.login}" class="profile-photo">
             </div>
 
+            <p class="data-reader">${reader.surname} ${reader.name} ${reader.middleName}</p>
+
             <div class="col-md-4">
                 <p class="parameter">${numberTicket}: </p><h2 class="h-parameter">${reader.numberTicket}</h2>
-                <p class="parameter">${surname}: </p><h2 class="h-parameter">${reader.surname}</h2>
-                <p class="parameter">${name}: </p><h2 class="h-parameter">${reader.name}</h2>
-                <p class="parameter">${middleName}: </p><h2 class="h-parameter">${reader.middleName}</h2>
+                <p class="parameter">${age}: </p><h2 class="h-parameter">${reader.age}</h2>
             </div>
             <div class="col-md-4 col-md-offset-4">
-                <p class="parameter">${age}: </p><h2 class="h-parameter">${reader.age}</h2>
                 <p class="parameter">${phone}: </p><h2 class="h-parameter">${reader.phoneNumber}</h2>
                 <p class="parameter">${mail}: </p><h2 class="h-parameter">${reader.mail}</h2>
                 <p class="parameter">${login}: </p><h2 class="h-parameter">${reader.login}</h2>
-                <p class="parameter">${password}: </p><h2 class="h-parameter">${reader.password}</h2>
             </div>
         </c:if>
     </form>

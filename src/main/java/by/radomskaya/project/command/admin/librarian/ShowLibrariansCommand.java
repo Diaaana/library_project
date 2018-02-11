@@ -1,7 +1,7 @@
 package by.radomskaya.project.command.admin.librarian;
 
 import by.radomskaya.project.command.Command;
-import by.radomskaya.project.constant.PageConstant;
+import by.radomskaya.project.constant.JspPage;
 import by.radomskaya.project.controller.Router;
 import by.radomskaya.project.entity.User;
 import by.radomskaya.project.exception.CommandException;
@@ -28,7 +28,7 @@ public class ShowLibrariansCommand implements Command {
             listLibrarians = librarianLogic.getLibrarians();
 
             request.setAttribute("librarians", listLibrarians);
-            page = PageConstant.ADMIN_LIBRARIANS_PAGE;
+            page = JspPage.ADMIN_LIBRARIANS_PAGE;
         } catch (DAOException e) {
             throw new CommandException(e);
         }

@@ -19,7 +19,7 @@ function checkLibrarians() {
     }
 
     if (!(/^[A-ZА-Я][a-zа-я\-]+$/.test(document.form.name.value))) {
-        alert("Имя должно содержать только буквы и начинаться с заглавной буквы!");
+        alert("Имя может содержать только буквы и символ "-" и начинаться с заглавной буквы!");
         return false;
     }
 
@@ -32,7 +32,7 @@ function checkLibrarians() {
         alert("Логин должнен содержать больше 5 символов!");
         return false;
     } else if (!(/^[A-Za-z][A-Za-z0-9_]+$/.test(document.form.login.value))) {
-        alert("Логин должен содержать только латинские буквы!");
+        alert("Логин должен содержать только латинские буквы и цифры!");
         return false;
     }
 }

@@ -10,8 +10,8 @@ import by.radomskaya.project.logic.ReaderLogic;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import static by.radomskaya.project.constant.PageConstant.USER_ACCOUNT_PAGE;
-import static by.radomskaya.project.constant.PageConstant.USER_CHANGE_PASSWORD_PAGE;
+import static by.radomskaya.project.constant.JspPage.USER_ACCOUNT_PAGE;
+import static by.radomskaya.project.constant.JspPage.USER_CHANGE_PASSWORD_PAGE;
 
 public class ChangePasswordCommand implements Command {
     private ReaderLogic readerLogic;

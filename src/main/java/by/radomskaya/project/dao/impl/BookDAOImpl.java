@@ -67,6 +67,7 @@ public class BookDAOImpl implements BookDAO {
     private final static String GET_GENRE_BY_ID_BOOK = "SELECT name_genre FROM library.books " +
             "JOIN library.book_genre ON books.id_book = book_genre.id_book " +
             "JOIN library.genres ON book_genre.id_genre = genres.id_genre WHERE books.id_book = ?;";
+    private final static String COUNT_BOOKS = "SELECT COUNT(1) FROM library.books;";
 
     @Override
     public List<Book> getBooksAndAuthors() throws DAOException {
@@ -331,6 +332,35 @@ public class BookDAOImpl implements BookDAO {
             return listBooks;
         } catch (SQLException e) {
             throw new DAOException("Error found book by author" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+    }
+
+    @Override
+    public int countBooks() throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        Statement statement = null;
+        ResultSet resultSet;
+        int countBooks = 0;
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(COUNT_BOOKS);
+            if (resultSet.next()) {
+                countBooks = resultSet.getInt(1);
+            }
+            return countBooks;
+        } catch (SQLException e) {
+            throw new DAOException("Error to count books" + e);
         } finally {
             try {
                 statement.close();
