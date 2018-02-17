@@ -5,17 +5,9 @@
          version="3.1">
 
 
-    <!--<error-page>
+    <error-page>
         <location>/jsp/error/error.jsp</location>
-    </error-page>-->
-    <!--<servlet>
-        <servlet-name>Controller</servlet-name>
-        <servlet-class>by.radomskaya.project.controller.Controller</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Controller</servlet-name>
-        <url-pattern>/Controller</url-pattern>
-    </servlet-mapping>-->
+    </error-page>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>

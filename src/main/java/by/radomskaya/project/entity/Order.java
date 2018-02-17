@@ -102,6 +102,7 @@ public class Order extends Entity {
     @Override
     public String toString() {
         return "Order{" +
+                "id=" + getId() +
                 "user=" + user +
                 ", book=" + book +
                 ", author=" + author +

@@ -10,12 +10,12 @@ function checkAuthor() {
         return false;
     }
 
-    if (!(/^[A-ZА-Я][a-zа-я]+$/.test(document.form.surname.value))) {
+    if (!(/^[A-ZА-Я][a-zа-я]+('[a-zа-я]+|-[A-ZА-Я][a-zа-я]+)?$/.test(document.form.surname.value))) {
         alert("Фамилия должна содержать только буквы и начинаться с заглавной буквы!");
         return false;
     }
 
-    if (!(/^[A-ZА-Я][a-zа-я\-]+$/.test(document.form.name.value))) {
+    if (!(/^[A-ZА-Я][a-zа-я]+('[a-zа-я]+|-[A-ZА-Я][a-zа-я]+)?$/.test(document.form.name.value))) {
         alert("Имя должно содержать только буквы и начинаться с заглавной буквы!");
         return false;
     }
@@ -27,7 +27,7 @@ function checkAuthor() {
         }
     }
 
-    if (!(/^[A-ZА-Я][a-zа-я\-\s]+$/.test(document.form.country.value))) {
+    if (!(/^[A-ZА-Я][a-zа-я]+('[a-zа-я]+|-|\s[A-ZА-Я][a-zа-я]+)?$/.test(document.form.country.value))) {
         alert("Страна должна содержать только буквы и начинаться с заглавной буквы!");
         return false;
     }

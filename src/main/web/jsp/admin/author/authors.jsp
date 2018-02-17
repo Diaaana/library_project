@@ -35,36 +35,44 @@
 
 <div class="container">
 
-<form action="Controller" method="post">
-    <table class="table table-hover">
+    <form action="Controller" method="post">
+        <table class="table table-hover table-condensed">
 
-        <thead>
-        <tr>
-            <th><fmt:message key="label.surnameAuthor" bundle="${local}"/></th>
-            <th><fmt:message key="label.nameAuthor" bundle="${local}"/></th>
-            <th><fmt:message key="label.middleNameAuthor" bundle="${local}"/></th>
-            <th><fmt:message key="label.country" bundle="${local}"/></th>
-            <th></th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <c:forEach var="author" items="${authors}">
+            <thead>
             <tr>
-                <td>${author.surname}</td>
-                <td>${author.name}</td>
-                <td>${author.middleName}</td>
-                <td>${author.countryBirth}</td>
-                <td>
-                    <a class="a-function" href="/Controller?id_author=${author.id}&command=delete_author"><fmt:message key="label.delete" bundle="${local}"/> <span class="glyphicon glyphicon-trash"></span></a>
-                    <a class="a-function" href="/Controller?id_author=${author.id}&command=edit_author"><fmt:message key="label.edit" bundle="${local}"/> <span class="glyphicon glyphicon-pencil"></span></a>
-                </td>
+                <th><fmt:message key="label.surnameAuthor" bundle="${local}"/></th>
+                <th><fmt:message key="label.nameAuthor" bundle="${local}"/></th>
+                <th><fmt:message key="label.middleNameAuthor" bundle="${local}"/></th>
+                <th><fmt:message key="label.country" bundle="${local}"/></th>
+                <th></th>
             </tr>
-        </c:forEach>
-        </tbody>
+            </thead>
 
-    </table>
-</form>
+            <tbody>
+            <c:forEach var="author" items="${authors}">
+                <tr>
+                    <td>${author.surname}</td>
+                    <td>${author.name}</td>
+                    <td>${author.middleName}</td>
+                    <td>${author.countryBirth}</td>
+                    <td>
+                        <div class="functions">
+                            <a class="a-function"
+                               href="/Controller?id_author=${author.id}&command=delete_author"><fmt:message
+                                    key="label.delete" bundle="${local}"/> <span
+                                    class="glyphicon glyphicon-trash"></span></a>
+                            <a class="a-function"
+                               href="/Controller?id_author=${author.id}&command=edit_author"><fmt:message
+                                    key="label.edit" bundle="${local}"/> <span
+                                    class="glyphicon glyphicon-pencil"></span></a>
+                        </div>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+
+        </table>
+    </form>
 </div>
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 </body>

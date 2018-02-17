@@ -164,6 +164,7 @@ public class Book extends Entity {
     @Override
     public String toString() {
         return "Book{" +
+                "id=" + getId() +
                 ", isbn='" + isbn + '\'' +
                 ", tittle='" + tittle + '\'' +
                 ", author=" + author +

@@ -39,7 +39,7 @@
 
     <form role="form" name="form" action="/Controller" method="post" onsubmit="return checkAddBook();"
           enctype="multipart/form-data"
-          class="form-book">
+          class="form-param">
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterIsbn" bundle="${local}"/></label>
             <input type="text" name="isbn" class="form-control" placeholder="${ISBN}">

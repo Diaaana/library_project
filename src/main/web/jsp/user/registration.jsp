@@ -41,7 +41,7 @@
     </c:if>
 
     <form role="form" action="/Controller" name="form" onsubmit="return checkRegistration();" method="post"
-          enctype="multipart/form-data">
+          enctype="multipart/form-data" class="form-param">
         <div class="form-group">
             <label class="label"><fmt:message key="label.makeChoice" bundle="${local}"/> </label>
             <label class="radio-inline">

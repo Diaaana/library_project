@@ -1,4 +1,4 @@
-package by.radomskaya.project.util;
+package by.radomskaya.project.pool;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.util.ResourceBundle;
 
-public class DBConnectionTest {
+public class PoolManagerTest {
     private static ResourceBundle resource;
     private static String user;
     private static String password;

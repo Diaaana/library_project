@@ -34,12 +34,12 @@ function checkRegistration() {
         return false;
     }
 
-    if (!(/^[A-ZА-Я][a-zа-я]+$/.test(document.form.surname.value))) {
+    if (!(/^[A-ZА-Я][a-zа-я]+('[a-zа-я]+|-[A-ZА-Я][a-zа-я]+)?$/.test(document.form.surname.value))) {
         alert("Фамилия должна содержать только буквы и начинаться с заглавной буквы!");
         return false;
     }
 
-    if (!(/^[A-ZА-Я][a-zа-я\-]+$/.test(document.form.name.value))) {
+    if (!(/^[A-ZА-Я][a-zа-я]+('[a-zа-я]+|-[A-ZА-Я][a-zа-я]+)?$/.test(document.form.name.value))) {
         alert("Имя может содержать только буквы и символ "-" и начинаться с заглавной буквы!");
         return false;
     }
@@ -60,7 +60,7 @@ function checkRegistration() {
     if (document.form.phone.value.length > 17 ) {
         alert("Превышение количества символов в номере телефона!");
         return false;
-    } else if (!(/^\+|\d[\d\(\)\ -]{4,14}\d$/.test(document.form.phone.value))) {
+    } else if (!(/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/.test(document.form.phone.value))) {
         alert("Неправильный формат номера телефона!");
         return false;
     }

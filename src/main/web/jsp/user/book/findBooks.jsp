@@ -6,7 +6,7 @@
 
 <html>
 <head>
-    <title>Найденные книги</title>
+    <title><fmt:message key="label.books" bundle="${local}"/></title>
 
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/resource/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/app-style.css">

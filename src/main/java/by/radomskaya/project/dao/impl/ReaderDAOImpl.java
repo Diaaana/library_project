@@ -18,11 +18,11 @@ import java.util.List;
 
 public class ReaderDAOImpl implements ReaderDAO {
     private final static Logger LOGGER = LogManager.getLogger(ReaderDAOImpl.class);
-    private final static String SELECT_READERS = "SELECT number_ticket, surname, name, middle_name, age, phone_number, mail, login, image FROM library.users JOIN library.roles ON roles.id_role = users.id_role WHERE roles.name_role = 'Читатель'";
+    private final static String SELECT_READERS = "SELECT id_user, number_ticket, surname, name, middle_name, age, phone_number, mail, login, password, image FROM library.users JOIN library.roles ON roles.id_role = users.id_role WHERE roles.name_role = 'Читатель'";
     private final static String SELECT_ID_USER = "SELECT id_user FROM library.users WHERE login = ? AND password = ?;";
-    private final static String SELECT_USER_BY_LOGIN_PASSWORD = "SELECT id_user, number_ticket, surname, name, middle_name, login FROM library.users WHERE login = ? AND password = ?";
+    private final static String SELECT_USER_BY_LOGIN_PASSWORD = "SELECT id_user, number_ticket, surname, name, middle_name, age, phone_number, mail, login, password, image FROM library.users WHERE login = ? AND password = ?";
     private final static String SELECT_NUMBER_TICKET = "SELECT number_ticket FROM library.users WHERE login = ? AND password = ?;";
-    private final static String GET_READER_BY_TICKET = "SELECT number_ticket, surname, name, middle_name, age, phone_number, mail, login, password, image FROM library.users WHERE number_ticket = ?";
+    private final static String GET_READER_BY_TICKET = "SELECT id_user, number_ticket, surname, name, middle_name, age, phone_number, mail, login, password, image FROM library.users WHERE number_ticket = ?";
     private final static String GET_PASSWORD_BY_TICKET = "SELECT password FROM library.users WHERE number_ticket = ?";
     private final static String CHECK_LOGIN_PASSWORD = "SELECT name_role FROM library.users JOIN library.roles ON roles.id_role = users.id_role WHERE login = ? AND password = ?";
     private final static String CHECK_LOGIN = "SELECT login FROM library.users WHERE login = ?";
@@ -42,24 +42,46 @@ public class ReaderDAOImpl implements ReaderDAO {
         try {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SELECT_READERS);
+            User user;
             List<User> listUsers = new ArrayList<>();
             while (resultSet.next()) {
-                User user = new User();
-                user.setNumberTicket(resultSet.getInt("number_ticket"));
-                user.setSurname(resultSet.getString("surname"));
-                user.setName(resultSet.getString("name"));
-                user.setMiddleName(resultSet.getString("middle_name"));
-                user.setAge(resultSet.getInt("age"));
-                user.setPhoneNumber(resultSet.getString("phone_number"));
-                user.setMail(resultSet.getString("mail"));
-                user.setLogin(resultSet.getString("login"));
-                user.setProfilePhoto(resultSet.getString("image"));
-                user.setLogin(resultSet.getString("login"));
+                user = gerUserFromResultSet(resultSet);
                 listUsers.add(user);
             }
             return listUsers;
         } catch (SQLException e) {
             throw new DAOException("Error get all readers" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+    }
+
+    @Override
+    public User getUserByLoginPassword(String login, String password) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+        User user = new User();
+        try {
+            statement = connection.prepareStatement(SELECT_USER_BY_LOGIN_PASSWORD);
+            statement.setString(1, login);
+            statement.setString(2, password);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                user = gerUserFromResultSet(resultSet);
+            }
+            return user;
+        } catch (SQLException e) {
+            throw new DAOException("Error get user by login amd password" + e);
         } finally {
             try {
                 statement.close();
@@ -227,42 +249,6 @@ public class ReaderDAOImpl implements ReaderDAO {
     }
 
     @Override
-    public User getUserByLoginPassword(String login, String password) throws DAOException {
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        PreparedStatement statement = null;
-        ResultSet resultSet;
-        User user = new User();
-        try {
-            statement = connection.prepareStatement(SELECT_USER_BY_LOGIN_PASSWORD);
-            statement.setString(1, login);
-            statement.setString(2, password);
-            resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                user.setId(resultSet.getInt("id_user"));
-                user.setNumberTicket(resultSet.getInt("number_ticket"));
-                user.setSurname(resultSet.getString("surname"));
-                user.setName(resultSet.getString("name"));
-                user.setMiddleName(resultSet.getString("middle_name"));
-                user.setLogin(resultSet.getString("login"));
-            }
-            return user;
-        } catch (SQLException e) {
-            throw new DAOException("Error get user by login amd password" + e);
-        } finally {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing statement", e);
-            }
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                LOGGER.error("Error closing connection", e);
-            }
-        }
-    }
-
-    @Override
     public User getUserByTicket(int numberTicket) throws DAOException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = null;
@@ -273,17 +259,7 @@ public class ReaderDAOImpl implements ReaderDAO {
             statement.setInt(1, numberTicket);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                user.setNumberTicket(resultSet.getInt("number_ticket"));
-                user.setSurname(resultSet.getString("surname"));
-                user.setName(resultSet.getString("name"));
-                user.setMiddleName(resultSet.getString("middle_name"));
-                user.setAge(resultSet.getInt("age"));
-                user.setPhoneNumber(resultSet.getString("phone_number"));
-                user.setMail(resultSet.getString("mail"));
-                user.setLogin(resultSet.getString("login"));
-                user.setProfilePhoto(resultSet.getString("image"));
-                user.setLogin(resultSet.getString("login"));
-                user.setPassword(resultSet.getString("password"));
+                user = gerUserFromResultSet(resultSet);
             }
             return user;
         } catch (SQLException e) {
@@ -468,6 +444,23 @@ public class ReaderDAOImpl implements ReaderDAO {
                 LOGGER.error("Error closing connection", e);
             }
         }
+    }
+
+    private User gerUserFromResultSet(ResultSet resultSet) throws SQLException {
+        User user = new User();
+        user.setId(resultSet.getInt("id_user"));
+        user.setNumberTicket(resultSet.getInt("number_ticket"));
+        user.setSurname(resultSet.getString("surname"));
+        user.setName(resultSet.getString("name"));
+        user.setMiddleName(resultSet.getString("middle_name"));
+        user.setAge(resultSet.getInt("age"));
+        user.setPhoneNumber(resultSet.getString("phone_number"));
+        user.setMail(resultSet.getString("mail"));
+        user.setLogin(resultSet.getString("login"));
+        user.setProfilePhoto(resultSet.getString("image"));
+        user.setLogin(resultSet.getString("login"));
+        user.setPassword(resultSet.getString("password"));
+        return user;
     }
 
 }

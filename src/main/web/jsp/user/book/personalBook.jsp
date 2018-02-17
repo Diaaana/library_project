@@ -18,7 +18,7 @@
 
 <html>
 <head>
-    <title>Подробнее</title>
+    <title><fmt:message key="label.moreInfo" bundle="${local}"/></title>
 
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/resource/images/icon.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resource/css/app-style.css">
@@ -44,20 +44,20 @@
     <form action="/Controller" method="post">
         <c:if test="${book != null}">
 
+            <div class="tittle">${book.tittle}</div>
+
             <div class="image">
                 <img src="/resource/images/book/${book.image}" alt="${book.tittle}" class="persImageBook">
             </div>
 
+            <div class="author">${book.author.surname} ${book.author.name} ${book.author.middleName}</div>
+
             <div class="col-md-4">
                 <p class="parameter">${ISBN}: </p><h2 class="h-parameter">${book.isbn}</h2>
-                <p class="parameter">${tittle}: </p><h2 class="h-parameter">${book.tittle}</h2>
-                <p class="parameter">${surname}: </p><h2 class="h-parameter">${book.author.surname}</h2>
-                <p class="parameter">${name}: </p><h2 class="h-parameter">${book.author.name}</h2>
-                <p class="parameter">${middleName}: </p><h2 class="h-parameter">${book.author.middleName}</h2>
-            </div>
-            <div class="col-md-4 col-md-offset-4">
                 <p class="parameter">${dateEdition}: </p><h2 class="h-parameter">${book.dateEdition}</h2>
                 <p class="parameter">${placeEdition}: </p><h2 class="h-parameter">${book.placeEdition}</h2>
+            </div>
+            <div class="col-md-4 col-md-offset-4">
                 <p class="parameter">${publisher}: </p><h2 class="h-parameter">${book.publisher}</h2>
                 <p class="parameter">${numberCopies}: </p><h2 class="h-parameter">${book.numberCopies}</h2>
             </div>

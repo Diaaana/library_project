@@ -34,7 +34,7 @@
 </c:if>
 
 <div class="container">
-    <form role="form" action="/Controller" method="post" class="form-group">
+    <form role="form" action="/Controller" method="post" class="form-param">
 
         <div class="form-group">
             <label class="label"><fmt:message key="label.enterNumberTicket" bundle="${local}"/> </label>

@@ -20,31 +20,31 @@ public class BookDAOImpl implements BookDAO {
     private final static Logger LOGGER = LogManager.getLogger(BookDAOImpl.class);
 
     private final static String INSERT_BOOK = "INSERT INTO books(isbn, tittle, date_edition, place_edition, publisher, number_copies, image_book) VALUES(?,?,?,?,?,?,?)";
-    private final static String SELECT_BOOKS_AND_AUTHORS = "SELECT books.id_book, isbn, tittle, authors.id_author, surname, name, middle_name, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
+    private final static String SELECT_BOOKS_AND_AUTHORS = "SELECT books.id_book, isbn, tittle, authors.id_author, surname, name, middle_name, country, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
             "FROM library.books " +
             "JOIN library.book_author ON books.id_book = book_author.id_book " +
             "JOIN library.authors ON book_author.id_author = authors.id_author " +
             "JOIN library.book_genre ON book_genre.id_book = books.id_book " +
             "JOIN library.genres ON genres.id_genre = book_genre.id_genre;";
-    private final static String SELECT_BOOK_BY_ID = "SELECT books.id_book, isbn, tittle, authors.id_author, surname, name, middle_name, date_edition, place_edition, publisher, number_copies, image_book " +
+    private final static String SELECT_BOOK_BY_ID = "SELECT books.id_book, isbn, tittle, authors.id_author, surname, name, middle_name, country, date_edition, place_edition, publisher, number_copies, image_book " +
             "FROM library.books " +
             "JOIN library.book_author ON books.id_book = book_author.id_book " +
             "JOIN library.authors ON book_author.id_author = authors.id_author " +
             "WHERE books.id_book = ?;";
     private final static String SELECT_BOOKS_BY_GENRE = "SELECT books.id_book, authors.id_author," +
-            " isbn, tittle, surname, name, middle_name, date_edition, place_edition, publisher, number_copies, image_book " +
+            " isbn, tittle, surname, name, middle_name, country, date_edition, place_edition, publisher, number_copies, image_book " +
             "FROM library.books JOIN library.book_author ON book_author.id_book = books.id_book " +
             "JOIN library.authors ON authors.id_author = book_author.id_author " +
             "JOIN library.book_genre ON book_genre.id_book = books.id_book " +
             "JOIN library.genres ON genres.id_genre = book_genre.id_genre " +
             "WHERE name_genre = ?";
-    private final static String SELECT_FIND_BOOKS_BY_TITTLE = "SELECT books.id_book, authors.id_author, isbn, tittle, surname, name, middle_name, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
+    private final static String SELECT_FIND_BOOKS_BY_TITTLE = "SELECT books.id_book, authors.id_author, isbn, tittle, surname, name, middle_name, country, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
             "FROM library.books JOIN library.book_genre ON book_genre.id_book = books.id_book " +
             "JOIN library.genres ON book_genre.id_genre = genres.id_genre " +
             "JOIN library.book_author ON books.id_book = book_author.id_book " +
             "JOIN library.authors ON authors.id_author = book_author.id_author " +
             "WHERE tittle = ?;";
-    private final static String SELECT_FIND_BOOKS_BY_AUTHOR = "SELECT books.id_book, authors.id_author, isbn, tittle, surname, name, middle_name, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
+    private final static String SELECT_FIND_BOOKS_BY_AUTHOR = "SELECT books.id_book, authors.id_author, isbn, tittle, surname, name, middle_name, country, name_genre, date_edition, place_edition, publisher, number_copies, image_book " +
             "FROM library.books JOIN library.book_genre ON book_genre.id_book = books.id_book " +
             "JOIN library.genres ON book_genre.id_genre = genres.id_genre " +
             "JOIN library.book_author ON books.id_book = book_author.id_book " +
@@ -448,6 +448,7 @@ public class BookDAOImpl implements BookDAO {
         author.setSurname(resultSet.getString("surname"));
         author.setName(resultSet.getString("name"));
         author.setMiddleName(resultSet.getString("middle_name"));
+        author.setCountryBirth(resultSet.getString("country"));
         book.setAuthor(author);
         book.setDateEdition(resultSet.getDate("date_edition"));
         book.setPlaceEdition(resultSet.getString("place_edition"));

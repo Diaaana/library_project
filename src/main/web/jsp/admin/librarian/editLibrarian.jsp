@@ -43,7 +43,7 @@
         </div>
         <div class="form-group">
             <input type="hidden" name="command" value="update_librarian"/>
-            <input type="hidden" name="id_librarian" value="${librarian.numberTicket}"/>
+            <input type="hidden" name="id_librarian" value="${librarian.id}"/>
             <input type="submit" class="button" value="${edit}"/>
         </div>
     </form>

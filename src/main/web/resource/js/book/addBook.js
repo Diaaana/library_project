@@ -42,17 +42,17 @@ function checkAddBook() {
         return false;
     }
 
-    if (!(/^[A-ZА-Я0-9][a-zа-я0-9\-\№\(\)\s]+$/.test(document.form.tittle.value))) {
+    if (!(/^[A-ZА-Я0-9][a-zа-я0-9\-\№\(\)\s]+[A-ZА-Я][a-zа-я]+$/.test(document.form.tittle.value))) {
         alert("Название книги должно содержать только буквы, пробел, цифры и символы(-,№,(,)) и начинаться с заглавной буквы!");
         return false;
     }
 
-    if (!(/^[A-ZА-Я][a-zа-я]+$/.test(document.form.surname.value))) {
+    if (!(/^[A-ZА-Я][a-zа-я]+('[a-zа-я]+|-[A-ZА-Я][a-zа-я]+)?$/.test(document.form.surname.value))) {
         alert("Фамилия может содержать только буквы и символ "-" и начинаться с заглавной буквы!");
         return false;
     }
 
-    if (!(/^[A-ZА-Я][a-zа-я\-]+$/.test(document.form.name.value))) {
+    if (!(/^[A-ZА-Я][a-zа-я]+('[a-zа-я]+|-[A-ZА-Я][a-zа-я]+)?$/.test(document.form.name.value))) {
         alert("Имя может содержать только буквы и символ "-" и начинаться с заглавной буквы!");
         return false;
     }
@@ -64,7 +64,7 @@ function checkAddBook() {
         }
     }
 
-    if (!(/^[A-ZА-Я][a-zа-я\-\s]+$/.test(document.form.country.value))) {
+    if (!(/^[A-ZА-Я][a-zа-я]+('[a-zа-я]+|-|\s[A-ZА-Я][a-zа-я]+)?$/.test(document.form.country.value))) {
         alert("Страна автора может содержать только буквы, пробел и символ "-" и начинаться с заглавной буквы!");
         return false;
     }
@@ -74,12 +74,12 @@ function checkAddBook() {
         return false;
     }
 
-    if (!(/^[A-ZА-Я][a-zа-я\s\-]+$/.test(document.form.place_edition.value))) {
+    if (!(/^[A-ZА-Я][a-zа-я]+('[a-zа-я]+|-|\s[A-ZА-Я][a-zа-я]+)?$/.test(document.form.place_edition.value))) {
         alert("Место издания книги может содержать только буквы, пробел и символ "-" и начинаться с заглавной буквы!");
         return false;
     }
 
-    if (!(/^[A-ZА-Я][a-zа-я\-\s]+$/.test(document.form.publisher.value))) {
+    if (!(/^[A-ZА-Я][a-zа-я]+('[a-zа-я]+|-|\s[A-ZА-Я][a-zа-я]+)?$/.test(document.form.publisher.value))) {
         alert("Издательство книги может содержать только буквы, пробел и символ "-" и начинаться с заглавной буквы!");
         return false;
     }

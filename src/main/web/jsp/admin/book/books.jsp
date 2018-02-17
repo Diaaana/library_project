@@ -44,15 +44,13 @@
     </div>
 </c:if>
 
-
-<div class="container">
     <form action="/Controller" method="post">
         <a href="Controller?command=get_genres" class="a-function"><fmt:message key="label.addNewBook" bundle="${local}"/> <span
                 class="glyphicon glyphicon-plus"></span></a>
     </form>
 
     <form action="/Controller" method="post">
-        <table class="table table-hover">
+        <table class="table table-hover table-condensed">
 
             <thead>
             <tr>
@@ -122,7 +120,6 @@
             </c:if>
         </ul>
 
-</div>
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/footer.jsp"></jsp:include>
 </body>
 </html>

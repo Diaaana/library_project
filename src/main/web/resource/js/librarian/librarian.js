@@ -13,12 +13,12 @@ function checkLibrarians() {
         return false;
     }
 
-    if (!(/^[A-ZА-Я][a-zа-я]+$/.test(document.form.surname.value))) {
+    if (!(/^[A-ZА-Я][a-zа-я]+('[a-zа-я]+|-[A-ZА-Я][a-zа-я]+)?$/.test(document.form.surname.value))) {
         alert("Фамилия должна содержать только буквы и начинаться с заглавной буквы!");
         return false;
     }
 
-    if (!(/^[A-ZА-Я][a-zа-я\-]+$/.test(document.form.name.value))) {
+    if (!(/^[A-ZА-Я][a-zа-я]+('[a-zа-я]+|-[A-ZА-Я][a-zа-я]+)?$/.test(document.form.name.value))) {
         alert("Имя может содержать только буквы и символ "-" и начинаться с заглавной буквы!");
         return false;
     }

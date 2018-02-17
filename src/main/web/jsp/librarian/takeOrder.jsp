@@ -26,7 +26,7 @@
 <jsp:include page="${pageContext.request.contextPath}/jsp/layout/layout.jsp"></jsp:include>
 
 <div class="container">
-    <form action="/Controller" method="post" name="form" onsubmit="return checkOrder();">
+    <form action="/Controller" method="post" name="form" onsubmit="return checkOrder();" class="form-param">
         <div class="form-group">
             <label class="label"><fmt:message key="label.dateBorrow" bundle="${local}"/> </label>
             <input type="text" name="date_borrow" placeholder="${date}" class="form-control">

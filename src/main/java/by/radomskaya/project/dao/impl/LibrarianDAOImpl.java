@@ -18,15 +18,15 @@ import java.util.List;
 public class LibrarianDAOImpl implements LibrarianDAO {
     private final static Logger LOGGER = LogManager.getLogger(LibrarianDAOImpl.class);
     private final static String INSERT_LIBRARIAN = "INSERT INTO users(surname, name, middle_name, login, password, id_role) VALUES(?,?,?,?,?,?);";
-    private final static String SELECT_LIBRARIANS = "SELECT number_ticket, surname, name, middle_name, login FROM library.users " +
+    private final static String SELECT_LIBRARIANS = "SELECT id_user, surname, name, middle_name, login FROM library.users " +
             "JOIN library.roles ON users.id_role = roles.id_role " +
             "WHERE roles.name_role = 'Библиотекарь';";
-    private final static String SELECT_LIBRARIAN_BY_ID = "SELECT number_ticket, surname, name, middle_name, login FROM library.users " +
+    private final static String SELECT_LIBRARIAN_BY_ID = "SELECT id_user, surname, name, middle_name, login FROM library.users " +
             "JOIN library.roles ON users.id_role = roles.id_role " +
-            "WHERE roles.name_role = 'Библиотекарь' AND number_ticket = ?;";
+            "WHERE roles.name_role = 'Библиотекарь' AND id_user = ?;";
     private final static String CHECK_LOGIN_PASSWORD = "SELECT login, password FROM library.users JOIN library.roles on users.id_role = roles.id_role WHERE name_role = 'Библиотекарь' AND login = ? AND password = ?";
-    private final static String DELETE_LIBRARIAN = "DELETE FROM library.users WHERE number_ticket = ?";
-    private final static String UPDATE_LIBRARIAN = "UPDATE library.users SET surname = ?, name = ?, middle_name = ?, login = ? WHERE number_ticket = ?;";
+    private final static String DELETE_LIBRARIAN = "DELETE FROM library.users WHERE id_user = ?";
+    private final static String UPDATE_LIBRARIAN = "UPDATE library.users SET surname = ?, name = ?, middle_name = ?, login = ? WHERE id_user = ?;";
     private final static int ID_ROLE_LIBRARIAN = 2;
 
 
@@ -155,7 +155,7 @@ public class LibrarianDAOImpl implements LibrarianDAO {
             statement.setString(2, librarian.getName());
             statement.setString(3, librarian.getMiddleName());
             statement.setString(4, librarian.getLogin());
-            statement.setInt(5, librarian.getNumberTicket());
+            statement.setInt(5, librarian.getId());
             statement.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -202,7 +202,7 @@ public class LibrarianDAOImpl implements LibrarianDAO {
 
     private User getLibrarianFromResultSet(ResultSet resultSet) throws SQLException {
         User librarian = new User();
-        librarian.setNumberTicket(resultSet.getInt("number_ticket"));
+        librarian.setId(resultSet.getInt("id_user"));
         librarian.setSurname(resultSet.getString("surname"));
         librarian.setName(resultSet.getString("name"));
         librarian.setMiddleName(resultSet.getString("middle_name"));

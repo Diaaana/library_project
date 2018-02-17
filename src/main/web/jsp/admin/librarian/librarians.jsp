@@ -65,10 +65,10 @@
                     <td>${librarian.login}</td>
                     <td>
                         <a class="a-function"
-                           href="/Controller?id_librarian=${librarian.numberTicket}&command=delete_librarian"><fmt:message key="label.delete" bundle="${local}"/>
+                           href="/Controller?id_librarian=${librarian.id}&command=delete_librarian"><fmt:message key="label.delete" bundle="${local}"/>
                             <span class="glyphicon glyphicon-trash"></span></a>
                         <a class="a-function"
-                           href="/Controller?id_librarian=${librarian.numberTicket}&command=edit_librarian"><fmt:message key="label.edit" bundle="${local}"/> <span class="glyphicon glyphicon-pencil"></span></a>
+                           href="/Controller?id_librarian=${librarian.id}&command=edit_librarian"><fmt:message key="label.edit" bundle="${local}"/> <span class="glyphicon glyphicon-pencil"></span></a>
                     </td>
                 </tr>
             </c:forEach>

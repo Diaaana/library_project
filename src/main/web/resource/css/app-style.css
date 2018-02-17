@@ -1,13 +1,3 @@
-/*.body {
-    background-image: url(/resource/images/background.jpg);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
-    background-clip: border-box;
-    background-origin: content-box;
-    background-size: cover;
-}*/
-
 html {
     position: relative;
     min-height: 100%;
@@ -19,7 +9,7 @@ body {
 
 footer {
     position: absolute;
-    bottom: 0;
+    bottom: -50px;
     width: 100%;
     height: 60px;
 }
@@ -28,24 +18,15 @@ footer {
     background-color: #a48b7a;
 }
 
-/*.nav-button-group {
-    width: 100%;
+.body-error {
+    background-image: url(/resource/images/error.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-clip: border-box;
+    background-origin: content-box;
+    background-size: cover;
 }
-
-.nav-btn {
-    margin-top: 70px;
-    padding-right: 180px;
-    padding-bottom: 20px;
-    border: none;
-    background-color: inherit;
-    font-size: 38px;
-}
-
-.nav-btn:hover {
-    border: none;
-    outline: none;
-    color: #802e36;
-}*/
 
 .form-login {
     position: relative;
@@ -69,9 +50,12 @@ footer {
     color: #802e36;
 }
 
-.form-book {
-    padding-left: 50px;
-    padding-right: 50px;
+.form-param {
+    background-color: #e0c6a673;
+    margin-top: 70px;
+    padding: 50px;
+    border-radius: 1%;
+    box-shadow: 0 0 0 3px #806756, 0 0 13px #1b1e21;
 }
 
 .btn-book {
@@ -203,11 +187,6 @@ footer {
 .label {
     font-size: 200%;
     color: #5a5050;
-}
-
-.footer {
-    position: absolute;
-    bottom: -50px;
 }
 
 .footer-button {
@@ -359,4 +338,31 @@ footer {
     top: 15px;
     left: 330px;
     font-size: 50px;
+}
+
+.error {
+    position: relative;
+    top: 170px;
+    left: -400px;
+    color: #a42727;
+}
+
+.functions {
+    position: relative;
+}
+
+.tittle {
+    position: relative;
+    color: #4f2b0d;
+    margin: 30px;
+    left: 400px;
+    font-size: 40px;
+}
+
+.author {
+    position: relative;
+    color: #4f2b0d;
+    margin: 30px;
+    left: 300px;
+    font-size: 40px;
 }

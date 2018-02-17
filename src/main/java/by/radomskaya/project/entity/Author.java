@@ -79,6 +79,7 @@ public class Author extends Entity {
     @Override
     public String toString() {
         return "Author{" +
+                "id=" + getId() +
                 ", surname='" + surname + '\'' +
                 ", name='" + name + '\'' +
                 ", middleName='" + middleName + '\'' +

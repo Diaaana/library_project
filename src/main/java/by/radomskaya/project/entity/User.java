@@ -60,6 +60,15 @@ public class User extends Entity {
         this.login = login;
     }
 
+    public User(int id, String surname, String name, String middleName, String login, String password) {
+        super(id);
+        this.surname = surname;
+        this.name = name;
+        this.middleName = middleName;
+        this.login = login;
+        this.password = password;
+    }
+
     public int getNumberTicket() {
         return numberTicket;
     }
