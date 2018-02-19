@@ -1,6 +1,7 @@
 package by.radomskaya.project.entity;
 
 public class Librarian extends Entity {
+    private int id;
     private String surname;
     private String name;
     private String middleName;
@@ -10,13 +11,22 @@ public class Librarian extends Entity {
 
     public Librarian() {}
 
-    public Librarian(String surname, String name, String middleName, int shift, String login, String password) {
+    public Librarian(int id, String surname, String name, String middleName, int shift, String login, String password) {
+        this.id = id;
         this.surname = surname;
         this.name = name;
         this.middleName = middleName;
         this.shift = shift;
         this.login = login;
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getSurname() {
@@ -74,6 +84,7 @@ public class Librarian extends Entity {
 
         Librarian librarian = (Librarian) o;
 
+        if (id != librarian.id) return false;
         if (shift != librarian.shift) return false;
         if (!surname.equals(librarian.surname)) return false;
         if (!name.equals(librarian.name)) return false;
@@ -84,24 +95,13 @@ public class Librarian extends Entity {
 
     @Override
     public int hashCode() {
-        int result = surname.hashCode();
+        int result = id;
+        result = 31 * result + surname.hashCode();
         result = 31 * result + name.hashCode();
         result = 31 * result + middleName.hashCode();
         result = 31 * result + shift;
         result = 31 * result + login.hashCode();
         result = 31 * result + password.hashCode();
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Librarian{" +
-                "surname='" + surname + '\'' +
-                ", name='" + name + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", shift=" + shift +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

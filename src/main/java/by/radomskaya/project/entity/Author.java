@@ -1,6 +1,7 @@
 package by.radomskaya.project.entity;
 
 public class Author extends Entity {
+    private int id;
     private String surname;
     private String name;
     private String middleName;
@@ -8,11 +9,20 @@ public class Author extends Entity {
 
     public Author() {}
 
-    public Author(String surname, String name, String middleName, String countryBirth) {
+    public Author(int id, String surname, String name, String middleName, String countryBirth) {
+        this.id = id;
         this.surname = surname;
         this.name = name;
         this.middleName = middleName;
         this.countryBirth = countryBirth;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getSurname() {
@@ -54,17 +64,19 @@ public class Author extends Entity {
 
         Author author = (Author) o;
 
+        if (id != author.id) return false;
         if (!surname.equals(author.surname)) return false;
         if (!name.equals(author.name)) return false;
-        if (!middleName.equals(author.middleName)) return false;
+        if (middleName != null ? !middleName.equals(author.middleName) : author.middleName != null) return false;
         return countryBirth.equals(author.countryBirth);
     }
 
     @Override
     public int hashCode() {
-        int result = surname.hashCode();
+        int result = id;
+        result = 31 * result + surname.hashCode();
         result = 31 * result + name.hashCode();
-        result = 31 * result + middleName.hashCode();
+        result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
         result = 31 * result + countryBirth.hashCode();
         return result;
     }
@@ -72,7 +84,8 @@ public class Author extends Entity {
     @Override
     public String toString() {
         return "Author{" +
-                "surname='" + surname + '\'' +
+                "id=" + id +
+                ", surname='" + surname + '\'' +
                 ", name='" + name + '\'' +
                 ", middleName='" + middleName + '\'' +
                 ", countryBirth='" + countryBirth + '\'' +

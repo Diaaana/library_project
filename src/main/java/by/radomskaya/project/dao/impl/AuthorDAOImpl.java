@@ -19,6 +19,7 @@ public class AuthorDAOImpl implements AuthorDAO {
     private final static Logger LOGGER = LogManager.getLogger(AuthorDAOImpl.class);
     private final static String SELECT_AUTHORS = "SELECT surname, name, middle_name, country FROM library.authors;";
     private final static String INSERT_AUTHOR = "INSERT INTO authors(surname, name, middle_name, country) VALUES(?,?,?,?)";
+    private final static String DELETE_AUTHOR = "DELETE FROM library.authors WHERE id_author = ?";
 
     @Override
     public List<Author> getAllAuthors() throws DAOException {
@@ -67,6 +68,31 @@ public class AuthorDAOImpl implements AuthorDAO {
             return true;
         } catch (SQLException e) {
             throw new DAOException("Error add author" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+    }
+
+    @Override
+    public boolean deleteAuthor(Author author) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(DELETE_AUTHOR);
+            statement.setInt(1, author.getId());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new DAOException("Error delete author" + e);
         } finally {
             try {
                 statement.close();

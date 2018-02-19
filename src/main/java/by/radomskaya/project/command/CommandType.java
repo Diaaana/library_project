@@ -25,7 +25,11 @@ public enum CommandType {
     SHOW_LIBRARIANS(new ShowLibrariansCommand(new AdminLogic())),
     GET_BOOKS(new GetBooksCommand(new UserLogic())),
     FIND_BOOK_BY_TITTLE(new FindBookByTittleCommand(new UserLogic())),
-    FIND_BOOK_BY_AUTHOR(new FindBookByAuthorCommand(new UserLogic()));
+    FIND_BOOK_BY_AUTHOR(new FindBookByAuthorCommand(new UserLogic())),
+    DELETE_BOOK(new DeleteBookCommand(new AdminLogic())),
+    DELETE_AUTHOR(new DeleteAuthorCommand(new AdminLogic())),
+    DELETE_READER(new DeleteReaderCommand(new AdminLogic())),
+    DELETE_LIBRARIAN(new DeleteLibrarianCommand(new AdminLogic()));
 
     private Command command;
 

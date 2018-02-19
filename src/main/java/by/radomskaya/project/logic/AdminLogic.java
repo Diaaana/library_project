@@ -57,4 +57,23 @@ public class AdminLogic {
         return librarianDAO.getAllLibrarians();
     }
 
+    public boolean deleteAuthor(Author author) throws DAOException {
+        AuthorDAO authorDAO = DAOFactory.getInstance().getAuthorDAO();
+        return authorDAO.deleteAuthor(author);
+    }
+
+    public boolean deleteBook(Book book) throws DAOException {
+        BookDAO bookDAO = DAOFactory.getInstance().getBookDAO();
+        return bookDAO.deleteBook(book);
+    }
+
+    public boolean deleteReader(Reader reader) throws DAOException {
+        ReaderDAO readerDAO = DAOFactory.getInstance().getReaderDAO();
+        return readerDAO.deleteReader(reader);
+    }
+
+    public boolean deleteLibrarian(Librarian librarian) throws DAOException {
+        LibrarianDAO librarianDAO = DAOFactory.getInstance().getLibrarianDAO();
+        return librarianDAO.deleteLibrarian(librarian);
+    }
 }

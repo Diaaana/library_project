@@ -16,10 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LibrarianDAOImpl implements LibrarianDAO {
-    private final static Logger LOGGER = LogManager.getLogger(ReaderDAOImpl.class);
+    private final static Logger LOGGER = LogManager.getLogger(LibrarianDAOImpl.class);
     private final static String INSERT_LIBRARIAN = "INSERT INTO librarians(surname, name, middle_name, shift, login, password) VALUES(?,?,?,?,?,?);";
     private final static String SELECT_LIBRARIANS = "SELECT surname, name, middle_name, shift FROM library.librarians;";
     private final static String CHECK_LOGIN_PASSWORD = "SELECT login, password FROM library.librarians JOIN library.roles on librarians.id_role = roles.id_role WHERE name_role = 'Библиотекарь' AND login = ? AND password = ?";
+    private final static String DELETE_LIBRARIAN = "DELETE FROM library.librarians WHERE id = ?";
 
     @Override
     public List<Librarian> getAllLibrarians() throws DAOException {
@@ -70,6 +71,31 @@ public class LibrarianDAOImpl implements LibrarianDAO {
             return true;
         } catch (SQLException e) {
             throw new DAOException("Error add librarian" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+    }
+
+    @Override
+    public boolean deleteLibrarian(Librarian librarian) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(DELETE_LIBRARIAN);
+            statement.setInt(1, librarian.getId());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new DAOException("Error delete the librarian" + e);
         } finally {
             try {
                 statement.close();

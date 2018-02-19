@@ -12,4 +12,5 @@ public interface BookDAO {
     boolean findBooksByAuthor(String author) throws DAOException;
     List<Book> getFoundBooksByTittle(String tittle) throws DAOException;
     List<Book> getFoundBooksByAuthor(String author) throws DAOException;
+    boolean deleteBook(Book book) throws DAOException;
 }

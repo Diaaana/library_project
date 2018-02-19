@@ -39,6 +39,7 @@ public class BookDAOImpl implements BookDAO {
             "JOIN library.book_author ON books.id_book = book_author.id_book " +
             "JOIN library.authors ON authors.id_author = book_author.id_author " +
             "WHERE surname = ?;";
+    private final static String DELETE_BOOK = "DELETE FROM library.books WHERE id_book = ?";
 
 
     @Override
@@ -209,6 +210,31 @@ public class BookDAOImpl implements BookDAO {
             return listBook;
         } catch (SQLException e) {
             throw new DAOException("Error get found book by author" + e);
+        } finally {
+            try {
+                statement.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing statement", e);
+            }
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOGGER.error("Error closing connection", e);
+            }
+        }
+    }
+
+    @Override
+    public boolean deleteBook(Book book) throws DAOException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(DELETE_BOOK);
+            statement.setString(1, book.getIsbn());
+            statement.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            throw new DAOException("Error delete a book" + e);
         } finally {
             try {
                 statement.close();
